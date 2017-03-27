@@ -50,7 +50,7 @@ Function Install-Git {
   Start-Process $installerPath -Wait -ArgumentList $args;
 
   # Update path
-  $env:PATH = [Environment]::GetEnvironmentVariable('PATH', [EnvironmentVariableTarget]::Machine);
+  Update-ScriptPath;
 
   Write-Host 'Verifying Git install ...';
   Write-Host '  git --version'; git --version;

@@ -49,7 +49,7 @@ Function Install-SVN {
   Start-Process msiexec -Wait -ArgumentList $args;
 
   # Update path
-  $env:PATH = [Environment]::GetEnvironmentVariable('PATH', [EnvironmentVariableTarget]::Machine);
+  Update-ScriptPath;
 
   Write-Host 'Verifying SVN install ...';
   Write-Host '  svn --version'; svn --version;
