@@ -71,6 +71,7 @@ NestedModules = @(
   'Functions/Install-Git.ps1',
   'Functions/Install-FromMsi.ps1',
   'Functions/Install-Ninja.ps1',
+  'Functions/Install-Perl.ps1',
   'Functions/Install-SVN.ps1',
   'Functions/Register-SystemPath.ps1',
   'Functions/Update-ScriptPath.ps1'
@@ -82,6 +83,7 @@ FunctionsToExport = @(
   'Install-Git',
   'Install-FromMsi',
   'Install-Ninja',
+  'Install-Perl',
   'Install-SVN',
   'Register-SystemPath',
   'Update-ScriptPath'

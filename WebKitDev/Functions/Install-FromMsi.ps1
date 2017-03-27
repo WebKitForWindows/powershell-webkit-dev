@@ -29,8 +29,8 @@ Function Install-FromMsi {
     [string] $name,
     [Parameter(Mandatory)]
     [string] $url,
-    [Parameter(Mandatory)]
-    [string[]] $options
+    [Parameter()]
+    [string[]] $options = @()
   )
 
   $installerPath = Join-Path ([System.IO.Path]::GetTempPath()) ('{0}.msi' -f $name);
