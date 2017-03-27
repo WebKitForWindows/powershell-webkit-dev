@@ -29,13 +29,8 @@ Function Install-Git {
   )
 
   $url = ('https://github.com/git-for-windows/git/releases/download/v{0}.windows.{1}/Git-{0}-64-bit.exe' -f $version, $buildNumber);
-  $installerPath = Join-Path ([System.IO.Path]::GetTempPath()) 'git-install.exe';
 
-  Write-Host ('Downloading Git installer from {0} ..' -f $url);
-  (New-Object System.Net.WebClient).DownloadFile($url, $installerPath);
-  Write-Host ('Downloaded {0} bytes' -f (Get-Item $installerPath).length);
-
-  $args = @(
+  $options = @(
     '/VERYSILENT',
     '/SUPPRESSMSGBOXES',
     '/NORESTART',
@@ -44,19 +39,5 @@ Function Install-Git {
     '/COMPONENTS=Cmd'
   );
 
-  Write-Host 'Installing Git ...';
-  Write-Host ('{0} {1}' -f $installerPath, ($args -Join ' '));
-
-  Start-Process $installerPath -Wait -ArgumentList $args;
-
-  # Update path
-  Update-ScriptPath;
-
-  Write-Host 'Verifying Git install ...';
-  Write-Host '  git --version'; git --version;
-
-  Write-Host 'Removing Git installer ...';
-  Remove-Item $installerPath -Force;
-
-  Write-Host 'Git install complete.';
+  Install-FromExe -Name 'git' -Url $url -Options $options;
 }

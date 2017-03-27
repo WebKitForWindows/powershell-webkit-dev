@@ -69,6 +69,7 @@ Description = 'PowerShell scripts for WebKit development on Windows'
 NestedModules = @(
   'Functions/Install-CMake.ps1',
   'Functions/Install-Git.ps1',
+  'Functions/Install-FromExe.ps1',
   'Functions/Install-FromMsi.ps1',
   'Functions/Install-Ninja.ps1',
   'Functions/Install-Perl.ps1',
@@ -82,6 +83,7 @@ NestedModules = @(
 FunctionsToExport = @(
   'Install-CMake'
   'Install-Git',
+  'Install-FromExe',
   'Install-FromMsi',
   'Install-Ninja',
   'Install-Perl',
