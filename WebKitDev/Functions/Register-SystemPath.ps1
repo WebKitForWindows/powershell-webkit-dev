@@ -24,9 +24,8 @@ Function Register-SystemPath {
   )
 
   if (!([System.IO.Path]::IsPathRooted($path))) {
-    $error = [string]'All system path values need to be absolute';
-    Write-Error $error;
-    return
+    Write-Error 'All system path values need to be absolute';
+    return;
   }
 
   Write-Host ('Adding {0} to the system path' -f $path);
