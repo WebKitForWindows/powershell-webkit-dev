@@ -29,6 +29,7 @@ Function Install-FromMsi {
     [string] $name,
     [Parameter(Mandatory)]
     [string] $url,
+    [switch] $noVerify = $false,
     [Parameter()]
     [string[]] $options = @()
   )
@@ -50,10 +51,12 @@ Function Install-FromMsi {
   # Update path
   Update-ScriptPath;
 
-  Write-Host ('Verifying {0} install ...' -f $name);
-  $verifyCommand = ('  {0} --version' -f $name);
-  Write-Host $verifyCommand;
-  Invoke-Expression $verifyCommand;
+  if (!$noVerify) {
+    Write-Host ('Verifying {0} install ...' -f $name);
+    $verifyCommand = ('  {0} --version' -f $name);
+    Write-Host $verifyCommand;
+    Invoke-Expression $verifyCommand;
+  }
 
   Write-Host ('Removing {0} installer ...' -f $name);
   Remove-Item $installerPath -Force;
