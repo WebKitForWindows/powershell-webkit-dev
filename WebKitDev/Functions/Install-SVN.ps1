@@ -29,33 +29,12 @@ Function Install-SVN {
   )
 
   $url = ('https://downloads.sourceforge.net/project/tortoisesvn/{0}/Application/TortoiseSVN-{0}.{1}-x64-svn-1.9.5.msi' -f $version, $buildNumber);
-  $installerPath = Join-Path ([System.IO.Path]::GetTempPath()) 'svn-install.msi';
 
-  Write-Host ('Downloading SVN installer from {0} ..' -f $url);
-  (New-Object System.Net.WebClient).DownloadFile($url, $installerPath);
-  Write-Host ('Downloaded {0} bytes' -f (Get-Item $installerPath).length);
-
-  $args = @(
-    '/i',
-    $installerPath,
+  $options = @(
     '/quiet',
     '/qn',
     'ADDLOCAL=CLI'
   );
 
-  Write-Host 'Installing SVN ...';
-  Write-Host ('msiexec {0}' -f ($args -Join ' '));
-
-  Start-Process msiexec -Wait -ArgumentList $args;
-
-  # Update path
-  Update-ScriptPath;
-
-  Write-Host 'Verifying SVN install ...';
-  Write-Host '  svn --version'; svn --version;
-
-  Write-Host 'Removing SVN installer ...';
-  Remove-Item $installerPath -Force;
-
-  Write-Host 'SVN install complete.';
+  Install-FromMsi -Name 'svn' -Url $url -Options $options;
 }
