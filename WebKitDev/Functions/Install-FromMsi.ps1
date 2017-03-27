@@ -39,7 +39,7 @@ Function Install-FromMsi {
   (New-Object System.Net.WebClient).DownloadFile($url, $installerPath);
   Write-Host ('Downloaded {0} bytes' -f (Get-Item $installerPath).length);
 
-  $args = @('/i', $installerPath);
+  $args = @('/i', $installerPath, '/quiet', '/qn');
   $args += $options;
 
   Write-Host ('Installing {0} ...' -f $name);

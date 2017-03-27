@@ -27,8 +27,6 @@ Function Install-CMake {
   $url = ('https://cmake.org/files/v{0}.{1}/cmake-{2}-win64-x64.msi' -f $major, $minor, $version);
 
   $options = @(
-    '/quiet',
-    '/qn',
     'ADD_CMAKE_TO_PATH="System"'
   );
 

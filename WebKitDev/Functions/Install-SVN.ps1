@@ -31,8 +31,6 @@ Function Install-SVN {
   $url = ('https://downloads.sourceforge.net/project/tortoisesvn/{0}/Application/TortoiseSVN-{0}.{1}-x64-svn-1.9.5.msi' -f $version, $buildNumber);
 
   $options = @(
-    '/quiet',
-    '/qn',
     'ADDLOCAL=CLI'
   );
 
