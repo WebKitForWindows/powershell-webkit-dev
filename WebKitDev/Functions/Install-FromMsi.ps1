@@ -7,21 +7,23 @@
   Downloads an installs a MSI package.
 
   .Description
-  Downloads the specified release of Git for Windows and installs it silently
-  on the host.
+  Downloads a MSI package and silently installs it on the host. Any
+  modifications to the system path are resolved after the installation.
+  Additionally it can attempt to verify that the application installed
+  correctly by calling it.
 
   .Parameter Name
   The name of the package.
 
   .Parameter Url
-  The URL to download from.
+  The URL to download from
+
+  .Parameter NoVerify
+  If set the installation is not verified by attempting to call an executable
+  with the given name.
 
   .Parameter Options
   A list of options to pass in.
-
-  .Example
-    # Install 2.12.1
-    Install-Git -Version 2.12.1 -BuildNumber 1
 #>
 Function Install-FromMsi {
   Param(
@@ -29,6 +31,7 @@ Function Install-FromMsi {
     [string] $name,
     [Parameter(Mandatory)]
     [string] $url,
+    [Parameter()]
     [switch] $noVerify = $false,
     [Parameter()]
     [string[]] $options = @()
