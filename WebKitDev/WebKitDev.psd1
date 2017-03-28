@@ -77,6 +77,7 @@ NestedModules = @(
   'Functions/Get-WebKitGitUrl.ps1',
   'Functions/Get-WebKitSVNSnapshotUrl.ps1',
   'Functions/Get-WebKitSVNUrl.ps1',
+  'Functions/Initialize-VSEnvironment.ps1',
   'Functions/Install-Bison.ps1',
   'Functions/Install-CMake.ps1',
   'Functions/Install-Flex.ps1',
@@ -108,6 +109,7 @@ FunctionsToExport = @(
   'Get-WebKitGitUrl',
   'Get-WebKitSVNSnapshotUrl',
   'Get-WebKitSVNUrl',
+  'Initialize-VSEnvironment',
   'Install-Bison',
   'Install-CMake'
   'Install-Flex',
