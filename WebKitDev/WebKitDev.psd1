@@ -67,8 +67,11 @@ Description = 'PowerShell scripts for WebKit development on Windows'
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 NestedModules = @(
+  'Functions/Install-Bison.ps1',
   'Functions/Install-CMake.ps1',
+  'Functions/Install-Flex.ps1',
   'Functions/Install-Git.ps1',
+  'Functions/Install-Gperf.ps1',
   'Functions/Install-FromExe.ps1',
   'Functions/Install-FromMsi.ps1',
   'Functions/Install-FromArchive.ps1',
@@ -83,8 +86,11 @@ NestedModules = @(
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @(
+  'Install-Bison',
   'Install-CMake'
+  'Install-Flex',
   'Install-Git',
+  'Install-Gperf',
   'Install-FromExe',
   'Install-FromMsi',
   'Install-FromArchive',
