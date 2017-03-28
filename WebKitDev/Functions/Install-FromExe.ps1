@@ -16,7 +16,7 @@
   The name of the package.
 
   .Parameter Url
-  The URL to download from
+  The URL to download from.
 
   .Parameter NoVerify
   If set the installation is not verified by attempting to call an executable
