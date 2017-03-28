@@ -51,7 +51,10 @@ Description = 'PowerShell scripts for WebKit development on Windows'
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-# RequiredModules = @()
+RequiredModules = @(
+  @{ModuleName = '7Zip4Powershell'; ModuleVersion = '1.8'; MaximumVersion = '1.9'; },
+  @{ModuleName = 'VSSetup'; ModuleVersion = '1.0.47.27524 '; MaximumVersion = '1.1'; }
+)
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
