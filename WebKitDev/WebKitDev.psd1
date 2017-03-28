@@ -69,6 +69,10 @@ Description = 'PowerShell scripts for WebKit development on Windows'
 NestedModules = @(
   'Functions/Expand-SourceArchive.ps1',
   'Functions/Get-SourceCodeRelease.ps1',
+  'Functions/Get-VSBuildTools2015InstallationPath.ps1',
+  'Functions/Get-VSBuildTools2015VCVarsAllPath.ps1',
+  'Functions/Get-VSBuildTools2017InstallationPath.ps1',
+  'Functions/Get-VSBuildTools2017VCVarsAllPath.ps1',
   'Functions/Get-WebKitGitHubUrl.ps1',
   'Functions/Get-WebKitGitUrl.ps1',
   'Functions/Get-WebKitSVNSnapshotUrl.ps1',
@@ -96,6 +100,10 @@ NestedModules = @(
 FunctionsToExport = @(
   'Expand-SourceArchive',
   'Get-SourceCodeRelease',
+  'Get-VSBuildTools2015InstallationPath',
+  'Get-VSBuildTools2015VCVarsAllPath',
+  'Get-VSBuildTools2017InstallationPath',
+  'Get-VSBuildTools2017VCVarsAllPath',
   'Get-WebKitGitHubUrl',
   'Get-WebKitGitUrl',
   'Get-WebKitSVNSnapshotUrl',
