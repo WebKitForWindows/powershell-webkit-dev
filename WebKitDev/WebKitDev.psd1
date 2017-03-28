@@ -69,6 +69,10 @@ Description = 'PowerShell scripts for WebKit development on Windows'
 NestedModules = @(
   'Functions/Expand-SourceArchive.ps1',
   'Functions/Get-SourceCodeRelease.ps1',
+  'Functions/Get-WebKitGitHubUrl.ps1',
+  'Functions/Get-WebKitGitUrl.ps1',
+  'Functions/Get-WebKitSVNSnapshotUrl.ps1',
+  'Functions/Get-WebKitSVNUrl.ps1',
   'Functions/Install-Bison.ps1',
   'Functions/Install-CMake.ps1',
   'Functions/Install-Flex.ps1',
@@ -92,6 +96,10 @@ NestedModules = @(
 FunctionsToExport = @(
   'Expand-SourceArchive',
   'Get-SourceCodeRelease',
+  'Get-WebKitGitHubUrl',
+  'Get-WebKitGitUrl',
+  'Get-WebKitSVNSnapshotUrl',
+  'Get-WebKitSVNUrl',
   'Install-Bison',
   'Install-CMake'
   'Install-Flex',
