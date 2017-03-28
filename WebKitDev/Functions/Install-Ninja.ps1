@@ -34,20 +34,6 @@ Function Install-Ninja {
   )
 
   $url = ('https://github.com/ninja-build/ninja/releases/download/v{0}/ninja-win.zip' -f $version);
-  $archivePath = Join-Path ([System.IO.Path]::GetTempPath()) 'ninja.zip';
 
-  Write-Host ('Downloading Ninja binaries from {0} ..' -f $url);
-  (New-Object System.Net.WebClient).DownloadFile($url, $archivePath);
-  Write-Host ('Downloaded {0} bytes' -f (Get-Item $archivePath).length);
-
-  Write-Host 'Unzipping Ninja binaries ...';
-  Expand-Archive -Path $archivePath -DestinationPath $installPath -Force;
-
-  Write-Host 'Verifying ninja install ...';
-  Write-Host '  ninja --version'; ninja --version;
-
-  Write-Host 'Removing Ninja binaries ...';
-  Remove-Item $archivePath -Force;
-
-  Write-Host 'Ninja install complete.';
+  Install-FromArchive -Name 'ninja' -Url $url -InstallPath $installPath;
 }
