@@ -13,26 +13,33 @@
   .Parameter Version
   The version of TortoiseSVN to install.
 
-  .Parameter BuildNumber
-  The corresponding build number.
+  .Parameter InstallationPath
+  The location to install to.
 
   .Example
-    # Install 1.9.5
-    Install-SVN -Version 1.9.5 -BuildNumber 27581
+    # Install 1.9.5.27581
+    Install-SVN -Version 1.9.5.27581
 #>
 Function Install-SVN {
   Param(
     [Parameter(Mandatory)]
     [string] $version,
-    [Parameter(Mandatory)]
-    [string] $buildNumber
+    [Parameter()]
+    [AllowNull()]
+    [string] $installationPath
   )
 
-  $url = ('https://downloads.sourceforge.net/project/tortoisesvn/{0}/Application/TortoiseSVN-{0}.{1}-x64-svn-1.9.5.msi' -f $version, $buildNumber);
+  $major, $minor, $patch, $build = $version.split('.');
+
+  $url = ('https://downloads.sourceforge.net/project/tortoisesvn/{0}.{1}.{2}/Application/TortoiseSVN-{0}.{1}.{2}.{3}-x64-svn-1.9.5.msi' -f $major, $minor, $patch, $build);
 
   $options = @(
     'ADDLOCAL=CLI'
   );
+
+  if ($installationPath) {
+    $options += ('INSTALLDIR={0}' -f $installationPath);
+  }
 
   Install-FromMsi -Name 'svn' -Url $url -Options $options;
 }
