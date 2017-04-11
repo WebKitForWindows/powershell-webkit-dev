@@ -18,22 +18,22 @@
   .Parameter Version
   The version of bison to install.
 
-  .Parameter InstallPath
+  .Parameter InstallationPath
   The path to install at.
 
   .Example
     # Install 2.4.1
-    Install-Bison -Version 2.4.1 -InstallPath C:\gnuwin32
+    Install-Bison -Version 2.4.1 -InstallationPath C:\gnuwin32
 #>
 Function Install-Bison {
   Param(
     [Parameter(Mandatory)]
     [string] $version,
     [Parameter(Mandatory)]
-    [string] $installPath
+    [string] $installationPath
   )
 
   $url = ('https://downloads.sourceforge.net/project/gnuwin32/bison/{0}/bison-{0}-bin.zip' -f $version);
 
-  Install-FromArchive -Name 'bison' -Url $url -InstallPath $installPath;
+  Install-FromArchive -Name 'bison' -Url $url -InstallationPath $installationPath;
 }

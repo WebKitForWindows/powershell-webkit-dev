@@ -15,7 +15,7 @@
   .Parameter Url
   The URL to download from.
 
-  .Parameter InstallPath
+  .Parameter InstallationPath
   The path to install at.
 
   .Parameter NoVerify
@@ -32,7 +32,7 @@ Function Install-FromArchive {
     [Parameter(Mandatory)]
     [string] $url,
     [Parameter(Mandatory)]
-    [string] $installPath,
+    [string] $installationPath,
     [Parameter()]
     [switch] $noVerify = $false
   )
@@ -45,7 +45,7 @@ Function Install-FromArchive {
   Write-Host ('Downloaded {0} bytes' -f (Get-Item $archivePath).length);
 
   Write-Host ('Unzipping {0} package ...' -f $name);
-  Expand-7Zip -ArchiveFileName $archivePath -TargetPath $installPath;
+  Expand-7Zip -ArchiveFileName $archivePath -TargetPath $installationPath;
 
   if (!$noVerify) {
     Write-Host ('Verifying {0} install ...' -f $name);

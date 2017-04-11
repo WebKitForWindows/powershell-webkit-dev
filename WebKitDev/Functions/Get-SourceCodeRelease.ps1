@@ -9,7 +9,7 @@
   .Parameter Name
   The name of the source code package.
 
-  .Parameter Path
+  .Parameter Url
   The path to the source code release.
 
   .Parameter DestinationPath
@@ -20,15 +20,15 @@ Function Get-SourceCodeRelease {
     [Parameter(Mandatory)]
     [string] $name,
     [Parameter(Mandatory)]
-    [string] $path,
+    [string] $url,
     [Parameter(Mandatory)]
     [string] $destinationPath
   )
 
-  Write-Host ('Downloading {0} source code from {1} ...' -f $name, $path);
-  $extension = [System.IO.Path]::GetExtension($path);
+  Write-Host ('Downloading {0} source code from {1} ...' -f $name, $url);
+  $extension = [System.IO.Path]::GetExtension($url);
   $fileName = [System.IO.Path]::GetTempFileName() | Rename-Item -NewName { $_ -replace '.tmp$', $extension } -PassThru;
-  (New-Object System.Net.WebClient).DownloadFile($path, $fileName);
+  (New-Object System.Net.WebClient).DownloadFile($url, $fileName);
   Write-Host ('Downloaded {0} bytes' -f (Get-Item $fileName).Length);
 
   Write-Host ('Unzipping {0} source code to {1} ...' -f $name, $destinationPath);

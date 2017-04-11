@@ -18,22 +18,22 @@
   .Parameter Version
   The version of Ninja to install.
 
-  .Parameter InstallPath
+  .Parameter InstallationPath
   The path to install at.
 
   .Example
     # Install 1.7.2
-    Install-Ninja -Version 1.7.2 -InstallPath C:\Ninja
+    Install-Ninja -Version 1.7.2 -InstallationPath C:\Ninja
 #>
 Function Install-Ninja {
   Param(
     [Parameter(Mandatory)]
     [string] $version,
     [Parameter(Mandatory)]
-    [string] $installPath
+    [string] $installationPath
   )
 
   $url = ('https://github.com/ninja-build/ninja/releases/download/v{0}/ninja-win.zip' -f $version);
 
-  Install-FromArchive -Name 'ninja' -Url $url -InstallPath $installPath;
+  Install-FromArchive -Name 'ninja' -Url $url -InstallationPath $installationPath;
 }
