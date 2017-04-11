@@ -15,7 +15,7 @@
   .Parameter BuiltType
   The type of build to do.
 
-  .Parameter InstallPath
+  .Parameter InstallationPath
   The root install path.
 
   .Parameter Platform
@@ -29,7 +29,7 @@ Function Invoke-CMakeBuild {
     [Parameter(Mandatory)]
     [string] $path,
     [Parameter(Mandatory)]
-    [string] $installPath,
+    [string] $installationPath,
     [Parameter(Mandatory)]
     [ValidateSet('Release','Debug')]
     [string] $buildType = 'Release',
@@ -59,7 +59,8 @@ Function Invoke-CMakeBuild {
   }
 
   $genArgs += ('-DCMAKE_BUILD_TYPE={0}' -f $buildType);
-  $genArgs += ('-DCMAKE_INSTALL_PREFIX={0}' -f $installPath);
+  $genArgs += ('-DCMAKE_INSTALL_PREFIX={0}' -f $installationPath);
+  $genArgs += ('-DCMAKE_PREFIX_PATH={0}' -f $installationPath);
 
   $buildDir = Join-Path $path (Join-Path 'build' $buildType);
 
