@@ -8,8 +8,17 @@
 
   .Description
   Downloads VS Build Tools and installs it silently on the host.
+
+  .Parameter InstallationPath
+  The location to install to.
 #>
 Function Install-VSBuildTools2017 {
+  Param(
+    [Parameter()]
+    [AllowNull()]
+    [string] $installationPath
+  )
+
   $url = 'https://download.microsoft.com/download/5/A/8/5A8B8314-CA70-4225-9AF0-9E957C9771F7/vs_BuildTools.exe';
 
   $options = @(
@@ -18,6 +27,10 @@ Function Install-VSBuildTools2017 {
     '--wait',
     '--add', 'Microsoft.VisualStudio.Workload.VCTools', '--includeOptional'
    );
+
+   if ($installationPath) {
+     $options += @('--installPath', ('/dir="{0}"' -f $installationPath));
+   }
 
   Install-FromExe -Name 'VSBuildTools2017' -Url $url -Options $options -NoVerify;
 }

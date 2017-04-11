@@ -16,6 +16,9 @@
   .Parameter PipVersion
   The version of pip (Pip Installs Python) to install.
 
+  .Parameter InstallationPath
+  The location to install to.
+
   .Example
     # Install 2.7.13 and PIP 9.0.1
     Install-Python -Version 2.7.13 -PipVersion
@@ -25,7 +28,10 @@ Function Install-Python {
     [Parameter(Mandatory)]
     [string] $version,
     [Parameter(Mandatory)]
-    [string] $pipVersion
+    [string] $pipVersion,
+    [Parameter()]
+    [AllowNull()]
+    [string] $installationPath
   )
 
   $major, $minor, $patch = $version.split('.');
@@ -38,10 +44,13 @@ Function Install-Python {
   $pythonUrl = ('https://www.python.org/ftp/python/{0}/python-{0}.amd64.msi' -f $version);
 
   $options = @(
-    'TARGETDIR=C:\Python',
     'ALLUSERS=1',
     'ADDLOCAL=DefaultFeature,Extensions,TclTk,Tools,PrependPath'
   );
+
+  if ($installationPath) {
+    $options += ('TARGETDIR="{0}"' -f $installationPath);
+  }
 
   Install-FromMsi -Name 'python' -Url $pythonUrl -Options $options;
 

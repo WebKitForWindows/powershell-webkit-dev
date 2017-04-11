@@ -12,6 +12,9 @@
   .Parameter Version
   The version of CMake to install.
 
+  .Parameter InstallationPath
+  The location to install to.
+
   .Example
     # Install 3.7.2
     Install-CMake -Version 3.7.2
@@ -19,7 +22,10 @@
 Function Install-CMake {
   Param(
     [Parameter(Mandatory)]
-    [string] $version
+    [string] $version,
+    [Parameter()]
+    [AllowNull()]
+    [string] $installationPath
   )
 
   $major, $minor, $patch = $version.split('.');
@@ -29,6 +35,10 @@ Function Install-CMake {
   $options = @(
     'ADD_CMAKE_TO_PATH="System"'
   );
+
+  if ($installationPath) {
+    $options += ('INSTALL_ROOT="{0}"' -f $installationPath);
+  }
 
   Install-FromMsi -Name 'cmake' -Url $url -Options $options;
 }

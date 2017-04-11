@@ -38,7 +38,7 @@ Function Install-SVN {
   );
 
   if ($installationPath) {
-    $options += ('INSTALLDIR={0}' -f $installationPath);
+    $options += ('INSTALLDIR="{0}"' -f $installationPath);
   }
 
   Install-FromMsi -Name 'svn' -Url $url -Options $options;

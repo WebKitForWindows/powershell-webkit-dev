@@ -13,22 +13,25 @@
   .Parameter Version
   The version of Git for Windows to install.
 
-  .Parameter BuildNumber
-  The corresponding build number.
+  .Parameter InstallationPath
+  The location to install to.
 
   .Example
-    # Install 2.12.1
-    Install-Git -Version 2.12.1 -BuildNumber 1
+    # Install 2.12.1.1
+    Install-Git -Version 2.12.1.1
 #>
 Function Install-Git {
   Param(
     [Parameter(Mandatory)]
     [string] $version,
-    [Parameter(Mandatory)]
-    [string] $buildNumber
+    [Parameter()]
+    [AllowNull()]
+    [string] $installationPath
   )
 
-  $url = ('https://github.com/git-for-windows/git/releases/download/v{0}.windows.{1}/Git-{0}-64-bit.exe' -f $version, $buildNumber);
+  $major, $minor, $patch, $build = $version.split('.');
+
+  $url = ('https://github.com/git-for-windows/git/releases/download/v{0}.{1}.{2}.windows.{3}/Git-{0}.{1}.{2}.{3}-64-bit.exe' -f $major, $minor, $patch, $build);
 
   $options = @(
     '/VERYSILENT',
@@ -38,6 +41,10 @@ Function Install-Git {
     '/SP-',
     '/COMPONENTS=Cmd'
   );
+
+  if ($installationPath) {
+    $options += ('/DIR="{0}"' -f $installationPath);
+  }
 
   Install-FromExe -Name 'git' -Url $url -Options $options;
 }

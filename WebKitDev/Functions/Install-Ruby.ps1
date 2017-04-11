@@ -12,6 +12,9 @@
   .Parameter Version
   The version of Ruby to install.
 
+  .Parameter InstallationPath
+  The location to install to.
+
   .Example
     # Install 2.3.3
     Install-Ruby -Version 2.3.3
@@ -19,7 +22,10 @@
 Function Install-Ruby {
   Param(
     [Parameter(Mandatory)]
-    [string] $version
+    [string] $version,
+    [Parameter()]
+    [AllowNull()]
+    [string] $installationPath
   )
 
   $url = ('https://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-{0}-x64.exe' -f $version);
@@ -28,6 +34,10 @@ Function Install-Ruby {
     '/verysilent',
     '/tasks="assocfiles,modpath"'
   );
+
+  if ($installationPath) {
+    $options += ('/dir="{0}"' -f $installationPath);
+  }
 
   Install-FromExe -Name 'ruby' -Url $url -Options $options;
 }
