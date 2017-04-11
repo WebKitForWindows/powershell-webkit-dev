@@ -12,11 +12,14 @@
   .Parameter Path
   The path that contains the root CMakeLists.txt.
 
-  .Parameter BuiltType
-  The type of build to do.
+  .Parameter BuildPath
+  The path to build at.
 
   .Parameter InstallationPath
   The root install path.
+
+  .Parameter BuiltType
+  The type of build to do.
 
   .Parameter Platform
   The platform to build for.
@@ -28,6 +31,8 @@ Function Invoke-CMakeBuild {
   Param(
     [Parameter(Mandatory)]
     [string] $path,
+    [Parameter(Mandatory)]
+    [string] $buildPath,
     [Parameter(Mandatory)]
     [string] $installationPath,
     [Parameter(Mandatory)]
@@ -62,11 +67,9 @@ Function Invoke-CMakeBuild {
   $genArgs += ('-DCMAKE_INSTALL_PREFIX={0}' -f $installationPath);
   $genArgs += ('-DCMAKE_PREFIX_PATH={0}' -f $installationPath);
 
-  $buildDir = Join-Path $path (Join-Path 'build' $buildType);
-
   $genArgs += $options;
 
-  $genArgs += ('-B{0}' -f $buildDir);
+  $genArgs += ('-B{0}' -f $buildPath);
   $genArgs += ('-H{0}' -f $path);
 
   # Create the generate call
@@ -76,7 +79,7 @@ Function Invoke-CMakeBuild {
   Invoke-Expression $genCall
 
   # Create the build call
-  $buildArgs += @('--build', $buildDir, '--target install');
+  $buildArgs += @('--build', $buildPath, '--target install');
 
   $buildCall = ('cmake {0}' -f ($buildArgs -Join ' '));
 
