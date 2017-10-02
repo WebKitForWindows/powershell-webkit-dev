@@ -57,6 +57,7 @@ Function Install-Python {
   # Install PIP
   $pipInstall = ('pip=={0}' -f $pipVersion);
   Write-Host ('Installing {0} ...' -f $pipInstall);
+  [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
   (New-Object System.Net.WebClient).DownloadFile('https://bootstrap.pypa.io/get-pip.py', 'get-pip.py');
   python get-pip.py $pipInstall;
   Remove-Item get-pip.py -Force;
