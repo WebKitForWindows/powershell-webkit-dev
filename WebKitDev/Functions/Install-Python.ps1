@@ -57,9 +57,15 @@ Function Install-Python {
   # Install PIP
   $pipInstall = ('pip=={0}' -f $pipVersion);
   Write-Host ('Installing {0} ...' -f $pipInstall);
+
+  $oldSecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol;
+  [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
+
   (New-Object System.Net.WebClient).DownloadFile('https://bootstrap.pypa.io/get-pip.py', 'get-pip.py');
   python get-pip.py $pipInstall;
   Remove-Item get-pip.py -Force;
+
+  [System.Net.ServicePointManager]::SecurityProtocol = $oldSecurityProtocol;
 
   # Install Visual Studio for Python 2.7
   $vcForPythonUrl = 'https://download.microsoft.com/download/7/9/6/796EF2E4-801B-4FC4-AB28-B59FBF6D907B/VCForPython27.msi';
