@@ -34,7 +34,7 @@ Function Install-Git {
   if ($build -ne '1') {
     $exePath = ('Git-{0}.{1}.{2}.{3}-64-bit.exe' -f $major, $minor, $patch, $build);
   } else {
-    $exePath = ('Git-{0}.{1}.{2}-64-bit.exe' -f $majob, $minor, $patch);
+    $exePath = ('Git-{0}.{1}.{2}-64-bit.exe' -f $major, $minor, $patch);
   }
 
   $url = ('https://github.com/git-for-windows/git/releases/download/v{0}.{1}.{2}.windows.{3}/{4}' -f $major, $minor, $patch, $build, $exePath);
