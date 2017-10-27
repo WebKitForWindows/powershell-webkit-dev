@@ -52,8 +52,8 @@ Description = 'PowerShell scripts for WebKit development on Windows'
 
 # Modules that must be imported into the global environment prior to importing this module
 RequiredModules = @(
-  @{ModuleName = '7Zip4Powershell'; ModuleVersion = '1.8'; MaximumVersion = '1.9'; },
-  @{ModuleName = 'VSSetup'; ModuleVersion = '1.0.47.27524 '; MaximumVersion = '1.1'; }
+  @{ModuleName = '7Zip4Powershell'; ModuleVersion = '1.8'; MaximumVersion = '2.0'; },
+  @{ModuleName = 'VSSetup'; ModuleVersion = '2.0.1.32208'; MaximumVersion = '3.0'; }
 )
 
 # Assemblies that must be loaded prior to importing this module
@@ -90,6 +90,7 @@ NestedModules = @(
   'Functions/Install-FromMsi.ps1',
   'Functions/Install-Git.ps1',
   'Functions/Install-Gperf.ps1',
+  'Functions/Install-Nasm.ps1',
   'Functions/Install-Ninja.ps1',
   'Functions/Install-Perl.ps1',
   'Functions/Install-Python.ps1',
@@ -125,6 +126,7 @@ FunctionsToExport = @(
   'Install-FromMsi',
   'Install-Git',
   'Install-Gperf',
+  'Install-Nasm',
   'Install-Ninja',
   'Install-Perl',
   'Install-Python',

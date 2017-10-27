@@ -18,6 +18,9 @@
   .Parameter InstallationPath
   The path to install at.
 
+  .Parameter ArchiveRoot
+  The path within the archive to install.
+
   .Parameter NoVerify
   If set the installation is not verified by attempting to call an executable
   with the given name.
@@ -31,6 +34,9 @@ Function Install-FromArchive {
     [Parameter(Mandatory)]
     [string] $installationPath,
     [Parameter()]
+    [AllowNull()]
+    [string] $archiveRoot,
+    [Parameter()]
     [switch] $noVerify = $false
   )
 
@@ -41,8 +47,24 @@ Function Install-FromArchive {
   (New-Object System.Net.WebClient).DownloadFile($url, $archivePath);
   Write-Host ('Downloaded {0} bytes' -f (Get-Item $archivePath).length);
 
+  # Expand to a temporary directory
   Write-Host ('Unzipping {0} package ...' -f $name);
-  Expand-7Zip -ArchiveFileName $archivePath -TargetPath $installationPath;
+  $tempDir = Join-Path ([System.IO.Path]::GetTempPath()) ([System.Guid]::NewGuid());
+  Expand-7Zip -ArchiveFileName $archivePath -TargetPath $tempDir;
+  
+  # Get the archive root
+  if ($archiveRoot) {
+    $moveFrom = Join-Path $tempDir $archiveRoot;
+  } else {
+    $moveFrom = $tempDir;
+  }
+
+  Move-Item -Path $moveFrom -Destination $installationPath;
+
+  # Remove temporary directory and its contents if present
+  if (Test-Path $moveFrom) {
+    Remove-Item $tempDir -Recurse -Force;
+  }
 
   if (!$noVerify) {
     Write-Host ('Verifying {0} install ...' -f $name);
