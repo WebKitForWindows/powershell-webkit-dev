@@ -21,9 +21,6 @@
   .Parameter NoVerify
   If set the installation is not verified by attempting to call an executable
   with the given name.
-
-  .Parameter Options
-  A list of options to pass in.
 #>
 Function Install-FromArchive {
   Param(
