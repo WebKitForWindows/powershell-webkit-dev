@@ -31,7 +31,13 @@ Function Install-Git {
 
   $major, $minor, $patch, $build = $version.split('.');
 
-  $url = ('https://github.com/git-for-windows/git/releases/download/v{0}.{1}.{2}.windows.{3}/Git-{0}.{1}.{2}.{3}-64-bit.exe' -f $major, $minor, $patch, $build);
+  if ($build -ne '1') {
+    $exePath = 'Git-{0}.{1}.{2}.{3}-64-bit.exe';
+  } else {
+    $exePath = 'Git-{0}.{1}.{2}-64-bit.exe'
+  }
+
+  $url = ('https://github.com/git-for-windows/git/releases/download/v{0}.{1}.{2}.windows.{3}/{4}' -f $major, $minor, $patch, $build, $exePath);
 
   $options = @(
     '/VERYSILENT',
