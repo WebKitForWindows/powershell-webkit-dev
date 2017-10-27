@@ -16,8 +16,8 @@
   The location to install to.
 
   .Example
-    # Install 2.3.3
-    Install-Ruby -Version 2.3.3
+    # Install 2.4.2-2
+    Install-Ruby -Version 2.4.2-2
 #>
 Function Install-Ruby {
   Param(
@@ -28,8 +28,8 @@ Function Install-Ruby {
     [string] $installationPath
   )
 
-  $url = ('https://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-{0}-x64.exe' -f $version);
-
+  $url = ('https://github.com/oneclick/rubyinstaller2/releases/download/rubyinstaller-{0}/rubyinstaller-{0}-x64.exe' -f $version);
+  
   $options = @(
     '/verysilent',
     '/tasks="assocfiles,modpath"'
