@@ -15,10 +15,10 @@
 Function Install-VSBuildTools2017 {
   Param(
     [Parameter()]
-    [AllowNull()]
-    [string] $installationPath,
+    [string[]] $workloads = @('Microsoft.VisualStudio.Workload.VCTools'),
     [Parameter()]
-    [string[]] $add = @('Microsoft.VisualStudio.Workload.VCTools')
+    [AllowNull()]
+    [string] $installationPath
   )
 
   $url = 'https://download.microsoft.com/download/5/A/8/5A8B8314-CA70-4225-9AF0-9E957C9771F7/vs_BuildTools.exe';
@@ -26,16 +26,17 @@ Function Install-VSBuildTools2017 {
   $options = @(
     '--quiet',
     '--norestart',
-    '--nocache'
-    '--wait',
-    '--add'
-   );
+    '--nocache',
+    '--wait'
+  );
 
-   $options += , $add;
+  foreach ($workload in $workloads) {
+    $options += @('--add', $workload);
+  }
 
-   if ($installationPath) {
-     $options += @('--installPath', ('/dir="{0}"' -f $installationPath));
-   }
+  if ($installationPath) {
+    $options += @('--installPath', ('/dir="{0}"' -f $installationPath));
+  }
 
   Install-FromExe -Name 'VSBuildTools2017' -Url $url -Options $options -NoVerify;
 }
