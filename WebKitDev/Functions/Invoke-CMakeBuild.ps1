@@ -18,7 +18,7 @@
   .Parameter InstallationPath
   The root install path.
 
-  .Parameter BuiltType
+  .Parameter BuildType
   The type of build to do.
 
   .Parameter Platform
@@ -79,7 +79,11 @@ Function Invoke-CMakeBuild {
   Invoke-Expression $genCall
 
   # Create the build call
-  $buildArgs += @('--build', $buildPath, '--target install');
+  $buildArgs += @('--build', $buildPath, '--target', 'install');
+
+  if ($generator -ne 'ninja') {
+    $buildArgs += ('--config', $buildType)
+  }
 
   $buildCall = ('cmake {0}' -f ($buildArgs -Join ' '));
 
