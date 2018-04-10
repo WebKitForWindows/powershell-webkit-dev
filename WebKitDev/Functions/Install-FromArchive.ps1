@@ -44,7 +44,7 @@ Function Install-FromArchive {
   $archivePath = Join-Path ([System.IO.Path]::GetTempPath()) ('{0}.{1}' -f $name, $extension);
 
   Write-Host ('Downloading {0} package from {1} ..' -f $name, $url);
-  (New-Object System.Net.WebClient).DownloadFile($url, $archivePath);
+  Invoke-WebFileRequest -Url $url -DestinationPath $archivePath;
   Write-Host ('Downloaded {0} bytes' -f (Get-Item $archivePath).length);
 
   # Expand to a temporary directory

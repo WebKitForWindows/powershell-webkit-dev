@@ -28,7 +28,7 @@ Function Get-SourceCodeRelease {
   Write-Host ('Downloading {0} source code from {1} ...' -f $name, $url);
   $extension = [System.IO.Path]::GetExtension($url);
   $fileName = [System.IO.Path]::GetTempFileName() | Rename-Item -NewName { $_ -replace '.tmp$', $extension } -PassThru;
-  (New-Object System.Net.WebClient).DownloadFile($url, $fileName);
+  Invoke-WebFileRequest -Url $url -DestinationPath $fileName;
   Write-Host ('Downloaded {0} bytes' -f (Get-Item $fileName).Length);
 
   Write-Host ('Unzipping {0} source code to {1} ...' -f $name, $destinationPath);

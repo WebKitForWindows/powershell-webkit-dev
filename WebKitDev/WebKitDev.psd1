@@ -12,7 +12,7 @@
 # RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '0.1.7'
+ModuleVersion = '0.1.8'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -99,7 +99,9 @@ NestedModules = @(
   'Functions/Install-VSBuildTools2015.ps1',
   'Functions/Install-VSBuildTools2017.ps1',
   'Functions/Invoke-CMakeBuild.ps1',
+  'Functions/Invoke-WebFileRequest.ps1',
   'Functions/Register-SystemPath.ps1',
+  'Functions/Remove-TempFiles.ps1',
   'Functions/Select-VSEnvironment.ps1',
   'Functions/Update-ScriptPath.ps1'
 )
@@ -135,7 +137,9 @@ FunctionsToExport = @(
   'Install-VSBuildTools2015',
   'Install-VSBuildTools2017',
   'Invoke-CMakeBuild',
+  'Invoke-WebFileRequest',
   'Register-SystemPath',
+  'Remove-TempFiles',
   'Select-VSEnvironment',
   'Update-ScriptPath'
 )

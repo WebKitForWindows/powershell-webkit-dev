@@ -40,7 +40,7 @@ Function Install-FromExe {
   $installerPath = Join-Path ([System.IO.Path]::GetTempPath()) ('{0}.exe' -f $name);
 
   Write-Host ('Downloading {0} installer from {1} ..' -f $name, $url);
-  (New-Object System.Net.WebClient).DownloadFile($url, $installerPath);
+  Invoke-WebFileRequest -Url $url -DestinationPath $installerPath;
   Write-Host ('Downloaded {0} bytes' -f (Get-Item $installerPath).length);
 
   Write-Host ('Installing {0} ...' -f $name);
@@ -60,6 +60,7 @@ Function Install-FromExe {
 
   Write-Host ('Removing {0} installer ...' -f $name);
   Remove-Item $installerPath -Force;
+  Remove-TempFiles;
 
   Write-Host ('{0} install complete.' -f $name);
 }
