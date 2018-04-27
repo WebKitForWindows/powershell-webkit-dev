@@ -84,6 +84,7 @@ NestedModules = @(
   'Functions/Initialize-VSEnvironment.ps1',
   'Functions/Install-Bison.ps1',
   'Functions/Install-CMake.ps1',
+  'Functions/Install-DiffUtils.ps1',
   'Functions/Install-Flex.ps1',
   'Functions/Install-FromArchive.ps1',
   'Functions/Install-FromExe.ps1',
@@ -121,7 +122,8 @@ FunctionsToExport = @(
   'Initialize-NinjaEnvironment',
   'Initialize-VSEnvironment',
   'Install-Bison',
-  'Install-CMake'
+  'Install-CMake',
+  'Install-DiffUtils',
   'Install-Flex',
   'Install-FromArchive',
   'Install-FromExe',
