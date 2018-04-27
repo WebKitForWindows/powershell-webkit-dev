@@ -59,12 +59,10 @@ Function Install-FromArchive {
     $moveFrom = $tempDir;
   }
 
-  Move-Item -Path $moveFrom -Destination $installationPath;
+  Copy-DirectoryStructure -Path $moveFrom -Destination $installationPath;
 
-  # Remove temporary directory and its contents if present
-  if (Test-Path $moveFrom) {
-    Remove-Item $tempDir -Recurse -Force;
-  }
+  # Remove temporary directory and its contents
+  Remove-Item $tempDir -Recurse -Force;
 
   if (!$noVerify) {
     Write-Host ('Verifying {0} install ...' -f $name);
@@ -77,4 +75,35 @@ Function Install-FromArchive {
   Remove-Item $archivePath -Force;
 
   Write-Host ('{0} install complete.' -f $name);
+}
+
+Function Copy-DirectoryStructure {
+  Param(
+    [Parameter(Mandatory)]
+    [string] $path,
+    [Parameter(Mandatory)]
+    [string] $destination
+  )
+
+  # Create destination path if necessary
+  if (!(Test-Path $destination)) {
+    New-Item $destination -ItemType directory | Out-Null;
+  }
+
+  # Iterate through directories
+  $directories = Get-ChildItem $path -Dir;
+
+  foreach ($dir in $directories) {
+    $fromPath = Join-Path $path $dir.Name;
+    $toPath = Join-Path $destination $dir.Name;
+
+    Copy-DirectoryStructure -Path $fromPath -Destination $toPath;
+  }
+
+  # Iterate through files
+  $files = Get-ChildItem $path -File;
+
+  foreach ($file in $files) {
+    Copy-Item -Path $file.FullName -Destination $destination;
+  }
 }
