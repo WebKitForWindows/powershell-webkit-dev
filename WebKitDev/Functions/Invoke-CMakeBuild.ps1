@@ -89,4 +89,9 @@ Function Invoke-CMakeBuild {
 
   Write-Host $buildCall;
   Invoke-Expression $buildCall;
+  $cmakeExitCode = $LASTEXITCODE;
+
+  if ($cmakeExitCode -ne 0) {
+    throw "CMake failed with code {0}" -f $cmakeExitCode
+  }
 }
