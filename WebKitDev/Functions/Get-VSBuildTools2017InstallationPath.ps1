@@ -21,6 +21,26 @@ Function Get-VSBuildTools2017InstallationPath {
     }
   }
 
+  # If the Build Tools are not found, try Enterprise, then Professional, and then Community.
+  # These packages all contain the Build Tools as a component.
+  foreach ($install in $installs) {
+    if ($install.DisplayName -eq 'Visual Studio Enterprise 2017') {
+      return $install.InstallationPath;
+    }
+  }
+
+  foreach ($install in $installs) {
+    if ($install.DisplayName -eq 'Visual Studio Professional 2017') {
+      return $install.InstallationPath;
+    }
+  }
+
+  foreach ($install in $installs) {
+    if ($install.DisplayName -eq 'Visual Studio Community 2017') {
+      return $install.InstallationPath;
+    }
+  }
+
   # Return the default path
   return 'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools';
 }
