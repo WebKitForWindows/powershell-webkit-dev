@@ -35,5 +35,9 @@ Function Install-Bison {
 
   $url = ('https://downloads.sourceforge.net/project/gnuwin32/bison/{0}/bison-{0}-bin.zip' -f $version);
 
-  Install-FromArchive -Name 'bison' -Url $url -InstallationPath $installationPath;
+  Install-FromArchive -Name 'bison' -Url $url -InstallationPath $installationPath -NoVerify;
+
+  $depsUrl = ('https://downloads.sourceforge.net/project/gnuwin32/bison/{0}/bison-{0}-dep.zip' -f $version);
+
+  Install-FromArchive -Name 'bison' -Url $depsUrl -InstallationPath $installationPath
 }
