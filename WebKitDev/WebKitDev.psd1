@@ -71,6 +71,7 @@ RequiredModules = @(
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 NestedModules = @(
   'Functions/Expand-SourceArchive.ps1',
+  'Functions/Get-Font.ps1',
   'Functions/Get-SourceCodeRelease.ps1',
   'Functions/Get-VSBuildTools2015InstallationPath.ps1',
   'Functions/Get-VSBuildTools2015VCVarsAllPath.ps1',
@@ -112,6 +113,7 @@ NestedModules = @(
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @(
   'Expand-SourceArchive',
+  'Get-Font',
   'Get-SourceCodeRelease',
   'Get-VSBuildTools2015InstallationPath',
   'Get-VSBuildTools2015VCVarsAllPath',
