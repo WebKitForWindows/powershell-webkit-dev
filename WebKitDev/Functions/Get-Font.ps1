@@ -11,7 +11,12 @@
     .Description
     Uses the type System.Windows.Media.Fonts static property SystemFontFamilies,
     to retrieve all of the fonts loaded by the system.  If the Fonts type is not found,
-    the PresentationCore assembly will be automatically loaded
+    the PresentationCore assembly will be automatically loaded.
+
+    This unfortunately can only enumerate the fonts that are present when the assembly
+    is loaded. This is because of how assemblys are loaded in Powershell. If the font
+    expected is not present then try running in a new Powershell instance to verify
+    that its present.
 
     .Parameter font
     A wildcard to search for font names
