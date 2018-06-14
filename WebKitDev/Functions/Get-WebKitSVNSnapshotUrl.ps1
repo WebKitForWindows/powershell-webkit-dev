@@ -7,5 +7,5 @@
   Retrieves the location of WebKit's SVN snapshot.
 #>
 Function Get-WebKitSVNSnapshotUrl {
-  return 'http://nightly.webkit.org/files/WebKit-SVN-source.tar.bz2';
+  return 'https://s3-us-west-2.amazonaws.com/archives.webkit.org/WebKit-SVN-source.tar.bz2';
 }
