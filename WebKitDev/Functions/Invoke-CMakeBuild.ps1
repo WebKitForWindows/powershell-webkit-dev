@@ -36,7 +36,7 @@ Function Invoke-CMakeBuild {
     [Parameter(Mandatory)]
     [string] $installationPath,
     [Parameter(Mandatory)]
-    [ValidateSet('Release','Debug')]
+    [ValidateSet('Release','Debug','RelWithDebInfo','MinSizeRel')]
     [string] $buildType = 'Release',
     [ValidateSet('ninja','vs2015','vs2017')]
     [string] $generator = 'ninja',
