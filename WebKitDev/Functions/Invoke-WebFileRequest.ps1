@@ -23,45 +23,54 @@ Function Invoke-WebFileRequest {
     [string] $destinationPath
   )
 
-  # Store off the security protocol
-  $oldSecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol;
-
-  # Determine the security protocol required
-  $securityProtocol = 0;
-  $uri = [System.Uri]$url;
-
-  foreach ($protocol in 'tls12', 'tls11', 'tls') {
-    $tcpClient = New-Object Net.Sockets.TcpClient;
-    $tcpClient.Connect($uri.Host, $uri.Port)
-    
-    $sslStream = New-Object Net.Security.SslStream $tcpClient.GetStream();
-    $sslStream.ReadTimeout = 15000;
-    $sslStream.WriteTimeout = 15000;
-
-    try {
-      $sslStream.AuthenticateAsClient($uri.Host, $null, $protocol, $false);
-      $supports = $true;
-    } catch {
-      $supports = $false;
-    }
-
-    $sslStream.Dispose();
-    $tcpClient.Dispose();
-
-    if ($supports) {
-      switch ($protocol) {
-        'tls12' { $securityProtocol = ($securityProtocol -bor [System.Net.SecurityProtocolType]::Tls12) }
-        'tls11' { $securityProtocol = ($securityProtocol -bor [System.Net.SecurityProtocolType]::Tls11) }
-        'tls'   { $securityProtocol = ($securityProtocol -bor [System.Net.SecurityProtocolType]::Tls) }
-      }
-    }
+  $secure = 1;
+  if ($url.StartsWith("http://")) {
+    $secure = 0;
   }
 
-  [System.Net.ServicePointManager]::SecurityProtocol = $securityProtocol;
+  if ($secure) {
+    # Store off the security protocol
+    $oldSecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol;
+
+    # Determine the security protocol required
+    $securityProtocol = 0;
+    $uri = [System.Uri]$url;
+
+    foreach ($protocol in 'tls12', 'tls11', 'tls') {
+      $tcpClient = New-Object Net.Sockets.TcpClient;
+      $tcpClient.Connect($uri.Host, $uri.Port)
+    
+      $sslStream = New-Object Net.Security.SslStream $tcpClient.GetStream();
+      $sslStream.ReadTimeout = 15000;
+      $sslStream.WriteTimeout = 15000;
+
+      try {
+        $sslStream.AuthenticateAsClient($uri.Host, $null, $protocol, $false);
+        $supports = $true;
+      } catch {
+        $supports = $false;
+      }
+
+      $sslStream.Dispose();
+      $tcpClient.Dispose();
+
+      if ($supports) {
+        switch ($protocol) {
+          'tls12' { $securityProtocol = ($securityProtocol -bor [System.Net.SecurityProtocolType]::Tls12) }
+          'tls11' { $securityProtocol = ($securityProtocol -bor [System.Net.SecurityProtocolType]::Tls11) }
+          'tls'   { $securityProtocol = ($securityProtocol -bor [System.Net.SecurityProtocolType]::Tls) }
+        }
+      }
+    }
+
+    [System.Net.ServicePointManager]::SecurityProtocol = $securityProtocol;
+  }
 
   # Download the file
   (New-Object System.Net.WebClient).DownloadFile($url, $destinationPath);
 
-  # Restore the security protocol
-  [System.Net.ServicePointManager]::SecurityProtocol = $oldSecurityProtocol;
+  if ($secure) {
+    # Restore the security protocol
+    [System.Net.ServicePointManager]::SecurityProtocol = $oldSecurityProtocol;
+  }
 }
