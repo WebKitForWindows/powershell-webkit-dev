@@ -21,25 +21,25 @@
     Install-SVN -Version 1.9.5.27581
 #>
 Function Install-SVN {
-  Param(
-    [Parameter(Mandatory)]
-    [string] $version,
-    [Parameter()]
-    [AllowNull()]
-    [string] $installationPath
-  )
+    Param(
+        [Parameter(Mandatory)]
+        [string] $version,
+        [Parameter()]
+        [AllowNull()]
+        [string] $installationPath
+    )
 
-  $major, $minor, $patch, $build = $version.split('.');
+    $major, $minor, $patch, $build = $version.split('.');
 
-  $url = ('https://downloads.sourceforge.net/project/tortoisesvn/{0}.{1}.{2}/Application/TortoiseSVN-{0}.{1}.{2}.{3}-x64-svn-{0}.{1}.{2}.msi' -f $major, $minor, $patch, $build);
+    $url = ('https://downloads.sourceforge.net/project/tortoisesvn/{0}.{1}.{2}/Application/TortoiseSVN-{0}.{1}.{2}.{3}-x64-svn-{0}.{1}.{2}.msi' -f $major, $minor, $patch, $build);
 
-  $options = @(
-    'ADDLOCAL=CLI'
-  );
+    $options = @(
+        'ADDLOCAL=CLI'
+    );
 
-  if ($installationPath) {
-    $options += ('INSTALLDIR="{0}"' -f $installationPath);
-  }
+    if ($installationPath) {
+        $options += ('INSTALLDIR="{0}"' -f $installationPath);
+    }
 
-  Install-FromMsi -Name 'svn' -Url $url -Options $options;
+    Install-FromMsi -Name 'svn' -Url $url -Options $options;
 }

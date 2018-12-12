@@ -20,25 +20,25 @@
     Install-CMake -Version 3.7.2
 #>
 Function Install-CMake {
-  Param(
-    [Parameter(Mandatory)]
-    [string] $version,
-    [Parameter()]
-    [AllowNull()]
-    [string] $installationPath
-  )
+    Param(
+        [Parameter(Mandatory)]
+        [string] $version,
+        [Parameter()]
+        [AllowNull()]
+        [string] $installationPath
+    )
 
-  $major, $minor, $patch = $version.split('.');
+    $major, $minor, $patch = $version.split('.');
 
-  $url = ('https://cmake.org/files/v{0}.{1}/cmake-{2}-win64-x64.msi' -f $major, $minor, $version);
+    $url = ('https://cmake.org/files/v{0}.{1}/cmake-{2}-win64-x64.msi' -f $major, $minor, $version);
 
-  $options = @(
-    'ADD_CMAKE_TO_PATH="System"'
-  );
+    $options = @(
+        'ADD_CMAKE_TO_PATH="System"'
+    );
 
-  if ($installationPath) {
-    $options += ('INSTALL_ROOT="{0}"' -f $installationPath);
-  }
+    if ($installationPath) {
+        $options += ('INSTALL_ROOT="{0}"' -f $installationPath);
+    }
 
-  Install-FromMsi -Name 'cmake' -Url $url -Options $options;
+    Install-FromMsi -Name 'cmake' -Url $url -Options $options;
 }

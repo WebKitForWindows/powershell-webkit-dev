@@ -15,5 +15,5 @@
   checking is performed.
 #>
 Function Get-VSBuildTools2015VCVarsAllPath {
-  return (Join-Path (Get-VSBuildTools2015InstallationPath) 'VC\vcvarsall.bat');
+    return (Join-Path (Get-VSBuildTools2015InstallationPath) 'VC\vcvarsall.bat');
 }

@@ -13,22 +13,22 @@
   The location to install to.
 #>
 Function Install-VSBuildTools2015 {
-  Param(
-    [Parameter()]
-    [AllowNull()]
-    [string] $installationPath
-  )
+    Param(
+        [Parameter()]
+        [AllowNull()]
+        [string] $installationPath
+    )
 
-  $url = 'https://download.microsoft.com/download/5/f/7/5f7acaeb-8363-451f-9425-68a90f98b238/visualcppbuildtools_full.exe';
+    $url = 'https://download.microsoft.com/download/5/f/7/5f7acaeb-8363-451f-9425-68a90f98b238/visualcppbuildtools_full.exe';
 
-  $options = @(
-    '/NoRestart',
-    '/Silent'
-   );
+    $options = @(
+        '/NoRestart',
+        '/Silent'
+    );
 
-   if ($installationPath) {
-     $options += ('/CustomInstallPath="{0}"' -f $installationPath);
-   }
+    if ($installationPath) {
+        $options += ('/CustomInstallPath="{0}"' -f $installationPath);
+    }
 
-  Install-FromExe -Name 'VSBuildTools2015' -Url $url -Options $options -NoVerify;
+    Install-FromExe -Name 'VSBuildTools2015' -Url $url -Options $options -NoVerify;
 }

@@ -18,28 +18,28 @@
     Register-Path -Path C:\ninja
 #>
 Function Register-SystemPath {
-  Param(
-    [Parameter(Mandatory)]
-    [string] $path
-  )
+    Param(
+        [Parameter(Mandatory)]
+        [string] $path
+    )
 
-  if (!([System.IO.Path]::IsPathRooted($path))) {
-    Write-Error 'All system path values need to be absolute';
-    return;
-  }
+    if (!([System.IO.Path]::IsPathRooted($path))) {
+        Write-Error 'All system path values need to be absolute';
+        return;
+    }
 
-  Write-Host ('Adding {0} to the system path' -f $path);
+    Write-Host ('Adding {0} to the system path' -f $path);
 
-  # Get current path from the registry
-  $systemPathKey = 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment';
-  $systemPath = (Get-ItemProperty -Path $systemPathKey -Name PATH).Path;
-  Write-Debug ('Current path {0}' -f $systemPath);
+    # Get current path from the registry
+    $systemPathKey = 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment';
+    $systemPath = (Get-ItemProperty -Path $systemPathKey -Name PATH).Path;
+    Write-Debug ('Current path {0}' -f $systemPath);
 
-  # Create and store new path in the registry
-  $updatedPath = ('{0};{1}' -f $systemPath, $path);
-  Write-Debug ('Updating path to {0}' -f $updatedPath);
-  Set-ItemProperty -Path $systemPathKey -Name PATH -Value $updatedPath;
+    # Create and store new path in the registry
+    $updatedPath = ('{0};{1}' -f $systemPath, $path);
+    Write-Debug ('Updating path to {0}' -f $updatedPath);
+    Set-ItemProperty -Path $systemPathKey -Name PATH -Value $updatedPath;
 
-  # Update script's environment
-  Update-ScriptPath;
+    # Update script's environment
+    Update-ScriptPath;
 }

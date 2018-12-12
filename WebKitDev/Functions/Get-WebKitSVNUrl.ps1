@@ -7,5 +7,5 @@
   Retrieves the location of WebKit's SVN repository.
 #>
 Function Get-WebKitSVNUrl {
-  return 'https://svn.webkit.org/repository/webkit/trunk';
+    return 'https://svn.webkit.org/repository/webkit/trunk';
 }

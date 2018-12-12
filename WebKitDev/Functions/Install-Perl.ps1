@@ -20,21 +20,21 @@
     Install-Perl -Version 5.24.1.1
 #>
 Function Install-Perl {
-  Param(
-    [Parameter(Mandatory)]
-    [string] $version,
-    [Parameter()]
-    [AllowNull()]
-    [string] $installationPath
-  )
+    Param(
+        [Parameter(Mandatory)]
+        [string] $version,
+        [Parameter()]
+        [AllowNull()]
+        [string] $installationPath
+    )
 
-  $url = ('http://strawberryperl.com/download/{0}/strawberry-perl-{0}-64bit.msi' -f $version);
+    $url = ('http://strawberryperl.com/download/{0}/strawberry-perl-{0}-64bit.msi' -f $version);
 
-  $options = @();
+    $options = @();
 
-  if ($installationPath) {
-    $options += ('INSTALLDIR="{0}"' -f $installationPath);
-  }
+    if ($installationPath) {
+        $options += ('INSTALLDIR="{0}"' -f $installationPath);
+    }
 
-  Install-FromMsi -Name 'perl' -Url $url -Options $options;
+    Install-FromMsi -Name 'perl' -Url $url -Options $options;
 }

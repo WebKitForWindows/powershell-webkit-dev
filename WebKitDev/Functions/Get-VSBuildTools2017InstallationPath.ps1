@@ -13,34 +13,34 @@
   The path should be tested before using. No error checking is performed.
 #>
 Function Get-VSBuildTools2017InstallationPath {
-  $installs = Get-VSSetupInstance;
+    $installs = Get-VSSetupInstance;
 
-  foreach ($install in $installs) {
-    if ($install.DisplayName -eq 'Visual Studio Build Tools 2017') {
-      return $install.InstallationPath;
+    foreach ($install in $installs) {
+        if ($install.DisplayName -eq 'Visual Studio Build Tools 2017') {
+            return $install.InstallationPath;
+        }
     }
-  }
 
-  # If the Build Tools are not found, try Enterprise, then Professional, and then Community.
-  # These packages all contain the Build Tools as a component.
-  foreach ($install in $installs) {
-    if ($install.DisplayName -eq 'Visual Studio Enterprise 2017') {
-      return $install.InstallationPath;
+    # If the Build Tools are not found, try Enterprise, then Professional, and then Community.
+    # These packages all contain the Build Tools as a component.
+    foreach ($install in $installs) {
+        if ($install.DisplayName -eq 'Visual Studio Enterprise 2017') {
+            return $install.InstallationPath;
+        }
     }
-  }
 
-  foreach ($install in $installs) {
-    if ($install.DisplayName -eq 'Visual Studio Professional 2017') {
-      return $install.InstallationPath;
+    foreach ($install in $installs) {
+        if ($install.DisplayName -eq 'Visual Studio Professional 2017') {
+            return $install.InstallationPath;
+        }
     }
-  }
 
-  foreach ($install in $installs) {
-    if ($install.DisplayName -eq 'Visual Studio Community 2017') {
-      return $install.InstallationPath;
+    foreach ($install in $installs) {
+        if ($install.DisplayName -eq 'Visual Studio Community 2017') {
+            return $install.InstallationPath;
+        }
     }
-  }
 
-  # Return the default path
-  return 'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools';
+    # Return the default path
+    return 'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools';
 }

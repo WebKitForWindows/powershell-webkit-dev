@@ -13,5 +13,5 @@
   https://github.com/w3c/web-platform-tests.
 #>
 Function Install-AhemFont {
-  Install-Font -Url 'https://raw.githubusercontent.com/w3c/web-platform-tests/master/fonts/Ahem.ttf';
+    Install-Font -Url 'https://raw.githubusercontent.com/w3c/web-platform-tests/master/fonts/Ahem.ttf';
 }

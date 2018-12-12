@@ -24,46 +24,46 @@
     Install-Python -Version 2.7.13 -PipVersion
 #>
 Function Install-Python {
-  Param(
-    [Parameter(Mandatory)]
-    [string] $version,
-    [Parameter(Mandatory)]
-    [string] $pipVersion,
-    [Parameter()]
-    [AllowNull()]
-    [string] $installationPath
-  )
+    Param(
+        [Parameter(Mandatory)]
+        [string] $version,
+        [Parameter(Mandatory)]
+        [string] $pipVersion,
+        [Parameter()]
+        [AllowNull()]
+        [string] $installationPath
+    )
 
-  $major, $minor, $patch = $version.split('.');
+    $major, $minor, $patch = $version.split('.');
 
-  if ($major -ne '2') {
-    Write-Error 'Only Python version 2.x is usable for WebKit development';
-    return;
-  }
+    if ($major -ne '2') {
+        Write-Error 'Only Python version 2.x is usable for WebKit development';
+        return;
+    }
 
-  $pythonUrl = ('https://www.python.org/ftp/python/{0}/python-{0}.amd64.msi' -f $version);
+    $pythonUrl = ('https://www.python.org/ftp/python/{0}/python-{0}.amd64.msi' -f $version);
 
-  $options = @(
-    'ALLUSERS=1',
-    'ADDLOCAL=DefaultFeature,Extensions,TclTk,Tools,PrependPath'
-  );
+    $options = @(
+        'ALLUSERS=1',
+        'ADDLOCAL=DefaultFeature,Extensions,TclTk,Tools,PrependPath'
+    );
 
-  if ($installationPath) {
-    $options += ('TARGETDIR="{0}"' -f $installationPath);
-  }
+    if ($installationPath) {
+        $options += ('TARGETDIR="{0}"' -f $installationPath);
+    }
 
-  Install-FromMsi -Name 'python' -Url $pythonUrl -Options $options;
+    Install-FromMsi -Name 'python' -Url $pythonUrl -Options $options;
 
-  # Install PIP
-  $pipInstall = ('pip=={0}' -f $pipVersion);
-  Write-Host ('Installing {0} ...' -f $pipInstall);
+    # Install PIP
+    $pipInstall = ('pip=={0}' -f $pipVersion);
+    Write-Host ('Installing {0} ...' -f $pipInstall);
 
-  Invoke-WebFileRequest -Url 'https://bootstrap.pypa.io/get-pip.py' -DestinationPath 'get-pip.py';
-  python get-pip.py $pipInstall;
-  Remove-Item get-pip.py -Force;
+    Invoke-WebFileRequest -Url 'https://bootstrap.pypa.io/get-pip.py' -DestinationPath 'get-pip.py';
+    python get-pip.py $pipInstall;
+    Remove-Item get-pip.py -Force;
 
-  # Install Visual Studio for Python 2.7
-  $vcForPythonUrl = 'https://download.microsoft.com/download/7/9/6/796EF2E4-801B-4FC4-AB28-B59FBF6D907B/VCForPython27.msi';
+    # Install Visual Studio for Python 2.7
+    $vcForPythonUrl = 'https://download.microsoft.com/download/7/9/6/796EF2E4-801B-4FC4-AB28-B59FBF6D907B/VCForPython27.msi';
 
-  Install-FromMsi -Name 'VCForPython27' -Url $vcForPythonUrl -NoVerify;
+    Install-FromMsi -Name 'VCForPython27' -Url $vcForPythonUrl -NoVerify;
 }

@@ -26,18 +26,18 @@
     Install-Make -Version 3.81 -InstallationPath C:\gnuwin32
 #>
 Function Install-Make {
-  Param(
-    [Parameter(Mandatory)]
-    [string] $version,
-    [Parameter(Mandatory)]
-    [string] $installationPath
-  )
+    Param(
+        [Parameter(Mandatory)]
+        [string] $version,
+        [Parameter(Mandatory)]
+        [string] $installationPath
+    )
 
-  $url = ('https://downloads.sourceforge.net/project/gnuwin32/make/{0}/make-{0}-bin.zip' -f $version);
+    $url = ('https://downloads.sourceforge.net/project/gnuwin32/make/{0}/make-{0}-bin.zip' -f $version);
 
-  Install-FromArchive -Name 'make' -Url $url -InstallationPath $installationPath -NoVerify;
+    Install-FromArchive -Name 'make' -Url $url -InstallationPath $installationPath -NoVerify;
 
-  $depsUrl = ('https://downloads.sourceforge.net/project/gnuwin32/make/{0}/make-{0}-dep.zip' -f $version);
+    $depsUrl = ('https://downloads.sourceforge.net/project/gnuwin32/make/{0}/make-{0}-dep.zip' -f $version);
 
-  Install-FromArchive -Name 'make' -Url $depsUrl -InstallationPath $installationPath  
+    Install-FromArchive -Name 'make' -Url $depsUrl -InstallationPath $installationPath  
 }

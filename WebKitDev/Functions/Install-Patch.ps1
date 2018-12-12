@@ -26,14 +26,14 @@
     Install-Patch -Version 2.5.9 -InstallationPath C:\gnuwin32
 #>
 Function Install-Patch {
-  Param(
-    [Parameter(Mandatory)]
-    [string] $version,
-    [Parameter(Mandatory)]
-    [string] $installationPath
-  )
+    Param(
+        [Parameter(Mandatory)]
+        [string] $version,
+        [Parameter(Mandatory)]
+        [string] $installationPath
+    )
 
-  $url = ('https://downloads.sourceforge.net/project/gnuwin32/patch/{0}/patch-{0}-bin.zip' -f $version);
+    $url = ('https://downloads.sourceforge.net/project/gnuwin32/patch/{0}/patch-{0}-bin.zip' -f $version);
 
-  Install-FromArchive -Name 'patch' -Url $url -InstallationPath $installationPath;
+    Install-FromArchive -Name 'patch' -Url $url -InstallationPath $installationPath;
 }

@@ -21,21 +21,21 @@
     Install-LLVM -Version 7.0.0
 #>
 Function Install-LLVM {
-  Param(
-    [Parameter(Mandatory)]
-    [string] $version,
-    [Parameter()]
-    [AllowNull()]
-    [string] $installationPath
-  )
+    Param(
+        [Parameter(Mandatory)]
+        [string] $version,
+        [Parameter()]
+        [AllowNull()]
+        [string] $installationPath
+    )
 
-  $url = "http://releases.llvm.org/${version}/LLVM-${version}-win64.exe"
+    $url = "http://releases.llvm.org/${version}/LLVM-${version}-win64.exe"
 
-  $options = @('/S')
+    $options = @('/S')
 
-  if ($installationPath) {
-    $options += "/D=$installationPath"
-  }
+    if ($installationPath) {
+        $options += "/D=$installationPath"
+    }
 
-  Install-FromExe -Name 'LLVM' -Url $url -Options $options -noVerify
+    Install-FromExe -Name 'LLVM' -Url $url -Options $options -noVerify
 }

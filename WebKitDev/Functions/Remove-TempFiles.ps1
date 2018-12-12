@@ -10,23 +10,24 @@
     Remove-TempFiles
 #>
 Function Remove-TempFiles {
-  $tempFolders = @($env:temp, 'C:/Windows/temp')
+    $tempFolders = @($env:temp, 'C:/Windows/temp')
 
-  Write-Host 'Removing temporary files';
-  $filesRemoved = 0;
+    Write-Host 'Removing temporary files';
+    $filesRemoved = 0;
   
-  foreach ($folder in $tempFolders) {
-    $files = Get-ChildItem -Recurse -Force -ErrorAction SilentlyContinue $folder;
+    foreach ($folder in $tempFolders) {
+        $files = Get-ChildItem -Recurse -Force -ErrorAction SilentlyContinue $folder;
 
-    foreach ($file in $files) {
-      try {
-        Remove-Item $file.FullName -Recurse -Force -ErrorAction Stop
-        $filesRemoved++;
-      } catch {
-        Write-Host ('Could not remove file {0}' -f  $file.FullName)
-      }
+        foreach ($file in $files) {
+            try {
+                Remove-Item $file.FullName -Recurse -Force -ErrorAction Stop
+                $filesRemoved++;
+            }
+            catch {
+                Write-Host ('Could not remove file {0}' -f $file.FullName)
+            }
+        }
     }
-  }
 
-  Write-Host ('Removed {0} files from temporary directories' -f $filesRemoved)
+    Write-Host ('Removed {0} files from temporary directories' -f $filesRemoved)
 }

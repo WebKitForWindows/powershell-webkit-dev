@@ -26,18 +26,18 @@
     Install-Bison -Version 2.4.1 -InstallationPath C:\gnuwin32
 #>
 Function Install-Bison {
-  Param(
-    [Parameter(Mandatory)]
-    [string] $version,
-    [Parameter(Mandatory)]
-    [string] $installationPath
-  )
+    Param(
+        [Parameter(Mandatory)]
+        [string] $version,
+        [Parameter(Mandatory)]
+        [string] $installationPath
+    )
 
-  $url = ('https://downloads.sourceforge.net/project/gnuwin32/bison/{0}/bison-{0}-bin.zip' -f $version);
+    $url = ('https://downloads.sourceforge.net/project/gnuwin32/bison/{0}/bison-{0}-bin.zip' -f $version);
 
-  Install-FromArchive -Name 'bison' -Url $url -InstallationPath $installationPath -NoVerify;
+    Install-FromArchive -Name 'bison' -Url $url -InstallationPath $installationPath -NoVerify;
 
-  $depsUrl = ('https://downloads.sourceforge.net/project/gnuwin32/bison/{0}/bison-{0}-dep.zip' -f $version);
+    $depsUrl = ('https://downloads.sourceforge.net/project/gnuwin32/bison/{0}/bison-{0}-dep.zip' -f $version);
 
-  Install-FromArchive -Name 'bison' -Url $depsUrl -InstallationPath $installationPath
+    Install-FromArchive -Name 'bison' -Url $depsUrl -InstallationPath $installationPath
 }

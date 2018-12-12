@@ -26,44 +26,44 @@
   A list of options to pass in.
 #>
 Function Install-FromMsi {
-  Param(
-    [Parameter(Mandatory)]
-    [string] $name,
-    [Parameter(Mandatory)]
-    [string] $url,
-    [Parameter()]
-    [switch] $noVerify = $false,
-    [Parameter()]
-    [string[]] $options = @()
-  )
+    Param(
+        [Parameter(Mandatory)]
+        [string] $name,
+        [Parameter(Mandatory)]
+        [string] $url,
+        [Parameter()]
+        [switch] $noVerify = $false,
+        [Parameter()]
+        [string[]] $options = @()
+    )
 
-  $installerPath = Join-Path ([System.IO.Path]::GetTempPath()) ('{0}.msi' -f $name);
+    $installerPath = Join-Path ([System.IO.Path]::GetTempPath()) ('{0}.msi' -f $name);
 
-  Write-Host ('Downloading {0} installer from {1} ..' -f $name, $url);
-  Invoke-WebFileRequest -Url $url -DestinationPath $installerPath;
-  Write-Host ('Downloaded {0} bytes' -f (Get-Item $installerPath).length);
+    Write-Host ('Downloading {0} installer from {1} ..' -f $name, $url);
+    Invoke-WebFileRequest -Url $url -DestinationPath $installerPath;
+    Write-Host ('Downloaded {0} bytes' -f (Get-Item $installerPath).length);
 
-  $args = @('/i', $installerPath, '/quiet', '/qn');
-  $args += $options;
+    $args = @('/i', $installerPath, '/quiet', '/qn');
+    $args += $options;
 
-  Write-Host ('Installing {0} ...' -f $name);
-  Write-Host ('msiexec {0}' -f ($args -Join ' '));
+    Write-Host ('Installing {0} ...' -f $name);
+    Write-Host ('msiexec {0}' -f ($args -Join ' '));
 
-  Start-Process msiexec -Wait -ArgumentList $args;
+    Start-Process msiexec -Wait -ArgumentList $args;
 
-  # Update path
-  Update-ScriptPath;
+    # Update path
+    Update-ScriptPath;
 
-  if (!$noVerify) {
-    Write-Host ('Verifying {0} install ...' -f $name);
-    $verifyCommand = ('  {0} --version' -f $name);
-    Write-Host $verifyCommand;
-    Invoke-Expression $verifyCommand;
-  }
+    if (!$noVerify) {
+        Write-Host ('Verifying {0} install ...' -f $name);
+        $verifyCommand = ('  {0} --version' -f $name);
+        Write-Host $verifyCommand;
+        Invoke-Expression $verifyCommand;
+    }
 
-  Write-Host ('Removing {0} installer ...' -f $name);
-  Remove-Item $installerPath -Force;
-  Remove-TempFiles;
+    Write-Host ('Removing {0} installer ...' -f $name);
+    Remove-Item $installerPath -Force;
+    Remove-TempFiles;
 
-  Write-Host ('{0} install complete.' -f $name);
+    Write-Host ('{0} install complete.' -f $name);
 }

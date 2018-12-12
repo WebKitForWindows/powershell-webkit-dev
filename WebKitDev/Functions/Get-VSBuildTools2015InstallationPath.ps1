@@ -12,5 +12,5 @@
   The path should be tested before using. No error checking is performed.
 #>
 Function Get-VSBuildTools2015InstallationPath {
-  return 'C:\Program Files (x86)\Microsoft Visual Studio 14.0';
+    return 'C:\Program Files (x86)\Microsoft Visual Studio 14.0';
 }

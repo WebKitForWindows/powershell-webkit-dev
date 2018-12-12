@@ -17,13 +17,13 @@
   The path to the C++ compiler.
 #>
 Function Initialize-NinjaEnvironment {
-  Param(
-    [Parameter(Mandatory)]
-    [string] $cc,
-    [Parameter(Mandatory)]
-    [string] $cxx
-  )
+    Param(
+        [Parameter(Mandatory)]
+        [string] $cc,
+        [Parameter(Mandatory)]
+        [string] $cxx
+    )
 
-  $env:CC = $cc;
-  $env:CXX = $cxx;
+    $env:CC = $cc;
+    $env:CXX = $cxx;
 }

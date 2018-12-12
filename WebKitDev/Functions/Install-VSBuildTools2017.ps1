@@ -13,30 +13,30 @@
   The location to install to.
 #>
 Function Install-VSBuildTools2017 {
-  Param(
-    [Parameter()]
-    [string[]] $workloads = @('Microsoft.VisualStudio.Workload.VCTools'),
-    [Parameter()]
-    [AllowNull()]
-    [string] $installationPath
-  )
+    Param(
+        [Parameter()]
+        [string[]] $workloads = @('Microsoft.VisualStudio.Workload.VCTools'),
+        [Parameter()]
+        [AllowNull()]
+        [string] $installationPath
+    )
 
-  $url = 'https://aka.ms/vs/15/release/vs_buildtools.exe';
+    $url = 'https://aka.ms/vs/15/release/vs_buildtools.exe';
 
-  $options = @(
-    '--quiet',
-    '--norestart',
-    '--nocache',
-    '--wait'
-  );
+    $options = @(
+        '--quiet',
+        '--norestart',
+        '--nocache',
+        '--wait'
+    );
 
-  foreach ($workload in $workloads) {
-    $options += @('--add', $workload);
-  }
+    foreach ($workload in $workloads) {
+        $options += @('--add', $workload);
+    }
 
-  if ($installationPath) {
-    $options += @('--installPath', $installationPath);
-  }
+    if ($installationPath) {
+        $options += @('--installPath', $installationPath);
+    }
 
-  Install-FromExe -Name 'VSBuildTools2017' -Url $url -Options $options -NoVerify;
+    Install-FromExe -Name 'VSBuildTools2017' -Url $url -Options $options -NoVerify;
 }

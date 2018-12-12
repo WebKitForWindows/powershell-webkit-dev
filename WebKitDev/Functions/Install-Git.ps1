@@ -21,36 +21,37 @@
     Install-Git -Version 2.12.1.1
 #>
 Function Install-Git {
-  Param(
-    [Parameter(Mandatory)]
-    [string] $version,
-    [Parameter()]
-    [AllowNull()]
-    [string] $installationPath
-  )
+    Param(
+        [Parameter(Mandatory)]
+        [string] $version,
+        [Parameter()]
+        [AllowNull()]
+        [string] $installationPath
+    )
 
-  $major, $minor, $patch, $build = $version.split('.');
+    $major, $minor, $patch, $build = $version.split('.');
 
-  if ($build -ne '1') {
-    $exePath = ('Git-{0}.{1}.{2}.{3}-64-bit.exe' -f $major, $minor, $patch, $build);
-  } else {
-    $exePath = ('Git-{0}.{1}.{2}-64-bit.exe' -f $major, $minor, $patch);
-  }
+    if ($build -ne '1') {
+        $exePath = ('Git-{0}.{1}.{2}.{3}-64-bit.exe' -f $major, $minor, $patch, $build);
+    }
+    else {
+        $exePath = ('Git-{0}.{1}.{2}-64-bit.exe' -f $major, $minor, $patch);
+    }
 
-  $url = ('https://github.com/git-for-windows/git/releases/download/v{0}.{1}.{2}.windows.{3}/{4}' -f $major, $minor, $patch, $build, $exePath);
+    $url = ('https://github.com/git-for-windows/git/releases/download/v{0}.{1}.{2}.windows.{3}/{4}' -f $major, $minor, $patch, $build, $exePath);
 
-  $options = @(
-    '/VERYSILENT',
-    '/SUPPRESSMSGBOXES',
-    '/NORESTART',
-    '/NOCANCEL',
-    '/SP-',
-    '/COMPONENTS=Cmd'
-  );
+    $options = @(
+        '/VERYSILENT',
+        '/SUPPRESSMSGBOXES',
+        '/NORESTART',
+        '/NOCANCEL',
+        '/SP-',
+        '/COMPONENTS=Cmd'
+    );
 
-  if ($installationPath) {
-    $options += ('/DIR="{0}"' -f $installationPath);
-  }
+    if ($installationPath) {
+        $options += ('/DIR="{0}"' -f $installationPath);
+    }
 
-  Install-FromExe -Name 'git' -Url $url -Options $options;
+    Install-FromExe -Name 'git' -Url $url -Options $options;
 }

@@ -26,41 +26,41 @@
   A list of options to pass in.
 #>
 Function Install-FromExe {
-  Param(
-    [Parameter(Mandatory)]
-    [string] $name,
-    [Parameter(Mandatory)]
-    [string] $url,
-    [Parameter()]
-    [switch] $noVerify = $false,
-    [Parameter(Mandatory)]
-    [string[]] $options = @()
-  )
+    Param(
+        [Parameter(Mandatory)]
+        [string] $name,
+        [Parameter(Mandatory)]
+        [string] $url,
+        [Parameter()]
+        [switch] $noVerify = $false,
+        [Parameter(Mandatory)]
+        [string[]] $options = @()
+    )
 
-  $installerPath = Join-Path ([System.IO.Path]::GetTempPath()) ('{0}.exe' -f $name);
+    $installerPath = Join-Path ([System.IO.Path]::GetTempPath()) ('{0}.exe' -f $name);
 
-  Write-Host ('Downloading {0} installer from {1} ..' -f $name, $url);
-  Invoke-WebFileRequest -Url $url -DestinationPath $installerPath;
-  Write-Host ('Downloaded {0} bytes' -f (Get-Item $installerPath).length);
+    Write-Host ('Downloading {0} installer from {1} ..' -f $name, $url);
+    Invoke-WebFileRequest -Url $url -DestinationPath $installerPath;
+    Write-Host ('Downloaded {0} bytes' -f (Get-Item $installerPath).length);
 
-  Write-Host ('Installing {0} ...' -f $name);
-  Write-Host ('{0} {1}' -f $installerPath, ($options -Join ' '));
+    Write-Host ('Installing {0} ...' -f $name);
+    Write-Host ('{0} {1}' -f $installerPath, ($options -Join ' '));
 
-  Start-Process $installerPath -Wait -ArgumentList $options;
+    Start-Process $installerPath -Wait -ArgumentList $options;
 
-  # Update path
-  Update-ScriptPath;
+    # Update path
+    Update-ScriptPath;
 
-  if (!$noVerify) {
-    Write-Host ('Verifying {0} install ...' -f $name);
-    $verifyCommand = ('  {0} --version' -f $name);
-    Write-Host $verifyCommand;
-    Invoke-Expression $verifyCommand;
-  }
+    if (!$noVerify) {
+        Write-Host ('Verifying {0} install ...' -f $name);
+        $verifyCommand = ('  {0} --version' -f $name);
+        Write-Host $verifyCommand;
+        Invoke-Expression $verifyCommand;
+    }
 
-  Write-Host ('Removing {0} installer ...' -f $name);
-  Remove-Item $installerPath -Force;
-  Remove-TempFiles;
+    Write-Host ('Removing {0} installer ...' -f $name);
+    Remove-Item $installerPath -Force;
+    Remove-TempFiles;
 
-  Write-Host ('{0} install complete.' -f $name);
+    Write-Host ('{0} install complete.' -f $name);
 }

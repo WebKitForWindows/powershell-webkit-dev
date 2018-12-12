@@ -26,14 +26,14 @@
     Install-Flex -Version 2.5.4a-1 -InstallationPath C:\gnuwin32
 #>
 Function Install-Flex {
-  Param(
-    [Parameter(Mandatory)]
-    [string] $version,
-    [Parameter(Mandatory)]
-    [string] $installationPath
-  )
+    Param(
+        [Parameter(Mandatory)]
+        [string] $version,
+        [Parameter(Mandatory)]
+        [string] $installationPath
+    )
 
-  $url = ('https://downloads.sourceforge.net/project/gnuwin32/flex/{0}/flex-{0}-bin.zip' -f $version);
+    $url = ('https://downloads.sourceforge.net/project/gnuwin32/flex/{0}/flex-{0}-bin.zip' -f $version);
 
-  Install-FromArchive -Name 'flex' -Url $url -InstallationPath $installationPath;
+    Install-FromArchive -Name 'flex' -Url $url -InstallationPath $installationPath;
 }

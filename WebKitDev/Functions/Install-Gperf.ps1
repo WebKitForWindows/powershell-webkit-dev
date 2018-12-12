@@ -26,14 +26,14 @@
     Install-Gperf -Version 3.0.1 -InstallationPath C:\gnuwin32
 #>
 Function Install-Gperf {
-  Param(
-    [Parameter(Mandatory)]
-    [string] $version,
-    [Parameter(Mandatory)]
-    [string] $installationPath
-  )
+    Param(
+        [Parameter(Mandatory)]
+        [string] $version,
+        [Parameter(Mandatory)]
+        [string] $installationPath
+    )
 
-  $url = ('https://downloads.sourceforge.net/project/gnuwin32/gperf/{0}/gperf-{0}-bin.zip' -f $version);
+    $url = ('https://downloads.sourceforge.net/project/gnuwin32/gperf/{0}/gperf-{0}-bin.zip' -f $version);
 
-  Install-FromArchive -Name 'gperf' -Url $url -InstallationPath $installationPath;
+    Install-FromArchive -Name 'gperf' -Url $url -InstallationPath $installationPath;
 }

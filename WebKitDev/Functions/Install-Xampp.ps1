@@ -20,19 +20,19 @@
     Install-Xampp -Version 7.2.4
 #>
 Function Install-Xampp {
-  Param(
-    [Parameter(Mandatory)]
-    [string] $version
-  )
+    Param(
+        [Parameter(Mandatory)]
+        [string] $version
+    )
 
-  $url = ('https://www.apachefriends.org/xampp-files/{0}/xampp-win32-{0}-0-VC15-installer.exe' -f $version);
+    $url = ('https://www.apachefriends.org/xampp-files/{0}/xampp-win32-{0}-0-VC15-installer.exe' -f $version);
   
-  $options = @(
-    '--unattendedmodeui', 'none',
-    '--mode', 'unattended',
-    '--launchapps', '0',
-    '--disable-components', 'xampp_mysql,xampp_filezilla,xampp_mercury,xampp_tomcat,xampp_perl,xampp_phpmyadmin,xampp_webalizer,xampp_sendmail'
-  );
+    $options = @(
+        '--unattendedmodeui', 'none',
+        '--mode', 'unattended',
+        '--launchapps', '0',
+        '--disable-components', 'xampp_mysql,xampp_filezilla,xampp_mercury,xampp_tomcat,xampp_perl,xampp_phpmyadmin,xampp_webalizer,xampp_sendmail'
+    );
 
-  Install-FromExe -Name 'xampp' -Url $url -Options $options -NoVerify;
+    Install-FromExe -Name 'xampp' -Url $url -Options $options -NoVerify;
 }

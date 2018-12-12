@@ -11,5 +11,5 @@
   run after any installers complete so any new system paths are present.
 #>
 Function Update-ScriptPath {
-  $env:PATH = [Environment]::GetEnvironmentVariable('PATH', [EnvironmentVariableTarget]::Machine);
+    $env:PATH = [Environment]::GetEnvironmentVariable('PATH', [EnvironmentVariableTarget]::Machine);
 }
