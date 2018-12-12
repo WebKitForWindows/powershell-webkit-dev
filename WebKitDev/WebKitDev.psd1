@@ -111,7 +111,8 @@
         'Functions/Register-SystemPath.ps1',
         'Functions/Remove-TempFiles.ps1',
         'Functions/Select-VSEnvironment.ps1',
-        'Functions/Update-ScriptPath.ps1'
+        'Functions/Update-ScriptPath.ps1',
+        'Functions/Update-XamppPerlLocation.ps1'
     )
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
@@ -157,7 +158,8 @@
         'Register-SystemPath',
         'Remove-TempFiles',
         'Select-VSEnvironment',
-        'Update-ScriptPath'
+        'Update-ScriptPath',
+        'Update-XamppPerlLocation'
     )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
