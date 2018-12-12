@@ -21,7 +21,7 @@ Function Install-VSBuildTools2017 {
     [string] $installationPath
   )
 
-  $url = 'https://download.microsoft.com/download/5/A/8/5A8B8314-CA70-4225-9AF0-9E957C9771F7/vs_BuildTools.exe';
+  $url = 'https://aka.ms/vs/15/release/vs_buildtools.exe';
 
   $options = @(
     '--quiet',
@@ -35,7 +35,7 @@ Function Install-VSBuildTools2017 {
   }
 
   if ($installationPath) {
-    $options += @('--installPath', ('/dir="{0}"' -f $installationPath));
+    $options += @('--installPath', $installationPath);
   }
 
   Install-FromExe -Name 'VSBuildTools2017' -Url $url -Options $options -NoVerify;
