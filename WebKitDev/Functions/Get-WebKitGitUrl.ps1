@@ -7,5 +7,5 @@
   Retrieves the location of WebKit's git repository.
 #>
 Function Get-WebKitGitUrl {
-  return 'git://git.webkit.org/WebKit.git';
+  return 'https://git.webkit.org/git/WebKit.git';
 }
