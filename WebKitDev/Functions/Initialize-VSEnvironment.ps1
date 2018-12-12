@@ -16,6 +16,10 @@
   .Parameter Path
   The path to `vcvarsall.bat`
 
+  .Parameter Toolset
+  The Visual Studio toolset to use. If unspecified the latest installed is
+  used.
+
   .Example
     # Initialize VC++ 2015 environment.
     Initialize-VSEnvironment -Architecture amd64 -Path (Get-VSBuildTools2015VCVarsAllPath)
@@ -30,7 +34,10 @@ Function Initialize-VSEnvironment {
         [ValidateSet('x86', 'amd64')]
         [string] $architecture,
         [Parameter(Mandatory)]
-        [string] $path
+        [string] $path,
+        [Parameter()]
+        [AllowNull()]
+        [string] $toolset
     )
 
     if (!(Test-Path $path)) {
@@ -38,12 +45,18 @@ Function Initialize-VSEnvironment {
         return;
     }
 
+    $toolsetVersion = '';
+
+    if ($toolset) {
+        $toolsetVersion = ('-vcvars_ver={0}' -f $toolset);
+    }
+
     # Taken from https://www.safaribooksonline.com/library/view/windows-powershell-cookbook/9780596528492/ch01s09.html
     $tempFile = [IO.Path]::GetTempFileName();
 
     # Store the output of cmd.exe. We also ask cmd.exe to output
     # the environment table after the batch file completes
-    $call = ('"{0}" {1} && set > "{2}"' -f $path, $architecture, $tempFile);
+    $call = ('"{0}" {1} {2} && set > "{3}"' -f $path, $architecture, $toolsetVersion, $tempFile);
     cmd /c $call;
 
     # Go through the environment variables in the temp file.
