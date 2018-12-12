@@ -34,7 +34,7 @@ Function Initialize-VSEnvironment {
   )
 
   if (!(Test-Path $path)) {
-    Write-Error ('{0} path not found.');
+    Write-Error ('{0} path not found.' -f $path);
     return;
   }
 
