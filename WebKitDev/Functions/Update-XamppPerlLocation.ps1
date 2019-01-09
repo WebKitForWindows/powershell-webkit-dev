@@ -34,8 +34,8 @@ Function Update-XamppPerlLocation {
     $registryValue = ('{0} -T' -f $perlExecutable);
 
     # Add perl filetype value
-    $registryPath = 'HKCR:\.pl\Shell\ExecCGI';
-    $registryKey = 'Command';
+    $registryPath = 'HKCR:\.pl\Shell\ExecCGI\Command';
+    $registryKey = '(Default)';
 
     if (!(Test-Path $registryPath)) {
         New-Item -Path $registryPath -Force | Out-Null;
@@ -45,8 +45,8 @@ Function Update-XamppPerlLocation {
     New-ItemProperty -Path $registryPath -Name $registryKey -PropertyType String -Value $registryValue -Force | Out-Null;
     
     # Add CGI filetype value
-    $registryPath = 'HKCR:\.cgi\Shell\ExecCGI';
-    $registryKey = 'Command';
+    $registryPath = 'HKCR:\.cgi\Shell\ExecCGI\Command';
+    $registryKey = '(Default)';
 
     if (!(Test-Path $registryPath)) {
         New-Item -Path $registryPath -Force | Out-Null;
