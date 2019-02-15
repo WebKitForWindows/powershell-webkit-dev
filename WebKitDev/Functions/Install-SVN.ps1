@@ -31,7 +31,7 @@ Function Install-SVN {
 
     $major, $minor, $patch, $build = $version.split('.');
 
-    $url = ('https://downloads.sourceforge.net/project/tortoisesvn/{0}.{1}.{2}/Application/TortoiseSVN-{0}.{1}.{2}.{3}-x64-svn-{0}.{1}.{2}.msi' -f $major, $minor, $patch, $build);
+    $url = ('https://mirrors.gigenet.com/OSDN/storage/g/t/to/tortoisesvn/{0}.{1}.{2}/Application/TortoiseSVN-{0}.{1}.{2}.{3}-x64-svn-{0}.{1}.{2}.msi' -f $major, $minor, $patch, $build);
 
     $options = @(
         'ADDLOCAL=CLI'
