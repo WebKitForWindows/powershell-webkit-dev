@@ -28,7 +28,7 @@ Function Install-Ruby {
         [string] $installationPath
     )
 
-    $url = ('https://github.com/oneclick/rubyinstaller2/releases/download/rubyinstaller-{0}/rubyinstaller-{0}-x64.exe' -f $version);
+    $url = ('https://github.com/oneclick/rubyinstaller2/releases/download/RubyInstaller-{0}/rubyinstaller-{0}-x64.exe' -f $version);
   
     $options = @(
         '/verysilent',
