@@ -33,11 +33,11 @@ Function Install-Bison {
         [string] $installationPath
     )
 
-    $url = ('https://downloads.sourceforge.net/project/gnuwin32/bison/{0}/bison-{0}-bin.zip' -f $version);
+    $url = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/bison/{0}/bison-{0}-bin.zip' -f $version);
 
     Install-FromArchive -Name 'bison' -Url $url -InstallationPath $installationPath -NoVerify;
 
-    $depsUrl = ('https://downloads.sourceforge.net/project/gnuwin32/bison/{0}/bison-{0}-dep.zip' -f $version);
+    $depsUrl = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/bison/{0}/bison-{0}-dep.zip' -f $version);
 
     Install-FromArchive -Name 'bison' -Url $depsUrl -InstallationPath $installationPath
 }

@@ -33,7 +33,7 @@ Function Install-Gperf {
         [string] $installationPath
     )
 
-    $url = ('https://downloads.sourceforge.net/project/gnuwin32/gperf/{0}/gperf-{0}-bin.zip' -f $version);
+    $url = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/gperf/{0}/gperf-{0}-bin.zip' -f $version);
 
     Install-FromArchive -Name 'gperf' -Url $url -InstallationPath $installationPath;
 }

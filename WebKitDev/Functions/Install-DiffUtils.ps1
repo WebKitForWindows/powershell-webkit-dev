@@ -37,11 +37,11 @@ Function Install-DiffUtils {
 
     $major, $minor, $patch, $build = $version.split('.');
 
-    $url = ('https://downloads.sourceforge.net/project/gnuwin32/diffutils/{0}.{1}.{2}-{3}/diffutils-{0}.{1}.{2}-{3}-bin.zip' -f $major, $minor, $patch, $build);
+    $url = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/diffutils/{0}.{1}.{2}-{3}/diffutils-{0}.{1}.{2}-{3}-bin.zip' -f $major, $minor, $patch, $build);
 
     Install-FromArchive -Name 'diff3' -Url $url -InstallationPath $installationPath -NoVerify;
 
-    $depsUrl = ('https://downloads.sourceforge.net/project/gnuwin32/diffutils/{0}.{1}.{2}-{3}/diffutils-{0}.{1}.{2}-{3}-dep.zip' -f $major, $minor, $patch, $build);
+    $depsUrl = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/diffutils/{0}.{1}.{2}-{3}/diffutils-{0}.{1}.{2}-{3}-dep.zip' -f $major, $minor, $patch, $build);
 
     Install-FromArchive -Name 'diff3' -Url $depsUrl -InstallationPath $installationPath  
 }

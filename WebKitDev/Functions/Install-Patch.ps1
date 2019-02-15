@@ -33,7 +33,7 @@ Function Install-Patch {
         [string] $installationPath
     )
 
-    $url = ('https://downloads.sourceforge.net/project/gnuwin32/patch/{0}/patch-{0}-bin.zip' -f $version);
+    $url = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/patch/{0}/patch-{0}-bin.zip' -f $version);
 
     Install-FromArchive -Name 'patch' -Url $url -InstallationPath $installationPath;
 }

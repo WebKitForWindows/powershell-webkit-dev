@@ -33,11 +33,11 @@ Function Install-Make {
         [string] $installationPath
     )
 
-    $url = ('https://downloads.sourceforge.net/project/gnuwin32/make/{0}/make-{0}-bin.zip' -f $version);
+    $url = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/make/{0}/make-{0}-bin.zip' -f $version);
 
     Install-FromArchive -Name 'make' -Url $url -InstallationPath $installationPath -NoVerify;
 
-    $depsUrl = ('https://downloads.sourceforge.net/project/gnuwin32/make/{0}/make-{0}-dep.zip' -f $version);
+    $depsUrl = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/make/{0}/make-{0}-dep.zip' -f $version);
 
     Install-FromArchive -Name 'make' -Url $depsUrl -InstallationPath $installationPath  
 }

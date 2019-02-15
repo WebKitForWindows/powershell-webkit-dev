@@ -33,7 +33,7 @@ Function Install-Flex {
         [string] $installationPath
     )
 
-    $url = ('https://downloads.sourceforge.net/project/gnuwin32/flex/{0}/flex-{0}-bin.zip' -f $version);
+    $url = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/flex/{0}/flex-{0}-bin.zip' -f $version);
 
     Install-FromArchive -Name 'flex' -Url $url -InstallationPath $installationPath;
 }
