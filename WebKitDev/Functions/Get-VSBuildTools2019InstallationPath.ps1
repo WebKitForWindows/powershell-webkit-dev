@@ -13,8 +13,7 @@
   The path should be tested before using. No error checking is performed.
 #>
 Function Get-VSBuildTools2019InstallationPath {
-    # TODO: Remove -Prerelease and change default when 2019 is released
-    $installs = Get-VSSetupInstance -Prerelease;
+    $installs = Get-VSSetupInstance;
 
     foreach ($install in $installs) {
         if ($install.DisplayName -eq 'Visual Studio Build Tools 2019') {
@@ -44,5 +43,5 @@ Function Get-VSBuildTools2019InstallationPath {
     }
 
     # Return the default path
-    return 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview';
+    return 'C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools';
 }

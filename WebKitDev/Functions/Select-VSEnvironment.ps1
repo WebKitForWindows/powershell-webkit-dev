@@ -21,14 +21,18 @@ Function Select-VSEnvironment {
     param(
         [ValidateSet('x86', 'amd64')]
         [string] $architecture = 'amd64',
-        [ValidateSet('vs2015', 'vs2017')]
+        [ValidateSet('vs2015', 'vs2017', 'vs2019')]
         [AllowNull()]
         [string] $version
     )
 
     # Find version if not specified
     if (!$version) {
-        if (Test-Path (Get-VSBuildTools2017InstallationPath)) {
+        if (Test-Path (Get-VSBuildTools2019InstallationPath)) {
+            Write-Host 'Found VS2019 Build Tools';
+            $version = 'vs2019';
+        }
+        elseif (Test-Path (Get-VSBuildTools2017InstallationPath)) {
             Write-Host 'Found VS2017 Build Tools';
             $version = 'vs2017';
         }
@@ -45,7 +49,10 @@ Function Select-VSEnvironment {
     # Get vcvarsall.bat path
     $vcvars = $null;
 
-    if ($version -eq 'vs2017') {
+    if ($version -eq 'vs2019') {
+        $vcvars = Get-VSBuildTools2019VCVarsAllPath;
+    }
+    elseif ($version -eq 'vs2017') {
         $vcvars = Get-VSBuildTools2017VCVarsAllPath;
     }
     else {

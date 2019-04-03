@@ -21,8 +21,7 @@ Function Install-VSBuildTools2019 {
         [string] $installationPath
     )
 
-    # TODO: Change URL when 2019 is released
-    $url = 'https://aka.ms/vs/16/pre/vs_buildtools.exe';
+    $url = 'https://aka.ms/vs/16/release/vs_buildtools.exe';
 
     $options = @(
         '--quiet',

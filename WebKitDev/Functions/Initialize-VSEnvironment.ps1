@@ -21,12 +21,16 @@
   used.
 
   .Example
-    # Initialize VC++ 2015 environment.
-    Initialize-VSEnvironment -Architecture amd64 -Path (Get-VSBuildTools2015VCVarsAllPath)
+    # Initialize VC++ 2019 environment.
+    Initialize-VSEnvironment -Architecture amd64 -Path (Get-VSBuildTools2019VCVarsAllPath)
 
   .Example
     # Initialize VC++ 2017 environment.
     Initialize-VSEnvironment -Architecture amd64 -Path (Get-VSBuildTools2017VCVarsAllPath)
+
+  .Example
+    # Initialize VC++ 2015 environment.
+    Initialize-VSEnvironment -Architecture amd64 -Path (Get-VSBuildTools2015VCVarsAllPath)
 #>
 Function Initialize-VSEnvironment {
     Param(
