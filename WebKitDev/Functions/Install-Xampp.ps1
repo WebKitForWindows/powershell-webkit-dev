@@ -25,7 +25,7 @@ Function Install-Xampp {
         [string] $version
     )
 
-    $url = ('https://www.apachefriends.org/xampp-files/{0}/xampp-win32-{0}-0-VC15-installer.exe' -f $version);
+    $url = ('https://www.apachefriends.org/xampp-files/{0}/xampp-windows-x64-{0}-0-VC15-installer.exe' -f $version);
   
     $options = @(
         '--unattendedmodeui', 'none',
