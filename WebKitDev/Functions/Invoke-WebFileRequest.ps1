@@ -23,9 +23,31 @@ Function Invoke-WebFileRequest {
         [string] $destinationPath
     )
 
+    # See if security protocol needs to be checked
     $secure = 1;
-    if ($url.StartsWith("http://")) {
+    if ($url.StartsWith('http:')) {
         $secure = 0;
+    }
+
+    # Setup a proxy if needed
+    $proxy = [System.Net.WebProxy]::GetDefaultProxy();
+    $proxyServer = $proxy.Address;
+
+    if ($proxy.Address -eq $null) {
+        if ($secure) {
+            if (Test-Path env:HTTPS_PROXY) {
+                $proxy = New-Object System.Net.WebProxy($env:HTTPS_PROXY, $true);
+
+                # Turn off SSL protocol check if proxy is HTTP
+                if ($env:HTTPS_PROXY.StartsWith('http:')) {
+                    $secure = 0;
+                }
+            }
+        } else {
+            if (Test-Path env:HTTP_PROXY) {
+                $proxy = New-Object System.Net.WebProxy($env:HTTP_PROXY, $true);
+            }
+        }
     }
 
     if ($secure) {
@@ -34,18 +56,22 @@ Function Invoke-WebFileRequest {
 
         # Determine the security protocol required
         $securityProtocol = 0;
-        $uri = [System.Uri]$url;
+        $testEndpoint = [System.Uri]$url;
+
+        if ($proxy.Address -ne $null) {
+            $testEndpoint = $proxy.Address;
+        }
 
         foreach ($protocol in 'tls12', 'tls11', 'tls') {
             $tcpClient = New-Object Net.Sockets.TcpClient;
-            $tcpClient.Connect($uri.Host, $uri.Port)
-    
+            $tcpClient.Connect($testEndpoint.Host, $testEndpoint.Port)
+
             $sslStream = New-Object Net.Security.SslStream $tcpClient.GetStream();
             $sslStream.ReadTimeout = 15000;
             $sslStream.WriteTimeout = 15000;
 
             try {
-                $sslStream.AuthenticateAsClient($uri.Host, $null, $protocol, $false);
+                $sslStream.AuthenticateAsClient($testEndpoint.Host, $null, $protocol, $false);
                 $supports = $true;
             }
             catch {
@@ -68,9 +94,11 @@ Function Invoke-WebFileRequest {
     }
 
     # Download the file
-    (New-Object System.Net.WebClient).DownloadFile($url, $destinationPath);
+    $tcpClient = New-Object System.Net.WebClient;
+    $tcpClient.Proxy = $proxy;
+    $tcpClient.DownloadFile($url, $destinationPath);
 
-    if ($secure) {
+    if ($oldSecurityProtocol) {
         # Restore the security protocol
         [System.Net.ServicePointManager]::SecurityProtocol = $oldSecurityProtocol;
     }
