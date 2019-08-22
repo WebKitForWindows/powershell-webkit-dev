@@ -25,7 +25,7 @@ Function Invoke-WebFileRequest {
 
     # See if security protocol needs to be checked
     $secure = 1;
-    if ($url.StartsWith("http://")) {
+    if ($url.StartsWith('http:')) {
         $secure = 0;
     }
 
@@ -37,6 +37,11 @@ Function Invoke-WebFileRequest {
         if ($secure) {
             if (Test-Path env:HTTPS_PROXY) {
                 $proxy = New-Object System.Net.WebProxy($env:HTTPS_PROXY, $true);
+
+                # Turn off SSL protocol check if proxy is HTTP
+                if ($env:HTTPS_PROXY.StartsWith('http:')) {
+                    $secure = 0;
+                }
             }
         } else {
             if (Test-Path env:HTTP_PROXY) {
@@ -53,14 +58,14 @@ Function Invoke-WebFileRequest {
         $securityProtocol = 0;
         $testEndpoint = [System.Uri]$url;
 
-        if ($proxy.Address -eq $null) {
+        if ($proxy.Address -ne $null) {
             $testEndpoint = $proxy.Address;
         }
 
         foreach ($protocol in 'tls12', 'tls11', 'tls') {
             $tcpClient = New-Object Net.Sockets.TcpClient;
             $tcpClient.Connect($testEndpoint.Host, $testEndpoint.Port)
-    
+
             $sslStream = New-Object Net.Security.SslStream $tcpClient.GetStream();
             $sslStream.ReadTimeout = 15000;
             $sslStream.WriteTimeout = 15000;
