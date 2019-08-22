@@ -98,7 +98,7 @@ Function Invoke-WebFileRequest {
     $tcpClient.Proxy = $proxy;
     $tcpClient.DownloadFile($url, $destinationPath);
 
-    if ($secure -and $oldSecurityProtocol) {
+    if ($oldSecurityProtocol) {
         # Restore the security protocol
         [System.Net.ServicePointManager]::SecurityProtocol = $oldSecurityProtocol;
     }
