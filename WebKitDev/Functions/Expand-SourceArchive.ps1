@@ -28,25 +28,29 @@ Function Expand-SourceArchive {
         [string] $destinationPath
     )
 
-    # Expand to a temporary directory
-    $tempDir = Join-Path ([System.IO.Path]::GetTempPath()) ([System.Guid]::NewGuid());
+    Write-Debug ('Getting information for archive {0}' -f $path);
+    $files = Get-7Zip -ArchiveFileName $path;
+    $fileCount = $files.Count;
+    Write-Debug ('Archive contains {0} files' -f $fileCount);
 
-    Expand-7Zip -ArchiveFileName $path -TargetPath $tempDir;
+    # Determine if a nested call extraction is required
+    $tempDir = '';
+    if ($fileCount -eq 1 -And $files[0].FileName -eq '[no name]') {
+        # Expand to a temporary directory
+        $tempDir = Join-Path ([System.IO.Path]::GetTempPath()) ([System.Guid]::NewGuid());
+        Write-Debug ('Expanding nested archive to {0}' -f $tempDir);
+        Expand-7Zip -ArchiveFileName $path -TargetPath $tempDir;
 
-    # Look at the contents of the temporary directory to see if another file
-    # should be expanded.
-    #
-    # This check is for tar.gz type archives.
-    $contents = (Get-ChildItem $tempDir)[0];
-    $expandedPath = $contents.FullName;
-
-    if ($contents -is [System.IO.DirectoryInfo]) {
-        Move-Item -Path $expandedPath -Destination $destinationPath;
-    }
-    else {
-        Expand-SourceArchive -Path $expandedPath -DestinationPath $destinationPath;
+        # Get new path
+        $path = (Get-ChildItem $tempDir)[0].FullName;
     }
 
-    # Remove temporary directory and its contents
-    Remove-Item $tempDir -Recurse -Force;
+    Write-Debug ('Expanding archive {0} to {1}' -f $path, $destinationPath);
+    Expand-7Zip -ArchiveFileName $path -TargetPath $destinationPath;
+
+    # Remove temporary directory and its contents if necessary
+    if ($tempDir -ne '') {
+        Write-Debug ('Removing temp directory {0}' -f $tempDir)
+        Remove-Item $tempDir -Recurse -Force;
+    }
 }
