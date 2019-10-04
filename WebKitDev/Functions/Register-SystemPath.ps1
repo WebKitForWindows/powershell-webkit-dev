@@ -20,7 +20,9 @@
 Function Register-SystemPath {
     Param(
         [Parameter(Mandatory)]
-        [string] $path
+        [string] $path,
+        [Parameter()]
+        [switch] $prepend = $false
     )
 
     if (!([System.IO.Path]::IsPathRooted($path))) {
@@ -42,7 +44,11 @@ Function Register-SystemPath {
     }
 
     # Create and store new path in the registry
-    $updatedPath = ('{0};{1}' -f $systemPath, $path);
+    if ($prepend) {
+        $updatedPath = ('{0};{1}' -f $path, $systemPath);
+    } else {
+        $updatedPath = ('{0};{1}' -f $systemPath, $path);
+    }
     Write-Debug ('Updating path to {0}' -f $updatedPath);
     Set-ItemProperty -Path $systemPathKey -Name PATH -Value $updatedPath;
 
