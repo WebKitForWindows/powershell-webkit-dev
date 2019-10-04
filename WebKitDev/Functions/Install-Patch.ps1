@@ -7,33 +7,8 @@
   Installs patch.
 
   .Description
-  Downloads the specified release of patch and unzips it to the specified
-  location on disk.
-
-  Before installation `Register-SystemPath` should be used to add the install
-  location to the system path.
-
-  .Link Register-SystemPath
-
-  .Parameter Version
-  The version of patch to install.
-
-  .Parameter InstallationPath
-  The path to install at.
-
-  .Example
-    # Install 2.5.9
-    Install-Patch -Version 2.5.9 -InstallationPath C:\gnuwin32
+  Installs the latest version of patch provided by MSYS2.
 #>
 Function Install-Patch {
-    Param(
-        [Parameter(Mandatory)]
-        [string] $version,
-        [Parameter(Mandatory)]
-        [string] $installationPath
-    )
-
-    $url = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/patch/{0}/patch-{0}-bin.zip' -f $version);
-
-    Install-FromArchive -Name 'patch' -Url $url -InstallationPath $installationPath;
+    Install-FromPacman -Name 'patch'
 }

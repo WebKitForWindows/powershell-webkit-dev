@@ -7,33 +7,8 @@
   Installs flex.
 
   .Description
-  Downloads the specified release of flex and unzips it to the specified
-  location on disk.
-
-  Before installation `Register-SystemPath` should be used to add the install
-  location to the system path.
-
-  .Link Register-SystemPath
-
-  .Parameter Version
-  The version of flex to install.
-
-  .Parameter InstallationPath
-  The path to install at.
-
-  .Example
-    # Install 2.5.4a-1
-    Install-Flex -Version 2.5.4a-1 -InstallationPath C:\gnuwin32
+  Installs the latest version of flex provided by MSYS2.
 #>
 Function Install-Flex {
-    Param(
-        [Parameter(Mandatory)]
-        [string] $version,
-        [Parameter(Mandatory)]
-        [string] $installationPath
-    )
-
-    $url = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/flex/{0}/flex-{0}-bin.zip' -f $version);
-
-    Install-FromArchive -Name 'flex' -Url $url -InstallationPath $installationPath;
+    Install-FromPacman -Name 'flex';
 }

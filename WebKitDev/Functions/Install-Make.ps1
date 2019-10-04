@@ -7,37 +7,8 @@
   Installs make.
 
   .Description
-  Downloads the specified release of make and unzips it to the specified
-  location on disk.
-
-  Before installation `Register-SystemPath` should be used to add the install
-  location to the system path.
-
-  .Link Register-SystemPath
-
-  .Parameter Version
-  The version of make to install.
-
-  .Parameter InstallationPath
-  The path to install at.
-
-  .Example
-    # Install 3.81
-    Install-Make -Version 3.81 -InstallationPath C:\gnuwin32
+  Installs the latest version of make provided by MSYS2.
 #>
 Function Install-Make {
-    Param(
-        [Parameter(Mandatory)]
-        [string] $version,
-        [Parameter(Mandatory)]
-        [string] $installationPath
-    )
-
-    $url = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/make/{0}/make-{0}-bin.zip' -f $version);
-
-    Install-FromArchive -Name 'make' -Url $url -InstallationPath $installationPath -NoVerify;
-
-    $depsUrl = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/make/{0}/make-{0}-dep.zip' -f $version);
-
-    Install-FromArchive -Name 'make' -Url $depsUrl -InstallationPath $installationPath  
+    Install-FromPacman -Name 'make'
 }
