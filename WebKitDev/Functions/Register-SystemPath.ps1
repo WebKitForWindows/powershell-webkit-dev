@@ -35,6 +35,12 @@ Function Register-SystemPath {
     $systemPath = (Get-ItemProperty -Path $systemPathKey -Name PATH).Path;
     Write-Debug ('Current path {0}' -f $systemPath);
 
+    # See if the path is currently present
+    if ($systemPath.Contains($path)) {
+        Write-Debug ('Path {0} already present ignoring' -f $path);
+        return;
+    }
+
     # Create and store new path in the registry
     $updatedPath = ('{0};{1}' -f $systemPath, $path);
     Write-Debug ('Updating path to {0}' -f $updatedPath);
