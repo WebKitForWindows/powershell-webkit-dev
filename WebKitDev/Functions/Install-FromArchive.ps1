@@ -91,7 +91,14 @@ Function Move-DirectoryStructure {
 
     # See if we can just move the directory
     if (!(Test-Path $destination)) {
-        Write-Debug ('Destination {0} not present, will just move {1}' -f $destination, $path)
+        # See if we need to create the parent directory
+        $parent = Split-Path -Path $destination;
+        if (!(Test-Path $parent)) {
+            Write-Debug ('Parent directory {0} not present, need to create before moving' -f $parent);
+            New-Item -ItemType Directory -Path $parent -Force | Out-Null;
+        }
+
+        Write-Debug ('Destination {0} not present, will just move {1}' -f $destination, $path);
         Move-Item -Path $path -Destination $destination;
         return;
     }
