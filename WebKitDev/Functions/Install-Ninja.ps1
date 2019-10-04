@@ -30,10 +30,17 @@ Function Install-Ninja {
         [Parameter(Mandatory)]
         [string] $version,
         [Parameter(Mandatory)]
-        [string] $installationPath
+        [string] $installationPath,
+        [Parameter()]
+        [switch] $noPath = $false
     )
 
     $url = ('https://github.com/ninja-build/ninja/releases/download/v{0}/ninja-win.zip' -f $version);
 
-    Install-FromArchive -Name 'ninja' -Url $url -InstallationPath $installationPath;
+    if (!$noPath) {
+        # Ninja installs an exe in the root
+        Register-SystemPath $installationPath;
+    }
+
+    Install-FromArchive -Name 'ninja' -Url $url -InstallationPath $installationPath -NoVerify:$noPath;
 }

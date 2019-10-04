@@ -105,7 +105,7 @@ Function Move-DirectoryStructure {
         $fromPath = Join-Path $path $dir.Name;
         $toPath = Join-Path $destination $dir.Name;
 
-        Copy-DirectoryStructure -Path $fromPath -Destination $toPath;
+        Move-DirectoryStructure -Path $fromPath -Destination $toPath;
     }
 
     # Iterate through files

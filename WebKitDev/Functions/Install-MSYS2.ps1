@@ -25,7 +25,9 @@ Function Install-MSYS2 {
         [Parameter(Mandatory)]
         [string] $version,
         [Parameter(Mandatory)]
-        [string] $installationPath
+        [string] $installationPath,
+        [Parameter()]
+        [switch] $noPath = $false
     )
 
     $url = ('http://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-{0}.tar.xz' -f $version)
@@ -65,4 +67,9 @@ Function Install-MSYS2 {
         $done = $done -or ($i -ge 5);
     }
     Remove-Item $outFile;
+
+    if (!$noPath) {
+        # Add MSYS2 usr/bin to path
+        Register-SystemPath (Join-Path $installationPath -ChildPath 'usr' | Join-Path -ChildPath 'bin');
+    }
 }
