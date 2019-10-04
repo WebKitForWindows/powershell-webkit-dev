@@ -46,24 +46,25 @@ Function Install-FromArchive {
     Write-Host ('Downloading {0} package from {1} ..' -f $name, $url);
     Invoke-WebFileRequest -Url $url -DestinationPath $archivePath;
     Write-Host ('Downloaded {0} bytes' -f (Get-Item $archivePath).length);
-
-    # Expand to a temporary directory
     Write-Host ('Unzipping {0} package ...' -f $name);
-    $tempDir = Join-Path ([System.IO.Path]::GetTempPath()) ([System.Guid]::NewGuid());
-    Expand-7Zip -ArchiveFileName $archivePath -TargetPath $tempDir;
-  
-    # Get the archive root
+
+    # Determine where to expand the archive to
+    #
+    # If there's an archive root we unzip to a temporary folder and then use
+    # that.
     if ($archiveRoot) {
-        $moveFrom = Join-Path $tempDir $archiveRoot;
-    }
-    else {
-        $moveFrom = $tempDir;
+        $expandTo = Join-Path ([System.IO.Path]::GetTempPath()) ([System.Guid]::NewGuid());
+        Write-Debug ('Archive root {0} specified, creating temp directory at {1}' -f $archiveRoot, $expandTo)
+    } else {
+        $expandTo = $installationPath;
     }
 
-    Copy-DirectoryStructure -Path $moveFrom -Destination $installationPath;
+    Expand-SourceArchive -Path $archivePath -Destinationpath $expandTo;
 
-    # Remove temporary directory and its contents
-    Remove-Item $tempDir -Recurse -Force;
+    if ($archiveRoot) {
+        Move-DirectoryStructure (Join-Path $expandTo $archiveRoot) $installationPath;
+        Write-Debug ('Removing temporary directory {0}' -f $expandTo)
+    }
 
     if (!$noVerify) {
         Write-Host ('Verifying {0} install ...' -f $name);
@@ -78,7 +79,7 @@ Function Install-FromArchive {
     Write-Host ('{0} install complete.' -f $name);
 }
 
-Function Copy-DirectoryStructure {
+Function Move-DirectoryStructure {
     Param(
         [Parameter(Mandatory)]
         [string] $path,
@@ -86,10 +87,16 @@ Function Copy-DirectoryStructure {
         [string] $destination
     )
 
-    # Create destination path if necessary
+    Write-Debug ('Moving directory from {0} to {1}' -f $path, $destination)
+
+    # See if we can just move the directory
     if (!(Test-Path $destination)) {
-        New-Item $destination -ItemType directory | Out-Null;
+        Write-Debug ('Destination {0} not present, will just move {1}' -f $destination, $path)
+        Move-Item -Path $path -Destination $destination;
+        return;
     }
+
+    Write-Debug ('Populating {0} ' -f $destination)
 
     # Iterate through directories
     $directories = Get-ChildItem $path -Dir;
@@ -106,5 +113,6 @@ Function Copy-DirectoryStructure {
 
     foreach ($file in $files) {
         Copy-Item -Path $file.FullName -Destination $destination;
+        Write-Debug ('Copying {0}' -f $file.FullName)
     }
 }
