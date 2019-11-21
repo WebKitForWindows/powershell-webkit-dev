@@ -42,27 +42,10 @@ Function Install-NuGet {
         Register-SystemPath $installationPath;
     }
 
-    # Create directory if necessary
-    if (!(Test-Path $installationPath)) {
-        [void](New-Item -Path $installationPath -ItemType 'Directory');
-    }
-
-    $name = 'nuget'
-
-    $exePath = Join-Path $installationPath ('{0}.exe' -f $name);
-    Write-Host ('Downloading {0} executable from {1} ...' -f $name, $url);
-    Invoke-WebFileRequest -Url $url -DestinationPath $exePath;
-    Write-Host ('Downloaded {0} bytes' -f (Get-Item $exePath).length);
-
-    # Update path
-    Update-ScriptPath;
-
-    if (!$noPath) {
-        Write-Host ('Verifying {0} install ...' -f $name);
-        $verifyCommand = ('  {0} --version' -f $name);
-        Write-Host $verifyCommand;
-        Invoke-Expression $verifyCommand;
-    }
-
-    Write-Host ('{0} install complete.' -f $name);
+    Install-FromExeDownload `
+        -Name 'nuget' `
+        -Url $url `
+        -InstallationPath $installationPath `
+        -NoVerify:$noPath `
+        -VersionOptions @();
 }
