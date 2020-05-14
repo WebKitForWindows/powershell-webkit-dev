@@ -17,8 +17,8 @@
   The location to install to.
 
   .Example
-    # Install 7.0.0
-    Install-LLVM -Version 7.0.0
+    # Install 10.0.0
+    Install-LLVM -Version 10.0.0
 #>
 Function Install-LLVM {
     Param(
@@ -29,7 +29,8 @@ Function Install-LLVM {
         [string] $installationPath
     )
 
-    $url = "http://releases.llvm.org/${version}/LLVM-${version}-win64.exe"
+    # Releases after 10.0 moved to GitHub
+    $url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-${version}/LLVM-${version}-win64.exe"
 
     $options = @('/S')
 
