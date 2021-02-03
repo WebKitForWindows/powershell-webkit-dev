@@ -16,8 +16,8 @@
   The version of XAMPP to install.
 
   .Example
-    # Install 7.2.4
-    Install-Xampp -Version 7.2.4
+    # Install 7.2.4.0
+    Install-Xampp -Version 7.2.4.0
 #>
 Function Install-Xampp {
     Param(
@@ -25,7 +25,18 @@ Function Install-Xampp {
         [string] $version
     )
 
-    $url = ('https://www.apachefriends.org/xampp-files/{0}/xampp-windows-x64-{0}-0-VC15-installer.exe' -f $version);
+    $major, $minor, $patch, $build = $version.split('.')
+    if (-not $build) {
+        $build = '0'
+    }
+
+    if ($major -eq '7') {
+        $toolchain = 'VC15';
+    } else {
+        $toolchain = 'VS16';
+    }
+
+    $url = ('https://www.apachefriends.org/xampp-files/{0}.{1}.{2}/xampp-windows-x64-{0}.{1}.{2}-{3}-{4}-installer.exe' -f ($major, $minor, $patch, $build, $toolchain));
   
     $options = @(
         '--unattendedmodeui', 'none',
