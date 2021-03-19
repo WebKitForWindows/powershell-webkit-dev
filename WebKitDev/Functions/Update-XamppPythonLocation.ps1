@@ -29,7 +29,7 @@ Function Update-XamppPythonLocation {
         return;
     }
 
-    $registryValue = ('{0}' -f $pythonExecutable);
+    $registryValue = ('{0} -X utf8' -f $pythonExecutable);
 
     # Add python filetype value
     $registryPath = 'HKCR:\.py\Shell\ExecCGI\Command';
