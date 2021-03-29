@@ -55,7 +55,7 @@ Function Install-Python {
     }
     else {
         $pythonUrl = ('https://www.python.org/ftp/python/{0}/python-{0}.amd64.msi' -f $version);
-        $getPip = 'https://bootstrap.pypa.io/2.7/get-pip.py';
+        $getPip = 'https://bootstrap.pypa.io/pip/2.7/get-pip.py';
 
         $options = @(
             'ALLUSERS=1',
