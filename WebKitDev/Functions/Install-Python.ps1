@@ -77,11 +77,4 @@ Function Install-Python {
 
     python get-pip.py $pipInstall;
     Remove-Item get-pip.py -Force;
-
-    if ($major -eq '2') {
-        # Install Visual Studio for Python 2.7
-        $vcForPythonUrl = 'https://download.microsoft.com/download/7/9/6/796EF2E4-801B-4FC4-AB28-B59FBF6D907B/VCForPython27.msi';
-
-        Install-FromMsi -Name 'VCForPython27' -Url $vcForPythonUrl -NoVerify;
-    }
 }
