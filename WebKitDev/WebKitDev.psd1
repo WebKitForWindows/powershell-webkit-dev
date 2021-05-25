@@ -52,8 +52,8 @@
 
     # Modules that must be imported into the global environment prior to importing this module
     RequiredModules   = @(
-        @{ModuleName = '7Zip4Powershell'; ModuleVersion = '1.13.0'; MaximumVersion = '2.0'; },
-        @{ModuleName = 'VSSetup'; ModuleVersion = '2.2.16'; MaximumVersion = '3.0'; }
+        @{ModuleName = '7Zip4Powershell'; ModuleVersion = '1.13.0'; MaximumVersion = '1.999.999'; },
+        @{ModuleName = 'VSSetup'; ModuleVersion = '2.2.16'; MaximumVersion = '2.999.999'; }
     )
     # Assemblies that must be loaded prior to importing this module
     # RequiredAssemblies = @()
