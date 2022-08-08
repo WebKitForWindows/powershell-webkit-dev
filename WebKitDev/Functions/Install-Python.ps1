@@ -23,18 +23,18 @@
     # Install 2.7.13 and PIP 9.0.1
     Install-Python -Version 2.7.13 -PipVersion
 #>
-Function Install-Python {
-    Param(
+function Install-Python {
+    param(
         [Parameter(Mandatory)]
-        [string] $version,
+        [string]$version,
         [Parameter(Mandatory)]
-        [string] $pipVersion,
+        [string]$pipVersion,
         [Parameter()]
         [AllowNull()]
-        [string] $installationPath
+        [string]$installationPath
     )
 
-    $major, $minor, $patch = $version.split('.');
+    $major,$minor,$patch = $version.split('.');
 
     if ($major -ne '2') {
         $pythonUrl = ('https://www.python.org/ftp/python/{0}/python-{0}-amd64.exe' -f $version);
@@ -51,7 +51,7 @@ Function Install-Python {
             $options += ('TargetDir="{0}"' -f $installationPath)
         }
 
-        Install-FromExe -Name 'python' -Url $pythonUrl -Options $options;
+        Install-FromExe -Name 'python' -url $pythonUrl -options $options;
     }
     else {
         $pythonUrl = ('https://www.python.org/ftp/python/{0}/python-{0}.amd64.msi' -f $version);
@@ -66,15 +66,15 @@ Function Install-Python {
             $options += ('TARGETDIR="{0}"' -f $installationPath);
         }
 
-        Install-FromMsi -Name 'python' -Url $pythonUrl -Options $options;
+        Install-FromMsi -Name 'python' -url $pythonUrl -options $options;
     }
 
     # Install PIP
     $pipInstall = ('pip=={0}' -f $pipVersion);
-    Write-Host ('Installing {0} from {1} ...' -f ($pipInstall, $getPip));
+    Write-Host ('Installing {0} from {1} ...' -f ($pipInstall,$getPip));
 
-    Invoke-WebFileRequest -Url $getPip -DestinationPath 'get-pip.py';
+    Invoke-WebFileRequest -url $getPip -DestinationPath 'get-pip.py';
 
-    python get-pip.py $pipInstall;
+    python.exe get-pip.py $pipInstall;
     Remove-Item get-pip.py -Force;
 }

@@ -6,6 +6,6 @@
   .Synopsis
   Retrieves the location of WebKit's GitHub mirror.
 #>
-Function Get-WebKitGitHubUrl {
+function Get-WebKitGitHubUrl {
     return 'https://github.com/WebKit/webkit.git';
 }

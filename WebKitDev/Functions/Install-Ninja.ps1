@@ -25,14 +25,14 @@
     # Install 1.7.2
     Install-Ninja -Version 1.7.2 -InstallationPath C:\Ninja
 #>
-Function Install-Ninja {
-    Param(
+function Install-Ninja {
+    param(
         [Parameter(Mandatory)]
-        [string] $version,
+        [string]$version,
         [Parameter(Mandatory)]
-        [string] $installationPath,
+        [string]$installationPath,
         [Parameter()]
-        [switch] $noPath = $false
+        [switch]$noPath = $false
     )
 
     $url = ('https://github.com/ninja-build/ninja/releases/download/v{0}/ninja-win.zip' -f $version);
@@ -42,5 +42,5 @@ Function Install-Ninja {
         Register-SystemPath $installationPath;
     }
 
-    Install-FromArchive -Name 'ninja' -Url $url -InstallationPath $installationPath -NoVerify:$noPath;
+    Install-FromArchive -Name 'ninja' -url $url -installationPath $installationPath -NoVerify:$noPath;
 }

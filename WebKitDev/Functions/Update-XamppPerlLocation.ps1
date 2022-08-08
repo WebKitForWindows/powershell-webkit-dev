@@ -14,10 +14,10 @@
   .Parameter PerlPath
   The location perl was installed to.
 #>
-Function Update-XamppPerlLocation {
-    Param(
+function Update-XamppPerlLocation {
+    param(
         [Parameter(Mandatory)]
-        [string] $perlPath
+        [string]$perlPath
     )
 
     if (-not (Test-Path 'HKCR:')) {
@@ -27,7 +27,7 @@ Function Update-XamppPerlLocation {
     $perlExecutable = Join-Path $perlPath (Join-Path 'perl' (Join-Path 'bin' 'perl.exe'));
 
     if (!(Test-Path $perlExecutable)) {
-        Write-Error('perl not found at {0}' -f $perlPath);
+        Write-Error ('perl not found at {0}' -f $perlPath);
         return;
     }
 
@@ -41,9 +41,9 @@ Function Update-XamppPerlLocation {
         New-Item -Path $registryPath -Force | Out-Null;
     }
 
-    Write-Host ('Writing {0} : {1} at {2}' -f $registryKey, $registryValue, $registryPath);
+    Write-Host ('Writing {0} : {1} at {2}' -f $registryKey,$registryValue,$registryPath);
     New-ItemProperty -Path $registryPath -Name $registryKey -PropertyType String -Value $registryValue -Force | Out-Null;
-    
+
     # Add CGI filetype value
     $registryPath = 'HKCR:\.cgi\Shell\ExecCGI\Command';
     $registryKey = '(Default)';
@@ -52,6 +52,6 @@ Function Update-XamppPerlLocation {
         New-Item -Path $registryPath -Force | Out-Null;
     }
 
-    Write-Host ('Writing {0} : {1} at {2}' -f $registryKey, $registryValue, $registryPath);
+    Write-Host ('Writing {0} : {1} at {2}' -f $registryKey,$registryValue,$registryPath);
     New-ItemProperty -Path $registryPath -Name $registryKey -PropertyType String -Value $registryValue -Force | Out-Null;
 }

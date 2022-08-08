@@ -10,6 +10,6 @@
   Updates the environment path for the script's execution. This is useful to
   run after any installers complete so any new system paths are present.
 #>
-Function Update-ScriptPath {
-    $env:PATH = [Environment]::GetEnvironmentVariable('PATH', [EnvironmentVariableTarget]::Machine);
+function Update-ScriptPath {
+    $env:PATH = [Environment]::GetEnvironmentVariable('PATH',[EnvironmentVariableTarget]::Machine);
 }

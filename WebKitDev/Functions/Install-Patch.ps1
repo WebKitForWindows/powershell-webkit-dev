@@ -9,6 +9,6 @@
   .Description
   Installs the latest version of patch provided by MSYS2.
 #>
-Function Install-Patch {
+function Install-Patch {
     Install-FromPacman -Name 'patch'
 }

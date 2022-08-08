@@ -29,13 +29,13 @@
     # Get All Lucida Fonts
     Get-Font *Lucida*
 #>
-Function Get-Font {
-    Param(
+function Get-Font {
+    param(
         [Parameter()]
         $font = '*'
     )
 
-    if (-not ("Windows.Media.Fonts" -as [Type])) {
+    if (-not ("Windows.Media.Fonts" -as [type])) {
         Add-Type -AssemblyName PresentationCore;
     }
 

@@ -25,14 +25,14 @@
     # Install 2.13.01
     Install-NASM -Version 2.13.01 -InstallationPath C:\Nasm
 #>
-Function Install-Nasm {
-    Param(
+function Install-Nasm {
+    param(
         [Parameter(Mandatory)]
-        [string] $version,
+        [string]$version,
         [Parameter(Mandatory)]
-        [string] $installationPath,
+        [string]$installationPath,
         [Parameter()]
-        [switch] $noPath = $false
+        [switch]$noPath = $false
     )
 
     $url = ('http://www.nasm.us/pub/nasm/releasebuilds/{0}/win64/nasm-{0}-win64.zip' -f $version);
@@ -42,5 +42,5 @@ Function Install-Nasm {
         Register-SystemPath $installationPath;
     }
 
-    Install-FromArchive -Name 'nasm' -Url $url -InstallationPath $installationPath -ArchiveRoot ("nasm-{0}" -f $version) -NoVerify:$noPath;
+    Install-FromArchive -Name 'nasm' -url $url -installationPath $installationPath -archiveRoot ("nasm-{0}" -f $version) -NoVerify:$noPath;
 }

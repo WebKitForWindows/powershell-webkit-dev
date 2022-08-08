@@ -25,23 +25,23 @@
     # Install 2.8.7.1
     Install-DiffUtils -Version 2.8.7.1 -InstallationPath C:\gnuwin32
 #>
-Function Install-DiffUtils {
-    Param(
+function Install-DiffUtils {
+    param(
         [Parameter(Mandatory)]
-        [string] $version,
+        [string]$version,
         [Parameter(Mandatory)]
-        [string] $installationPath
+        [string]$installationPath
     )
 
     # There is a commandlet `diff` so use `diff3` as a check for success
 
-    $major, $minor, $patch, $build = $version.split('.');
+    $major,$minor,$patch,$build = $version.split('.');
 
-    $url = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/diffutils/{0}.{1}.{2}-{3}/diffutils-{0}.{1}.{2}-{3}-bin.zip' -f $major, $minor, $patch, $build);
+    $url = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/diffutils/{0}.{1}.{2}-{3}/diffutils-{0}.{1}.{2}-{3}-bin.zip' -f $major,$minor,$patch,$build);
 
-    Install-FromArchive -Name 'diff3' -Url $url -InstallationPath $installationPath -NoVerify;
+    Install-FromArchive -Name 'diff3' -url $url -installationPath $installationPath -noVerify;
 
-    $depsUrl = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/diffutils/{0}.{1}.{2}-{3}/diffutils-{0}.{1}.{2}-{3}-dep.zip' -f $major, $minor, $patch, $build);
+    $depsUrl = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/diffutils/{0}.{1}.{2}-{3}/diffutils-{0}.{1}.{2}-{3}-dep.zip' -f $major,$minor,$patch,$build);
 
-    Install-FromArchive -Name 'diff3' -Url $depsUrl -InstallationPath $installationPath  
+    Install-FromArchive -Name 'diff3' -url $depsUrl -installationPath $installationPath
 }

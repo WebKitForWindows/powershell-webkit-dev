@@ -25,26 +25,26 @@
   .Parameter Options
   A list of options to pass in.
 #>
-Function Install-FromExe {
-    Param(
+function Install-FromExe {
+    param(
         [Parameter(Mandatory)]
-        [string] $name,
+        [string]$name,
         [Parameter(Mandatory)]
-        [string] $url,
+        [string]$url,
         [Parameter()]
-        [switch] $noVerify = $false,
+        [switch]$noVerify = $false,
         [Parameter(Mandatory)]
-        [string[]] $options = @()
+        [string[]]$options = @()
     )
 
     $installerPath = Join-Path ([System.IO.Path]::GetTempPath()) ('{0}.exe' -f $name);
 
-    Write-Host ('Downloading {0} installer from {1} ..' -f $name, $url);
-    Invoke-WebFileRequest -Url $url -DestinationPath $installerPath;
-    Write-Host ('Downloaded {0} bytes' -f (Get-Item $installerPath).length);
+    Write-Host ('Downloading {0} installer from {1} ..' -f $name,$url);
+    Invoke-WebFileRequest -url $url -DestinationPath $installerPath;
+    Write-Host ('Downloaded {0} bytes' -f (Get-Item $installerPath).Length);
 
     Write-Host ('Installing {0} ...' -f $name);
-    Write-Host ('{0} {1}' -f $installerPath, ($options -Join ' '));
+    Write-Host ('{0} {1}' -f $installerPath,($options -join ' '));
 
     Start-Process $installerPath -Wait -ArgumentList $options;
 

@@ -25,29 +25,29 @@
   .Parameter Options
   A list of options to pass in.
 #>
-Function Install-FromMsi {
-    Param(
+function Install-FromMsi {
+    param(
         [Parameter(Mandatory)]
-        [string] $name,
+        [string]$name,
         [Parameter(Mandatory)]
-        [string] $url,
+        [string]$url,
         [Parameter()]
-        [switch] $noVerify = $false,
+        [switch]$noVerify = $false,
         [Parameter()]
-        [string[]] $options = @()
+        [string[]]$options = @()
     )
 
     $installerPath = Join-Path ([System.IO.Path]::GetTempPath()) ('{0}.msi' -f $name);
 
-    Write-Host ('Downloading {0} installer from {1} ..' -f $name, $url);
-    Invoke-WebFileRequest -Url $url -DestinationPath $installerPath;
-    Write-Host ('Downloaded {0} bytes' -f (Get-Item $installerPath).length);
+    Write-Host ('Downloading {0} installer from {1} ..' -f $name,$url);
+    Invoke-WebFileRequest -url $url -DestinationPath $installerPath;
+    Write-Host ('Downloaded {0} bytes' -f (Get-Item $installerPath).Length);
 
-    $args = @('/i', $installerPath, '/quiet', '/qn');
+    $args = @('/i',$installerPath,'/quiet','/qn');
     $args += $options;
 
     Write-Host ('Installing {0} ...' -f $name);
-    Write-Host ('msiexec {0}' -f ($args -Join ' '));
+    Write-Host ('msiexec {0}' -f ($args -join ' '));
 
     Start-Process msiexec -Wait -ArgumentList $args;
 

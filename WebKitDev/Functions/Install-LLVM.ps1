@@ -20,13 +20,13 @@
     # Install 10.0.0
     Install-LLVM -Version 10.0.0
 #>
-Function Install-LLVM {
-    Param(
+function Install-LLVM {
+    param(
         [Parameter(Mandatory)]
-        [string] $version,
+        [string]$version,
         [Parameter()]
         [AllowNull()]
-        [string] $installationPath
+        [string]$installationPath
     )
 
     # Releases after 10.0 moved to GitHub
@@ -38,5 +38,5 @@ Function Install-LLVM {
         $options += "/D=$installationPath"
     }
 
-    Install-FromExe -Name 'LLVM' -Url $url -Options $options -noVerify
+    Install-FromExe -Name 'LLVM' -url $url -options $options -noVerify
 }

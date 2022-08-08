@@ -12,7 +12,7 @@
 
   The path should be tested before using. No error checking is performed.
 #>
-Function Get-VSBuildTools2017InstallationPath {
+function Get-VSBuildTools2017InstallationPath {
     $installs = Get-VSSetupInstance;
 
     foreach ($install in $installs) {

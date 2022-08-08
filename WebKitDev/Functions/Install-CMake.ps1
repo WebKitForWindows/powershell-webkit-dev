@@ -19,22 +19,23 @@
     # Install 3.7.2
     Install-CMake -Version 3.7.2
 #>
-Function Install-CMake {
-    Param(
+function Install-CMake {
+    param(
         [Parameter(Mandatory)]
-        [string] $version,
+        [string]$version,
         [Parameter()]
         [AllowNull()]
-        [string] $installationPath
+        [string]$installationPath
     )
 
-    $major, $minor, $patch = $version.split('.');
+    $major,$minor,$patch = $version.split('.');
 
     # CMake releases moved to GitHub in 3.20
     if (([int]$major -ge 4) -or (([int]$major -eq 3) -and ([int]$minor -ge 20))) {
         $url = ('https://github.com/Kitware/CMake/releases/download/v{0}/cmake-{0}-windows-x86_64.msi' -f $version)
-    } else {
-        $url = ('https://cmake.org/files/v{0}.{1}/cmake-{2}-win64_x64.msi' -f $major, $minor, $version);
+    }
+    else {
+        $url = ('https://cmake.org/files/v{0}.{1}/cmake-{2}-win64_x64.msi' -f $major,$minor,$version);
     }
 
     $options = @(
@@ -45,5 +46,5 @@ Function Install-CMake {
         $options += ('INSTALL_ROOT="{0}"' -f $installationPath);
     }
 
-    Install-FromMsi -Name 'cmake' -Url $url -Options $options;
+    Install-FromMsi -Name 'cmake' -url $url -options $options;
 }
