@@ -41,7 +41,7 @@ function Update-XamppPerlLocation {
         New-Item -Path $registryPath -Force | Out-Null;
     }
 
-    Write-Host ('Writing {0} : {1} at {2}' -f $registryKey,$registryValue,$registryPath);
+    Write-Information -MessageData ('Writing {0} : {1} at {2}' -f $registryKey,$registryValue,$registryPath) -InformationAction Continue;
     New-ItemProperty -Path $registryPath -Name $registryKey -PropertyType String -Value $registryValue -Force | Out-Null;
 
     # Add CGI filetype value
@@ -52,6 +52,6 @@ function Update-XamppPerlLocation {
         New-Item -Path $registryPath -Force | Out-Null;
     }
 
-    Write-Host ('Writing {0} : {1} at {2}' -f $registryKey,$registryValue,$registryPath);
+    Write-Information -MessageData ('Writing {0} : {1} at {2}' -f $registryKey,$registryValue,$registryPath) -InformationAction Continue;
     New-ItemProperty -Path $registryPath -Name $registryKey -PropertyType String -Value $registryValue -Force | Out-Null;
 }

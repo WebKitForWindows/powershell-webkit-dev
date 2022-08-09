@@ -1,0 +1,10 @@
+@{
+    Severity = @('Error','Warning','Information')
+    IncludeRules = '*'
+    ExcludeRules = @(
+        'PSUseSingularNouns',
+        'PSAvoidUsingInvokeExpression',
+        'PSUseShouldProcessForStateChangingFunctions',
+        'PSReviewUnusedParameter'
+    )
+}

@@ -25,17 +25,17 @@ function Get-SourceCodeRelease {
         [string]$destinationPath
     )
 
-    Write-Host ('Downloading {0} source code from {1} ...' -f $name,$url);
+    Write-Information -MessageData ('Downloading {0} source code from {1} ...' -f $name,$url) -InformationAction Continue;
     $extension = [System.IO.Path]::GetExtension($url);
     $fileName = [System.IO.Path]::GetTempFileName() | Rename-Item -NewName { $_ -replace '.tmp$',$extension } -Passthru;
     Invoke-WebFileRequest -url $url -DestinationPath $fileName;
-    Write-Host ('Downloaded {0} bytes' -f (Get-Item $fileName).Length);
+    Write-Information -MessageData ('Downloaded {0} bytes' -f (Get-Item $fileName).Length) -InformationAction Continue;
 
-    Write-Host ('Unzipping {0} source code to {1} ...' -f $name,$destinationPath);
+    Write-Information -MessageData ('Unzipping {0} source code to {1} ...' -f $name,$destinationPath) -InformationAction Continue;
     Expand-SourceArchive -Path $fileName -DestinationPath $destinationPath;
 
     # Clean up temporary files
     Remove-Item $fileName -Force;
 
-    Write-Host 'Complete';
+    Write-Information -MessageData 'Complete' -InformationAction Continue;
 }

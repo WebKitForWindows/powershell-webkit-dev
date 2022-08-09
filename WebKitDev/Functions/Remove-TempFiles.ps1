@@ -12,7 +12,7 @@
 function Remove-TempFiles {
     $tempFolders = @($env:temp,'C:/Windows/temp')
 
-    Write-Host 'Removing temporary files';
+    Write-Information -MessageData 'Removing temporary files' -InformationAction Continue;
     $attempts = 1;
     $maxAttempts = 5;
     $filesRemoved = 0;
@@ -38,24 +38,24 @@ function Remove-TempFiles {
 
         # Break out of the loop if there were no problems
         if ($couldNotRemove.Count -eq 0) {
-            Write-Host ('All files have been removed');
+            Write-Information -MessageData ('All files have been removed') -InformationAction Continue;
             break;
         }
 
-        Write-Host ('Could not remove {0} files from temporary directories' -f $couldNotRemove.Count)
+        Write-Information -MessageData ('Could not remove {0} files from temporary directories' -f $couldNotRemove.Count) -InformationAction Continue;
 
         # Break out of the loop after all attempts are exhausted
         if ($attempts -eq $maxAttempts) {
             break;
         }
 
-        Write-Host ('Waiting {0} seconds till next attempt' -f $sleepFor);
+        Write-Information -MessageData ('Waiting {0} seconds till next attempt' -f $sleepFor) -InformationAction Continue;
         Start-Sleep -Seconds $sleepFor;
 
         $attempts += 1;
         $sleepFor *= $sleepMultiplier;
-        Write-Host ('Attempt {0} of {1}' -f $attempts,$maxAttempts);
+        Write-Information -MessageData ('Attempt {0} of {1}' -f $attempts,$maxAttempts) -InformationAction Continue;
     }
 
-    Write-Host ('Removed {0} files from temporary directories' -f $filesRemoved)
+    Write-Information -MessageData ('Removed {0} files from temporary directories' -f $filesRemoved) -InformationAction Continue;
 }
