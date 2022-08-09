@@ -12,6 +12,15 @@ steps:
     # Disable debugging and profiling
     COMPlus_EnableDiagnostics: 0
 
+- name: formatter-diff
+  image: mcr.microsoft.com/powershell:alpine-3.14
+  commands:
+  - apk add --no-cache ca-certificates git
+  - git diff
+  when:
+    status:
+    - failure
+
 trigger:
   ref:
   - refs/heads/master
