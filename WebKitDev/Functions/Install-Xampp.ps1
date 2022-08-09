@@ -37,7 +37,7 @@ function Install-Xampp {
         $toolchain = 'VS16';
     }
 
-    $url = ('https://www.apachefriends.org/xampp-files/{0}.{1}.{2}/xampp-windows-x64-{0}.{1}.{2}-{3}-{4}-installer.exe' -f ($major,$minor,$patch,$build,$toolchain));
+    $url = ('https://sourceforge.net/projects/xampp/files/XAMPP%20Windows/{0}.{1}.{2}/xampp-windows-x64-{0}.{1}.{2}-{3}-{4}-installer.exe' -f ($major,$minor,$patch,$build,$toolchain));
 
     $options = @(
         '--unattendedmodeui','none',
