@@ -10,20 +10,20 @@
   The URL to download from.
 #>
 function Install-Font {
-    Param(
+    param(
         [Parameter(Mandatory)]
-        [string] $url
+        [string]$url
     )
 
     $filename = [System.IO.Path]::GetFilename($url);
     $fontPath = Join-Path ([System.IO.Path]::GetTempPath()) $filename;
 
-    Write-Host ('Downloading {0} font from {1} ..' -f $name, $url);
-    Invoke-WebFileRequest -Url $url -DestinationPath $fontPath;
-    Write-Host ('Downloaded {0} bytes' -f (Get-Item $fontPath).length);
+    Write-Host ('Downloading {0} font from {1} ..' -f $name,$url);
+    Invoke-WebFileRequest -url $url -DestinationPath $fontPath;
+    Write-Host ('Downloaded {0} bytes' -f (Get-Item $fontPath).Length);
 
     # Retrieve the font's name
-    if (-not ('System.Drawing.Text.PrivateFontCollection' -as [Type])) {
+    if (-not ('System.Drawing.Text.PrivateFontCollection' -as [type])) {
         Add-Type -AssemblyName System.Drawing;
     }
 
@@ -31,10 +31,10 @@ function Install-Font {
     $fontCollection.AddFontFile($fontPath);
     $fontName = $fontCollection.Families.Name;
 
-    Write-Host ('Installing font {0} from {1}' -f $fontName, $filename);
+    Write-Host ('Installing font {0} from {1}' -f $fontName,$filename);
 
     # Move the file to the correct location
-    $shell = New-Object -COMObject Shell.Application;
+    $shell = New-Object -ComObject Shell.Application;
     $fonts = $shell.Namespace(0x14);
     $installationPath = $fonts.Self.Path;
 
@@ -53,16 +53,16 @@ function Install-Font {
 
     # Add the font to the registry
     $registryPath = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts';
-    $registryKey = ('{0}{1}' -f $fontName, $fontSuffix[[System.IO.Path]::GetExtension($filename)]);
+    $registryKey = ('{0}{1}' -f $fontName,$fontSuffix[[System.IO.Path]::GetExtension($filename)]);
     $registryTest = Get-ItemProperty -Path $registryPath -Name $registryKey -ErrorAction SilentlyContinue;
 
     if (-not ($registryTest)) {
-        Write-Host ('Writing {0} : {1} at ${2}' -f $registryKey, $filename, $registryPath);
+        Write-Host ('Writing {0} : {1} at ${2}' -f $registryKey,$filename,$registryPath);
         New-ItemProperty -Path $registryPath -Name $registryKey -PropertyType String -Value $filename | Out-Null;
     }
     else {
         Write-Host 'Font already present in registry';
-        Write-Host ('Value {0} : {1} at ${2}' -f $registryKey, $registryTest.$registryKey, $registryPath);
+        Write-Host ('Value {0} : {1} at ${2}' -f $registryKey,$registryTest.$registryKey,$registryPath);
     }
 
     # Verify that the font is present

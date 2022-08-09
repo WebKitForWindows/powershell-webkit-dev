@@ -19,17 +19,17 @@
     # Install 2.4.2-2
     Install-Ruby -Version 2.4.2-2
 #>
-Function Install-Ruby {
-    Param(
+function Install-Ruby {
+    param(
         [Parameter(Mandatory)]
-        [string] $version,
+        [string]$version,
         [Parameter()]
         [AllowNull()]
-        [string] $installationPath
+        [string]$installationPath
     )
 
     $url = ('https://github.com/oneclick/rubyinstaller2/releases/download/RubyInstaller-{0}/rubyinstaller-{0}-x64.exe' -f $version);
-  
+
     $options = @(
         '/verysilent',
         '/tasks="assocfiles,modpath"'
@@ -39,5 +39,5 @@ Function Install-Ruby {
         $options += ('/dir="{0}"' -f $installationPath);
     }
 
-    Install-FromExe -Name 'ruby' -Url $url -Options $options;
+    Install-FromExe -Name 'ruby' -url $url -options $options;
 }

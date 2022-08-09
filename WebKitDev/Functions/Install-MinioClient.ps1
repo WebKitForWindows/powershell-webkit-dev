@@ -17,12 +17,12 @@
     # Install
     Install-MinioClient-InstallationPath C:\Minio
 #>
-Function Install-MinioClient {
-    Param(
+function Install-MinioClient {
+    param(
         [Parameter(Mandatory)]
-        [string] $installationPath,
+        [string]$installationPath,
         [Parameter()]
-        [switch] $noPath = $false
+        [switch]$noPath = $false
     )
 
     $url = 'https://dl.min.io/client/mc/release/windows-amd64/mc.exe';
@@ -33,9 +33,9 @@ Function Install-MinioClient {
     }
 
     Install-FromExeDownload `
-        -Name 'mc' `
-        -Url $url `
-        -InstallationPath $installationPath `
-        -NoVerify:$noPath `
-        -VersionOptions @('version');
+         -Name 'mc' `
+         -url $url `
+         -installationPath $installationPath `
+         -NoVerify:$noPath `
+         -versionOptions @('version');
 }

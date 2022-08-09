@@ -6,6 +6,6 @@
   .Synopsis
   Retrieves the location of WebKit's SVN repository.
 #>
-Function Get-WebKitSVNUrl {
+function Get-WebKitSVNUrl {
     return 'https://svn.webkit.org/repository/webkit/trunk';
 }

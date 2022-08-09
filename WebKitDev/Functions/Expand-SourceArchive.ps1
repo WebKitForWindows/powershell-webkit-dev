@@ -20,12 +20,12 @@
   .Example
     Expand-SourceArchive -Path foo.tar.gz -DestinationPath C:\foo.
 #>
-Function Expand-SourceArchive {
-    Param(
+function Expand-SourceArchive {
+    param(
         [Parameter(Mandatory)]
-        [string] $path,
+        [string]$path,
         [Parameter(Mandatory)]
-        [string] $destinationPath
+        [string]$destinationPath
     )
 
     Write-Debug ('Getting information for archive {0}' -f $path);
@@ -35,7 +35,7 @@ Function Expand-SourceArchive {
 
     # Determine if a nested call extraction is required
     $tempDir = '';
-    if ($fileCount -eq 1 -And $files[0].FileName -eq '[no name]') {
+    if ($fileCount -eq 1 -and $files[0].FileName -eq '[no name]') {
         # Expand to a temporary directory
         $tempDir = Join-Path ([System.IO.Path]::GetTempPath()) ([System.Guid]::NewGuid());
         Write-Debug ('Expanding nested archive to {0}' -f $tempDir);
@@ -45,7 +45,7 @@ Function Expand-SourceArchive {
         $path = (Get-ChildItem $tempDir)[0].FullName;
     }
 
-    Write-Debug ('Expanding archive {0} to {1}' -f $path, $destinationPath);
+    Write-Debug ('Expanding archive {0} to {1}' -f $path,$destinationPath);
     Expand-7Zip -ArchiveFileName $path -TargetPath $destinationPath;
 
     # Remove temporary directory and its contents if necessary

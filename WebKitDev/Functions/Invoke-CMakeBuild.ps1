@@ -27,24 +27,24 @@
   .Parameter Options
   Additional CMake options for the build.
 #>
-Function Invoke-CMakeBuild {
-    Param(
+function Invoke-CMakeBuild {
+    param(
         [Parameter(Mandatory)]
-        [string] $path,
+        [string]$path,
         [Parameter(Mandatory)]
-        [string] $buildPath,
+        [string]$buildPath,
         [Parameter(Mandatory)]
-        [string] $installationPath,
+        [string]$installationPath,
         [Parameter(Mandatory)]
-        [ValidateSet('Release', 'Debug', 'RelWithDebInfo', 'MinSizeRel')]
-        [string] $buildType = 'Release',
-        [ValidateSet('ninja', 'vs2015', 'vs2017')]
-        [string] $generator = 'ninja',
+        [ValidateSet('Release','Debug','RelWithDebInfo','MinSizeRel')]
+        [string]$buildType = 'Release',
+        [ValidateSet('ninja','vs2015','vs2017')]
+        [string]$generator = 'ninja',
         [Parameter()]
         [AllowNull()]
-        [string] $platform,
+        [string]$platform,
         [Parameter()]
-        [string[]] $options = @()
+        [string[]]$options = @()
     )
 
     # Select the generator
@@ -54,10 +54,10 @@ Function Invoke-CMakeBuild {
         $genArgs += 'Ninja';
     }
     elseif ($generator -eq 'vs2015') {
-        $genArgs += @('"Visual Studio 14 2015"', 'Win64');
+        $genArgs += @('"Visual Studio 14 2015"','Win64');
     }
     else {
-        $genArgs += @('"Visual Studio 15 2017"', 'Win64');
+        $genArgs += @('"Visual Studio 15 2017"','Win64');
     }
 
     # Add all arguments
@@ -75,19 +75,19 @@ Function Invoke-CMakeBuild {
     $genArgs += ('-H{0}' -f $path);
 
     # Create the generate call
-    $genCall = ('cmake {0}' -f ($genArgs -Join ' '));
+    $genCall = ('cmake {0}' -f ($genArgs -join ' '));
 
     Write-Host $genCall;
     Invoke-Expression $genCall
 
     # Create the build call
-    $buildArgs += @('--build', $buildPath, '--target', 'install');
+    $buildArgs += @('--build',$buildPath,'--target','install');
 
     if ($generator -ne 'ninja') {
-        $buildArgs += ('--config', $buildType)
+        $buildArgs += ('--config',$buildType)
     }
 
-    $buildCall = ('cmake {0}' -f ($buildArgs -Join ' '));
+    $buildCall = ('cmake {0}' -f ($buildArgs -join ' '));
 
     Write-Host $buildCall;
     Invoke-Expression $buildCall;

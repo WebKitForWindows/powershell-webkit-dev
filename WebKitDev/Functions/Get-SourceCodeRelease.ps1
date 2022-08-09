@@ -15,23 +15,23 @@
   .Parameter DestinationPath
   The location to expand the source code to.
 #>
-Function Get-SourceCodeRelease {
-    Param(
+function Get-SourceCodeRelease {
+    param(
         [Parameter(Mandatory)]
-        [string] $name,
+        [string]$name,
         [Parameter(Mandatory)]
-        [string] $url,
+        [string]$url,
         [Parameter(Mandatory)]
-        [string] $destinationPath
+        [string]$destinationPath
     )
 
-    Write-Host ('Downloading {0} source code from {1} ...' -f $name, $url);
+    Write-Host ('Downloading {0} source code from {1} ...' -f $name,$url);
     $extension = [System.IO.Path]::GetExtension($url);
-    $fileName = [System.IO.Path]::GetTempFileName() | Rename-Item -NewName { $_ -replace '.tmp$', $extension } -PassThru;
-    Invoke-WebFileRequest -Url $url -DestinationPath $fileName;
+    $fileName = [System.IO.Path]::GetTempFileName() | Rename-Item -NewName { $_ -replace '.tmp$',$extension } -Passthru;
+    Invoke-WebFileRequest -url $url -DestinationPath $fileName;
     Write-Host ('Downloaded {0} bytes' -f (Get-Item $fileName).Length);
 
-    Write-Host ('Unzipping {0} source code to {1} ...' -f $name, $destinationPath);
+    Write-Host ('Unzipping {0} source code to {1} ...' -f $name,$destinationPath);
     Expand-SourceArchive -Path $fileName -DestinationPath $destinationPath;
 
     # Clean up temporary files

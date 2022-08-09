@@ -19,31 +19,32 @@
     # Install 7.2.4.0
     Install-Xampp -Version 7.2.4.0
 #>
-Function Install-Xampp {
-    Param(
+function Install-Xampp {
+    param(
         [Parameter(Mandatory)]
-        [string] $version
+        [string]$version
     )
 
-    $major, $minor, $patch, $build = $version.split('.')
+    $major,$minor,$patch,$build = $version.split('.')
     if (-not $build) {
         $build = '0'
     }
 
     if ($major -eq '7') {
         $toolchain = 'VC15';
-    } else {
+    }
+    else {
         $toolchain = 'VS16';
     }
 
-    $url = ('https://www.apachefriends.org/xampp-files/{0}.{1}.{2}/xampp-windows-x64-{0}.{1}.{2}-{3}-{4}-installer.exe' -f ($major, $minor, $patch, $build, $toolchain));
-  
+    $url = ('https://www.apachefriends.org/xampp-files/{0}.{1}.{2}/xampp-windows-x64-{0}.{1}.{2}-{3}-{4}-installer.exe' -f ($major,$minor,$patch,$build,$toolchain));
+
     $options = @(
-        '--unattendedmodeui', 'none',
-        '--mode', 'unattended',
-        '--launchapps', '0',
-        '--disable-components', 'xampp_mysql,xampp_filezilla,xampp_mercury,xampp_tomcat,xampp_perl,xampp_phpmyadmin,xampp_webalizer,xampp_sendmail'
+        '--unattendedmodeui','none',
+        '--mode','unattended',
+        '--launchapps','0',
+        '--disable-components','xampp_mysql,xampp_filezilla,xampp_mercury,xampp_tomcat,xampp_perl,xampp_phpmyadmin,xampp_webalizer,xampp_sendmail'
     );
 
-    Install-FromExe -Name 'xampp' -Url $url -Options $options -NoVerify;
+    Install-FromExe -Name 'xampp' -url $url -options $options -noVerify;
 }

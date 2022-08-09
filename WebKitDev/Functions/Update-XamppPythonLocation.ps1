@@ -12,10 +12,10 @@
   .Parameter PythonPath
   The location python was installed to.
 #>
-Function Update-XamppPythonLocation {
-    Param(
+function Update-XamppPythonLocation {
+    param(
         [Parameter(Mandatory)]
-        [string] $pythonPath
+        [string]$pythonPath
     )
 
     if (-not (Test-Path 'HKCR:')) {
@@ -25,7 +25,7 @@ Function Update-XamppPythonLocation {
     $pythonExecutable = Join-Path $pythonPath 'python.exe';
 
     if (!(Test-Path $pythonExecutable)) {
-        Write-Error('python not found at {0}' -f $perlPath);
+        Write-Error ('python not found at {0}' -f $perlPath);
         return;
     }
 
@@ -39,6 +39,6 @@ Function Update-XamppPythonLocation {
         New-Item -Path $registryPath -Force | Out-Null;
     }
 
-    Write-Host ('Writing {0} : {1} at {2}' -f $registryKey, $registryValue, $registryPath);
+    Write-Host ('Writing {0} : {1} at {2}' -f $registryKey,$registryValue,$registryPath);
     New-ItemProperty -Path $registryPath -Name $registryKey -PropertyType String -Value $registryValue -Force | Out-Null;
 }

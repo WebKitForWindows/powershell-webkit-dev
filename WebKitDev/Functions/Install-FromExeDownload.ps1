@@ -25,18 +25,18 @@
   .Parameter VersionOptions
   The options to pass to the executable to get the version.
 #>
-Function Install-FromExeDownload {
-    Param(
+function Install-FromExeDownload {
+    param(
         [Parameter(Mandatory)]
-        [string] $name,
+        [string]$name,
         [Parameter(Mandatory)]
-        [string] $url,
+        [string]$url,
         [Parameter(Mandatory)]
-        [string] $installationPath,
+        [string]$installationPath,
         [Parameter()]
-        [switch] $noVerify = $false,
+        [switch]$noVerify = $false,
         [Parameter()]
-        [string[]] $versionOptions = @('--version')
+        [string[]]$versionOptions = @('--version')
     )
 
     # Create directory if necessary
@@ -45,16 +45,16 @@ Function Install-FromExeDownload {
     }
 
     $exePath = Join-Path $installationPath ('{0}.exe' -f $name);
-    Write-Host ('Downloading {0} executable from {1} ...' -f $name, $url);
-    Invoke-WebFileRequest -Url $url -DestinationPath $exePath;
-    Write-Host ('Downloaded {0} bytes' -f (Get-Item $exePath).length);
+    Write-Host ('Downloading {0} executable from {1} ...' -f $name,$url);
+    Invoke-WebFileRequest -url $url -DestinationPath $exePath;
+    Write-Host ('Downloaded {0} bytes' -f (Get-Item $exePath).Length);
 
     # Update path
     Update-ScriptPath;
 
     if (!$noVerify) {
         Write-Host ('Verifying {0} install ...' -f $name);
-        $verifyCommand = ('  {0} {1}' -f $name, (' ' -join $versionOptions));
+        $verifyCommand = ('  {0} {1}' -f $name,(' ' -join $versionOptions));
         Write-Host $verifyCommand;
         Invoke-Expression $verifyCommand;
     }

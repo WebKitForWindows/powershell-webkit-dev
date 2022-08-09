@@ -9,6 +9,6 @@
   .Description
   Installs the latest version of bison provided by MSYS2.
 #>
-Function Install-Bison {
+function Install-Bison {
     Install-FromPacman -Name 'bison';
 }

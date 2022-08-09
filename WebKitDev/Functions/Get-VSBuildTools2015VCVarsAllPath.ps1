@@ -14,6 +14,6 @@
   The path should be tested before attempting to call the executable. No error
   checking is performed.
 #>
-Function Get-VSBuildTools2015VCVarsAllPath {
+function Get-VSBuildTools2015VCVarsAllPath {
     return (Join-Path (Get-VSBuildTools2015InstallationPath) 'VC\vcvarsall.bat');
 }

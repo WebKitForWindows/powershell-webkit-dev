@@ -25,14 +25,14 @@
     # Install 5.3.1
     Install-NuGet -Version 5.3.1 -InstallationPath C:\NuGet
 #>
-Function Install-NuGet {
-    Param(
+function Install-NuGet {
+    param(
         [Parameter(Mandatory)]
-        [string] $version,
+        [string]$version,
         [Parameter(Mandatory)]
-        [string] $installationPath,
+        [string]$installationPath,
         [Parameter()]
-        [switch] $noPath = $false
+        [switch]$noPath = $false
     )
 
     $url = ('https://dist.nuget.org/win-x86-commandline/v{0}/nuget.exe' -f $version);
@@ -43,9 +43,9 @@ Function Install-NuGet {
     }
 
     Install-FromExeDownload `
-        -Name 'nuget' `
-        -Url $url `
-        -InstallationPath $installationPath `
-        -NoVerify:$noPath `
-        -VersionOptions @();
+         -Name 'nuget' `
+         -url $url `
+         -installationPath $installationPath `
+         -NoVerify:$noPath `
+         -versionOptions @();
 }

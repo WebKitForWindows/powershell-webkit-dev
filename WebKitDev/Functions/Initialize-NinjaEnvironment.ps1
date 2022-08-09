@@ -16,12 +16,12 @@
   .Parameter CXX
   The path to the C++ compiler.
 #>
-Function Initialize-NinjaEnvironment {
-    Param(
+function Initialize-NinjaEnvironment {
+    param(
         [Parameter(Mandatory)]
-        [string] $cc,
+        [string]$cc,
         [Parameter(Mandatory)]
-        [string] $cxx
+        [string]$cxx
     )
 
     $env:CC = $cc;

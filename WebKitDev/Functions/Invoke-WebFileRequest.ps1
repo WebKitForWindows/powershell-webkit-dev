@@ -15,12 +15,12 @@
   .Example
     Invoke-WebFileRequest -Url https://bootstrap.pypa.io/get-pip.py -DestinationPath C:\get-pip.py.
 #>
-Function Invoke-WebFileRequest {
-    Param(
+function Invoke-WebFileRequest {
+    param(
         [Parameter(Mandatory)]
-        [string] $url,
+        [string]$url,
         [Parameter(Mandatory)]
-        [string] $destinationPath
+        [string]$destinationPath
     )
 
     # See if security protocol needs to be checked
@@ -36,16 +36,17 @@ Function Invoke-WebFileRequest {
     if ($proxy.Address -eq $null) {
         if ($secure) {
             if (Test-Path env:HTTPS_PROXY) {
-                $proxy = New-Object System.Net.WebProxy($env:HTTPS_PROXY, $true);
+                $proxy = New-Object System.Net.WebProxy ($env:HTTPS_PROXY,$true);
 
                 # Turn off SSL protocol check if proxy is HTTP
                 if ($env:HTTPS_PROXY.StartsWith('http:')) {
                     $secure = 0;
                 }
             }
-        } else {
+        }
+        else {
             if (Test-Path env:HTTP_PROXY) {
-                $proxy = New-Object System.Net.WebProxy($env:HTTP_PROXY, $true);
+                $proxy = New-Object System.Net.WebProxy ($env:HTTP_PROXY,$true);
             }
         }
     }
@@ -62,16 +63,16 @@ Function Invoke-WebFileRequest {
             $testEndpoint = $proxy.Address;
         }
 
-        foreach ($protocol in 'tls12', 'tls11', 'tls') {
+        foreach ($protocol in 'tls12','tls11','tls') {
             $tcpClient = New-Object Net.Sockets.TcpClient;
-            $tcpClient.Connect($testEndpoint.Host, $testEndpoint.Port)
+            $tcpClient.Connect($testEndpoint.Host,$testEndpoint.Port)
 
             $sslStream = New-Object Net.Security.SslStream $tcpClient.GetStream();
             $sslStream.ReadTimeout = 15000;
             $sslStream.WriteTimeout = 15000;
 
             try {
-                $sslStream.AuthenticateAsClient($testEndpoint.Host, $null, $protocol, $false);
+                $sslStream.AuthenticateAsClient($testEndpoint.Host,$null,$protocol,$false);
                 $supports = $true;
             }
             catch {
@@ -96,7 +97,7 @@ Function Invoke-WebFileRequest {
     # Download the file
     $tcpClient = New-Object System.Net.WebClient;
     $tcpClient.Proxy = $proxy;
-    $tcpClient.DownloadFile($url, $destinationPath);
+    $tcpClient.DownloadFile($url,$destinationPath);
 
     if ($oldSecurityProtocol) {
         # Restore the security protocol

@@ -9,6 +9,6 @@
   .Description
   Installs the latest version of make provided by MSYS2.
 #>
-Function Install-Make {
+function Install-Make {
     Install-FromPacman -Name 'make'
 }

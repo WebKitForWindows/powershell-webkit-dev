@@ -25,15 +25,15 @@
     # Install 3.0.1
     Install-Gperf -Version 3.0.1 -InstallationPath C:\gnuwin32
 #>
-Function Install-Gperf {
-    Param(
+function Install-Gperf {
+    param(
         [Parameter(Mandatory)]
-        [string] $version,
+        [string]$version,
         [Parameter(Mandatory)]
-        [string] $installationPath
+        [string]$installationPath
     )
 
     $url = ('https://newcontinuum.dl.sourceforge.net/project/gnuwin32/gperf/{0}/gperf-{0}-bin.zip' -f $version);
 
-    Install-FromArchive -Name 'gperf' -Url $url -InstallationPath $installationPath;
+    Install-FromArchive -Name 'gperf' -url $url -installationPath $installationPath;
 }

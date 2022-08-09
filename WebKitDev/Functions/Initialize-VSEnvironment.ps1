@@ -32,16 +32,16 @@
     # Initialize VC++ 2015 environment.
     Initialize-VSEnvironment -Architecture amd64 -Path (Get-VSBuildTools2015VCVarsAllPath)
 #>
-Function Initialize-VSEnvironment {
-    Param(
+function Initialize-VSEnvironment {
+    param(
         [Parameter(Mandatory)]
-        [ValidateSet('x86', 'amd64')]
-        [string] $architecture,
+        [ValidateSet('x86','amd64')]
+        [string]$architecture,
         [Parameter(Mandatory)]
-        [string] $path,
+        [string]$path,
         [Parameter()]
         [AllowNull()]
-        [string] $toolset
+        [string]$toolset
     )
 
     if (!(Test-Path $path)) {
@@ -60,12 +60,12 @@ Function Initialize-VSEnvironment {
 
     # Store the output of cmd.exe. We also ask cmd.exe to output
     # the environment table after the batch file completes
-    $call = ('"{0}" {1} {2} && set > "{3}"' -f $path, $architecture, $toolsetVersion, $tempFile);
-    cmd /c $call;
+    $call = ('"{0}" {1} {2} && set > "{3}"' -f $path,$architecture,$toolsetVersion,$tempFile);
+    cmd.exe /c $call;
 
     # Go through the environment variables in the temp file.
     # For each of them, set the variable in our local environment.
-    Get-Content $tempFile | Foreach-Object {
+    Get-Content $tempFile | ForEach-Object {
         if ($_ -match "^(.*?)=(.*)$") {
             Set-Content "env:\$($matches[1])" $matches[2]
         }

@@ -19,14 +19,14 @@
   .Parameter Options
   A list of options to pass in.
 #>
-Function Install-FromPacman {
-    Param(
+function Install-FromPacman {
+    param(
         [Parameter(Mandatory)]
-        [string] $name,
+        [string]$name,
         [Parameter()]
-        [string] $verifyExe = '',
+        [string]$verifyExe = '',
         [Parameter()]
-        [switch] $noVerify = $false
+        [switch]$noVerify = $false
     )
     $bash = Get-Command 'bash' -ErrorAction 'SilentlyContinue';
     if ($bash -eq $null) {

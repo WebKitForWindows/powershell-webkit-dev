@@ -20,18 +20,18 @@
     # Install 1.9.5.27581
     Install-SVN -Version 1.9.5.27581
 #>
-Function Install-SVN {
-    Param(
+function Install-SVN {
+    param(
         [Parameter(Mandatory)]
-        [string] $version,
+        [string]$version,
         [Parameter()]
         [AllowNull()]
-        [string] $installationPath
+        [string]$installationPath
     )
 
-    $major, $minor, $patch, $build = $version.split('.');
+    $major,$minor,$patch,$build = $version.split('.');
 
-    $url = ('https://mirrors.gigenet.com/OSDN/storage/g/t/to/tortoisesvn/{0}.{1}.{2}/Application/TortoiseSVN-{0}.{1}.{2}.{3}-x64-svn-{0}.{1}.{2}.msi' -f $major, $minor, $patch, $build);
+    $url = ('https://mirrors.gigenet.com/OSDN/storage/g/t/to/tortoisesvn/{0}.{1}.{2}/Application/TortoiseSVN-{0}.{1}.{2}.{3}-x64-svn-{0}.{1}.{2}.msi' -f $major,$minor,$patch,$build);
 
     $options = @(
         'ADDLOCAL=CLI'
@@ -41,5 +41,5 @@ Function Install-SVN {
         $options += ('INSTALLDIR="{0}"' -f $installationPath);
     }
 
-    Install-FromMsi -Name 'svn' -Url $url -Options $options;
+    Install-FromMsi -Name 'svn' -url $url -options $options;
 }

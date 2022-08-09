@@ -15,14 +15,14 @@
   .Parameter InstallationPath
   The location to install to.
 #>
-Function Install-Windows10SDK {
-    Param(
+function Install-Windows10SDK {
+    param(
         [Parameter()]
         [AllowNull()]
-        [string[]] $features,
+        [string[]]$features,
         [Parameter()]
         [AllowNull()]
-        [string] $installationPath
+        [string]$installationPath
     )
 
     $url = "http://download.microsoft.com/download/E/1/F/E1F1E61E-F3C6-4420-A916-FB7C47FBC89E/standalonesdk/sdksetup.exe"
@@ -33,12 +33,12 @@ Function Install-Windows10SDK {
     )
 
     if ($features) {
-        $options += '/Features', $features
+        $options += '/Features',$features
     }
 
     if ($installationPath) {
-        $options += '/installPath', $installationPath
+        $options += '/installPath',$installationPath
     }
 
-    Install-FromExe -Name 'Windows10SDK' -Url $url -Options $options -NoVerify
+    Install-FromExe -Name 'Windows10SDK' -url $url -options $options -noVerify
 }

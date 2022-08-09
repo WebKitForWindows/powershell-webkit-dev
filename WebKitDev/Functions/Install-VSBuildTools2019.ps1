@@ -12,13 +12,13 @@
   .Parameter InstallationPath
   The location to install to.
 #>
-Function Install-VSBuildTools2019 {
-    Param(
+function Install-VSBuildTools2019 {
+    param(
         [Parameter()]
-        [string[]] $workloads = @('Microsoft.VisualStudio.Workload.VCTools'),
+        [string[]]$workloads = @('Microsoft.VisualStudio.Workload.VCTools'),
         [Parameter()]
         [AllowNull()]
-        [string] $installationPath
+        [string]$installationPath
     )
 
     $url = 'https://aka.ms/vs/16/release/vs_buildtools.exe';
@@ -31,12 +31,12 @@ Function Install-VSBuildTools2019 {
     );
 
     foreach ($workload in $workloads) {
-        $options += @('--add', $workload);
+        $options += @('--add',$workload);
     }
 
     if ($installationPath) {
-        $options += @('--installPath', $installationPath);
+        $options += @('--installPath',$installationPath);
     }
 
-    Install-FromExe -Name 'VSBuildTools2019' -Url $url -Options $options -NoVerify;
+    Install-FromExe -Name 'VSBuildTools2019' -url $url -options $options -noVerify;
 }

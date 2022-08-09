@@ -9,6 +9,6 @@
   .Description
   Installs the latest version of flex provided by MSYS2.
 #>
-Function Install-Flex {
+function Install-Flex {
     Install-FromPacman -Name 'flex';
 }

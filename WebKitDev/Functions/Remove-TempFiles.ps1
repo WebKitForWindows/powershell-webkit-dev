@@ -9,8 +9,8 @@
   .Example
     Remove-TempFiles
 #>
-Function Remove-TempFiles {
-    $tempFolders = @($env:temp, 'C:/Windows/temp')
+function Remove-TempFiles {
+    $tempFolders = @($env:temp,'C:/Windows/temp')
 
     Write-Host 'Removing temporary files';
     $attempts = 1;
@@ -18,7 +18,7 @@ Function Remove-TempFiles {
     $filesRemoved = 0;
     $sleepFor = 1.0;
     $sleepMultiplier = 2.5;
-  
+
     while ($true) {
         $couldNotRemove = @();
 
@@ -54,7 +54,7 @@ Function Remove-TempFiles {
 
         $attempts += 1;
         $sleepFor *= $sleepMultiplier;
-        Write-Host ('Attempt {0} of {1}' -f $attempts, $maxAttempts);
+        Write-Host ('Attempt {0} of {1}' -f $attempts,$maxAttempts);
     }
 
     Write-Host ('Removed {0} files from temporary directories' -f $filesRemoved)

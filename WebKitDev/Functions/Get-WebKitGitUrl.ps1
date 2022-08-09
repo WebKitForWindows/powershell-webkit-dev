@@ -6,6 +6,6 @@
   .Synopsis
   Retrieves the location of WebKit's git repository.
 #>
-Function Get-WebKitGitUrl {
+function Get-WebKitGitUrl {
     return 'https://git.webkit.org/git/WebKit.git';
 }

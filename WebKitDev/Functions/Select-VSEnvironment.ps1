@@ -17,13 +17,13 @@
   The Visual Studio version to use. Either `vs2015` or `vs2017`. If not the
   value is not specified then the script will look for a compatible environment.
 #>
-Function Select-VSEnvironment {
+function Select-VSEnvironment {
     param(
-        [ValidateSet('x86', 'amd64')]
-        [string] $architecture = 'amd64',
-        [ValidateSet('vs2015', 'vs2017', 'vs2019', 'vs2022')]
+        [ValidateSet('x86','amd64')]
+        [string]$architecture = 'amd64',
+        [ValidateSet('vs2015','vs2017','vs2019','vs2022')]
         [AllowNull()]
-        [string] $version
+        [string]$version
     )
 
     # Find version if not specified
@@ -73,7 +73,7 @@ Function Select-VSEnvironment {
         return;
     }
 
-    Initialize-VSEnvironment -Architecture $architecture -Path $vcvars;
+    Initialize-VSEnvironment -architecture $architecture -Path $vcvars;
 
     # Initialize ninja
     $compilerExe = 'cl.exe';
@@ -81,5 +81,5 @@ Function Select-VSEnvironment {
 
     Write-Host ('Found compiler at {0}' -f $compilerPath);
 
-    Initialize-NinjaEnvironment -CC $compilerPath -CXX $compilerPath;
+    Initialize-NinjaEnvironment -Cc $compilerPath -cxx $compilerPath;
 }

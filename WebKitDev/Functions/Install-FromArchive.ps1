@@ -25,27 +25,27 @@
   If set the installation is not verified by attempting to call an executable
   with the given name.
 #>
-Function Install-FromArchive {
-    Param(
+function Install-FromArchive {
+    param(
         [Parameter(Mandatory)]
-        [string] $name,
+        [string]$name,
         [Parameter(Mandatory)]
-        [string] $url,
+        [string]$url,
         [Parameter(Mandatory)]
-        [string] $installationPath,
+        [string]$installationPath,
         [Parameter()]
         [AllowNull()]
-        [string] $archiveRoot,
+        [string]$archiveRoot,
         [Parameter()]
-        [switch] $noVerify = $false
+        [switch]$noVerify = $false
     )
 
     $extension = [System.IO.Path]::GetExtension($url);
-    $archivePath = Join-Path ([System.IO.Path]::GetTempPath()) ('{0}.{1}' -f $name, $extension);
+    $archivePath = Join-Path ([System.IO.Path]::GetTempPath()) ('{0}.{1}' -f $name,$extension);
 
-    Write-Host ('Downloading {0} package from {1} ..' -f $name, $url);
-    Invoke-WebFileRequest -Url $url -DestinationPath $archivePath;
-    Write-Host ('Downloaded {0} bytes' -f (Get-Item $archivePath).length);
+    Write-Host ('Downloading {0} package from {1} ..' -f $name,$url);
+    Invoke-WebFileRequest -url $url -DestinationPath $archivePath;
+    Write-Host ('Downloaded {0} bytes' -f (Get-Item $archivePath).Length);
     Write-Host ('Unzipping {0} package ...' -f $name);
 
     # Determine where to expand the archive to
@@ -54,12 +54,13 @@ Function Install-FromArchive {
     # that.
     if ($archiveRoot) {
         $expandTo = Join-Path ([System.IO.Path]::GetTempPath()) ([System.Guid]::NewGuid());
-        Write-Debug ('Archive root {0} specified, creating temp directory at {1}' -f $archiveRoot, $expandTo)
-    } else {
+        Write-Debug ('Archive root {0} specified, creating temp directory at {1}' -f $archiveRoot,$expandTo)
+    }
+    else {
         $expandTo = $installationPath;
     }
 
-    Expand-SourceArchive -Path $archivePath -Destinationpath $expandTo;
+    Expand-SourceArchive -Path $archivePath -DestinationPath $expandTo;
 
     if ($archiveRoot) {
         Move-DirectoryStructure (Join-Path $expandTo $archiveRoot) $installationPath;
@@ -79,15 +80,15 @@ Function Install-FromArchive {
     Write-Host ('{0} install complete.' -f $name);
 }
 
-Function Move-DirectoryStructure {
-    Param(
+function Move-DirectoryStructure {
+    param(
         [Parameter(Mandatory)]
-        [string] $path,
+        [string]$path,
         [Parameter(Mandatory)]
-        [string] $destination
+        [string]$destination
     )
 
-    Write-Debug ('Moving directory from {0} to {1}' -f $path, $destination)
+    Write-Debug ('Moving directory from {0} to {1}' -f $path,$destination)
 
     # See if we can just move the directory
     if (!(Test-Path $destination)) {
@@ -98,7 +99,7 @@ Function Move-DirectoryStructure {
             New-Item -ItemType Directory -Path $parent -Force | Out-Null;
         }
 
-        Write-Debug ('Destination {0} not present, will just move {1}' -f $destination, $path);
+        Write-Debug ('Destination {0} not present, will just move {1}' -f $destination,$path);
         Move-Item -Path $path -Destination $destination;
         return;
     }
