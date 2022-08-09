@@ -37,7 +37,7 @@ function Install-MSYS2 {
     # Setup the environment
     #
     # This is taken from different dockerfiles that do not call `msys2_shell.cmd`.
-    Write-Host 'Initializing MSYS2 environment';
+    Write-Information -MessageData 'Initializing MSYS2 environment' -InformationAction Continue;
     $env:MSYSTEM = 'MSYS2';
     $env:MSYSCON = 'defterm';
     [Environment]::SetEnvironmentVariable('MSYSTEM',$env:MSYSTEM,[EnvironmentVariableTarget]::Machine);
@@ -50,17 +50,17 @@ function Install-MSYS2 {
     $outFile = New-TemporaryFile;
 
     # Run bash a singular time
-    Write-Host "`n=================  STARTING BASH  =================`n"
+    Write-Information -MessageData '`n=================  STARTING BASH  =================`n' -InformationAction Continue;
     Set-Alias bash (Join-Path $installationPath -ChildPath 'usr' | Join-Path -ChildPath 'bin' | Join-Path -ChildPath 'bash.exe');
     bash.exe -lc 'exit 0' > $outFile;
     Get-Content $outFile;
 
     # Update steps taken from chocolatey package
     # https://github.com/msys2/msys2/wiki/MSYS2-installation
-    Write-Host 'Repeating system update until there are no more updates or max 5 iterations';
+    Write-Information -MessageData 'Repeating system update until there are no more updates or max 5 iterations' -InformationAction Continue;
     $ErrorActionPreference = 'Continue'; # otherwise bash warnings will exit
     while (!$done) {
-        Write-Host "`n================= SYSTEM UPDATE $((++$i)) =================`n";
+        Write-Information -MessageData '`n================= SYSTEM UPDATE $((++$i)) =================`n' -InformationAction Continue;
         bash.exe -lc 'pacman --noconfirm -Syuu' > $outFile;
         Get-Content $outFile;
         $done = (Get-Content $outFile) -match 'there is nothing to do' | Measure-Object | ForEach-Object { $_.Count -eq 2 };

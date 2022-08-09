@@ -45,19 +45,19 @@ function Install-FromExeDownload {
     }
 
     $exePath = Join-Path $installationPath ('{0}.exe' -f $name);
-    Write-Host ('Downloading {0} executable from {1} ...' -f $name,$url);
+    Write-Information -MessageData ('Downloading {0} executable from {1} ...' -f $name,$url) -InformationAction Continue;
     Invoke-WebFileRequest -url $url -DestinationPath $exePath;
-    Write-Host ('Downloaded {0} bytes' -f (Get-Item $exePath).Length);
+    Write-Information -MessageData ('Downloaded {0} bytes' -f (Get-Item $exePath).Length) -InformationAction Continue;
 
     # Update path
     Update-ScriptPath;
 
     if (!$noVerify) {
-        Write-Host ('Verifying {0} install ...' -f $name);
+        Write-Information -MessageData ('Verifying {0} install ...' -f $name) -InformationAction Continue;
         $verifyCommand = ('  {0} {1}' -f $name,(' ' -join $versionOptions));
-        Write-Host $verifyCommand;
+        Write-Information -MessageData $verifyCommand -InformationAction Continue;
         Invoke-Expression $verifyCommand;
     }
 
-    Write-Host ('{0} install complete.' -f $name);
+    Write-Information -MessageData ('{0} install complete.' -f $name) -InformationAction Continue;
 }

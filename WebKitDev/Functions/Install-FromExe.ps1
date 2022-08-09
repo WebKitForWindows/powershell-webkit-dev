@@ -39,12 +39,12 @@ function Install-FromExe {
 
     $installerPath = Join-Path ([System.IO.Path]::GetTempPath()) ('{0}.exe' -f $name);
 
-    Write-Host ('Downloading {0} installer from {1} ..' -f $name,$url);
+    Write-Information -MessageData ('Downloading {0} installer from {1} ..' -f $name,$url) -InformationAction Continue;
     Invoke-WebFileRequest -url $url -DestinationPath $installerPath;
-    Write-Host ('Downloaded {0} bytes' -f (Get-Item $installerPath).Length);
+    Write-Information -MessageData ('Downloaded {0} bytes' -f (Get-Item $installerPath).Length) -InformationAction Continue;
 
-    Write-Host ('Installing {0} ...' -f $name);
-    Write-Host ('{0} {1}' -f $installerPath,($options -join ' '));
+    Write-Information -MessageData ('Installing {0} ...' -f $name) -InformationAction Continue;
+    Write-Information -MessageData ('{0} {1}' -f $installerPath,($options -join ' ')) -InformationAction Continue;
 
     Start-Process $installerPath -Wait -ArgumentList $options;
 
@@ -52,15 +52,15 @@ function Install-FromExe {
     Update-ScriptPath;
 
     if (!$noVerify) {
-        Write-Host ('Verifying {0} install ...' -f $name);
+        Write-Information -MessageData ('Verifying {0} install ...' -f $name) -InformationAction Continue;
         $verifyCommand = ('  {0} --version' -f $name);
-        Write-Host $verifyCommand;
+        Write-Information -MessageData $verifyCommand -InformationAction Continue;
         Invoke-Expression $verifyCommand;
     }
 
-    Write-Host ('Removing {0} installer ...' -f $name);
+    Write-Information -MessageData ('Removing {0} installer ...' -f $name) -InformationAction Continue;
     Remove-Item $installerPath -Force;
     Remove-TempFiles;
 
-    Write-Host ('{0} install complete.' -f $name);
+    Write-Information -MessageData ('{0} install complete.' -f $name) -InformationAction Continue;
 }

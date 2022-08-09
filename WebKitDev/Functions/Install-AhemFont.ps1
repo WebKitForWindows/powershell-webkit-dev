@@ -9,7 +9,7 @@
   .Description
   Downloads the AHEM font and installs it into the system fonts.
 
-  The AHEM font is used for layout tests in WebKit and is retrieved from 
+  The AHEM font is used for layout tests in WebKit and is retrieved from
   https://github.com/w3c/web-platform-tests.
 #>
 function Install-AhemFont {

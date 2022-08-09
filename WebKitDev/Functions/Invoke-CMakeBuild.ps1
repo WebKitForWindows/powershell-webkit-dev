@@ -37,7 +37,7 @@ function Invoke-CMakeBuild {
         [string]$installationPath,
         [Parameter(Mandatory)]
         [ValidateSet('Release','Debug','RelWithDebInfo','MinSizeRel')]
-        [string]$buildType = 'Release',
+        [string]$buildType,
         [ValidateSet('ninja','vs2015','vs2017')]
         [string]$generator = 'ninja',
         [Parameter()]
@@ -77,7 +77,7 @@ function Invoke-CMakeBuild {
     # Create the generate call
     $genCall = ('cmake {0}' -f ($genArgs -join ' '));
 
-    Write-Host $genCall;
+    Write-Information -MessageData $genCall -InformationAction Continue;
     Invoke-Expression $genCall
 
     # Create the build call
@@ -89,7 +89,7 @@ function Invoke-CMakeBuild {
 
     $buildCall = ('cmake {0}' -f ($buildArgs -join ' '));
 
-    Write-Host $buildCall;
+    Write-Information -MessageData $buildCall -InformationAction Continue;
     Invoke-Expression $buildCall;
     $cmakeExitCode = $LASTEXITCODE;
 

@@ -29,7 +29,7 @@ function Install-FromPacman {
         [switch]$noVerify = $false
     )
     $bash = Get-Command 'bash' -ErrorAction 'SilentlyContinue';
-    if ($bash -eq $null) {
+    if ($null -eq $bash) {
         Write-Error ('Could not find bash to use to install {0}' -f $name);
         return
     }
@@ -42,7 +42,7 @@ function Install-FromPacman {
 
     $bashCmd = ('pacman --noconfirm -S {0}' -f $name);
     $bashExpression = ("bash -lc '{0}'" -f $bashCmd);
-    Write-Host $bashCmd;
+    Write-Information -MessageData $bashCmd -InformationAction Continue;
     Invoke-Expression $bashExpression > $outFile;
     Get-Content $outFile;
 
@@ -50,9 +50,9 @@ function Install-FromPacman {
         if ($verifyExe -eq '') {
             $verifyExe = $name;
         }
-        Write-Host ('Verifying {0} install ...' -f $name);
+        Write-Information -MessageData ('Verifying {0} install ...' -f $name) -InformationAction Continue;
         $verifyCommand = ('  {0} --version' -f $verifyExe);
-        Write-Host $verifyCommand;
+        Write-Information -MessageData $verifyCommand -InformationAction Continue;
         Invoke-Expression $verifyCommand > $outFile;
         Get-Content $outFile;
     }

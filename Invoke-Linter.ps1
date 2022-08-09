@@ -51,11 +51,9 @@ foreach ($script in $psScripts) {
     $files++;
     $scriptPath = $script.FullName;
 
-    $records = Invoke-ScriptAnalyzer -Path $scriptPath `
-         -Exclude PSUseSingularNouns,PSAvoidUsingInvokeExpression,PSUseShouldProcessForStateChangingFunctions `
-
     Write-Information -MessageData ('Analyzing {0}' -f $scriptPath) -InformationAction Continue;
 
+    $records = Invoke-ScriptAnalyzer -Path $scriptPath -Settings (Join-Path $PSScriptRoot 'ScriptAnalyzerSettings.txt');
     if ($records) {
         foreach ($record in $records) {
             $issues++;

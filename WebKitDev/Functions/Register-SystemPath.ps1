@@ -30,7 +30,7 @@ function Register-SystemPath {
         return;
     }
 
-    Write-Host ('Adding {0} to the system path' -f $path);
+    Write-Information -MessageData ('Adding {0} to the system path' -f $path) -InformationAction Continue;
 
     # Get current path from the registry
     $systemPathKey = 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment';

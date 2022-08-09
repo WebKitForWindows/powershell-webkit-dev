@@ -43,10 +43,10 @@ function Install-FromArchive {
     $extension = [System.IO.Path]::GetExtension($url);
     $archivePath = Join-Path ([System.IO.Path]::GetTempPath()) ('{0}.{1}' -f $name,$extension);
 
-    Write-Host ('Downloading {0} package from {1} ..' -f $name,$url);
+    Write-Information -MessageData ('Downloading {0} package from {1} ..' -f $name,$url) -InformationAction Continue;
     Invoke-WebFileRequest -url $url -DestinationPath $archivePath;
-    Write-Host ('Downloaded {0} bytes' -f (Get-Item $archivePath).Length);
-    Write-Host ('Unzipping {0} package ...' -f $name);
+    Write-Information -MessageData ('Downloaded {0} bytes' -f (Get-Item $archivePath).Length) -InformationAction Continue;
+    Write-Information -MessageData ('Unzipping {0} package ...' -f $name) -InformationAction Continue;
 
     # Determine where to expand the archive to
     #
@@ -68,16 +68,16 @@ function Install-FromArchive {
     }
 
     if (!$noVerify) {
-        Write-Host ('Verifying {0} install ...' -f $name);
+        Write-Information -MessageData ('Verifying {0} install ...' -f $name) -InformationAction Continue;
         $verifyCommand = ('  {0} --version' -f $name);
-        Write-Host $verifyCommand;
+        Write-Information -MessageData $verifyCommand -InformationAction Continue;
         Invoke-Expression $verifyCommand;
     }
 
-    Write-Host ('Removing {0} package  ...' -f $name);
+    Write-Information -MessageData ('Removing {0} package  ...' -f $name) -InformationAction Continue;
     Remove-Item $archivePath -Force;
 
-    Write-Host ('{0} install complete.' -f $name);
+    Write-Information -MessageData ('{0} install complete.' -f $name) -InformationAction Continue;
 }
 
 function Move-DirectoryStructure {

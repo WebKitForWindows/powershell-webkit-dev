@@ -71,7 +71,7 @@ function Install-Python {
 
     # Install PIP
     $pipInstall = ('pip=={0}' -f $pipVersion);
-    Write-Host ('Installing {0} from {1} ...' -f ($pipInstall,$getPip));
+    Write-Information -MessageData ('Installing {0} from {1} ...' -f ($pipInstall,$getPip)) -InformationAction Continue;
 
     Invoke-WebFileRequest -url $getPip -DestinationPath 'get-pip.py';
 

@@ -29,19 +29,19 @@ function Select-VSEnvironment {
     # Find version if not specified
     if (!$version) {
         if (Test-Path (Get-VSBuildTools2022InstallationPath)) {
-            Write-Host 'Found VS2022 Build Tools';
+            Write-Information -MessageData 'Found VS2022 Build Tools' -InformationAction Continue;
             $version = 'vs2022';
         }
         elseif (Test-Path (Get-VSBuildTools2019InstallationPath)) {
-            Write-Host 'Found VS2019 Build Tools';
+            Write-Information -MessageData 'Found VS2019 Build Tools' -InformationAction Continue;
             $version = 'vs2019';
         }
         elseif (Test-Path (Get-VSBuildTools2017InstallationPath)) {
-            Write-Host 'Found VS2017 Build Tools';
+            Write-Information -MessageData 'Found VS2017 Build Tools' -InformationAction Continue;
             $version = 'vs2017';
         }
         elseif (Test-Path (Get-VSBuildTools2015InstallationPath)) {
-            Write-Host 'Found VS2015 Build Tools';
+            Write-Information -MessageData 'Found VS2015 Build Tools' -InformationAction Continue;
             $version = 'vs2015';
         }
         else {
@@ -66,7 +66,7 @@ function Select-VSEnvironment {
         $vcvars = Get-VSBuildTools2015VCVarsAllPath;
     }
 
-    Write-Host $vcvars;
+    Write-Information -MessageData $vcvars -InformationAction Continue;
 
     if (!(Test-Path $vcvars)) {
         Write-Error ('Could not find {0}' -f $vcvars);
@@ -79,7 +79,7 @@ function Select-VSEnvironment {
     $compilerExe = 'cl.exe';
     $compilerPath = (Get-Command $compilerExe).Path;
 
-    Write-Host ('Found compiler at {0}' -f $compilerPath);
+    Write-Information -MessageData ('Found compiler at {0}' -f $compilerPath) -InformationAction Continue;
 
     Initialize-NinjaEnvironment -Cc $compilerPath -cxx $compilerPath;
 }
