@@ -73,8 +73,9 @@ function Install-Python {
     $pipInstall = ('pip=={0}' -f $pipVersion);
     Write-Information -MessageData ('Installing {0} from {1} ...' -f ($pipInstall,$getPip)) -InformationAction Continue;
 
-    Invoke-WebFileRequest -url $getPip -DestinationPath 'get-pip.py';
+    $pipScript = Join-Path ([System.IO.Path]::GetTempPath()) 'get-pip.py';
+    Invoke-WebFileRequest -url $getPip -DestinationPath $pipScript;
 
-    python.exe get-pip.py $pipInstall;
-    Remove-Item get-pip.py -Force;
+    python.exe $pipScript $pipInstall;
+    Remove-Item $pipScript -Force;
 }
