@@ -21,6 +21,14 @@ steps:
     status:
     - failure
 
+- name: linter
+  image: mcr.microsoft.com/powershell:alpine-3.14
+  commands:
+  - pwsh ./Invoke-Linter.ps1 -exitCodeOnError
+  environment:
+    # Disable debugging and profiling
+    COMPlus_EnableDiagnostics: 0
+
 trigger:
   ref:
   - refs/heads/master
