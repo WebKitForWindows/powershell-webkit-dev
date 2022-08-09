@@ -1,0 +1,19 @@
+---
+kind: pipeline
+type: docker
+name: Build
+
+steps:
+- name: formatter
+  image: mcr.microsoft.com/powershell:alpine-3.14
+  commands:
+  - pwsh ./Invoke-Formatter.ps1 -exitCodeOnFormat
+  environment:
+    # Disable debugging and profiling
+    COMPlus_EnableDiagnostics: 0
+
+trigger:
+  ref:
+  - refs/heads/master
+  - refs/tags/**
+  - refs/pull/**
