@@ -45,8 +45,7 @@ function Select-VSEnvironment {
             $version = 'vs2015';
         }
         else {
-            Write-Error 'Could not find a compatible Visual Studio instance';
-            return;
+            Write-Error 'Could not find a compatible Visual Studio instance' -ErrorAction Stop;
         }
     }
 
@@ -69,8 +68,7 @@ function Select-VSEnvironment {
     Write-Information -MessageData $vcvars -InformationAction Continue;
 
     if (!(Test-Path $vcvars)) {
-        Write-Error ('Could not find {0}' -f $vcvars);
-        return;
+        Write-Error ('Could not find {0}' -f $vcvars) -ErrorAction Stop;
     }
 
     Initialize-VSEnvironment -architecture $architecture -Path $vcvars;

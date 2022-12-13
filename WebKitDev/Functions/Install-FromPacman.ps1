@@ -30,8 +30,7 @@ function Install-FromPacman {
     )
     $bash = Get-Command 'bash' -ErrorAction 'SilentlyContinue';
     if ($null -eq $bash) {
-        Write-Error ('Could not find bash to use to install {0}' -f $name);
-        return
+        Write-Error ('Could not find bash to use to install {0}' -f $name) -ErrorAction Stop;
     }
 
     # Temp file for output
