@@ -27,8 +27,7 @@ function Update-XamppPerlLocation {
     $perlExecutable = Join-Path $perlPath (Join-Path 'perl' (Join-Path 'bin' 'perl.exe'));
 
     if (!(Test-Path $perlExecutable)) {
-        Write-Error ('perl not found at {0}' -f $perlPath);
-        return;
+        Write-Error ('perl not found at {0}' -f $perlPath) -ErrorAction Stop;
     }
 
     $registryValue = ('{0} -T' -f $perlExecutable);
