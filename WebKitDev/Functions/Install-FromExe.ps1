@@ -46,7 +46,15 @@ function Install-FromExe {
     Write-Information -MessageData ('Installing {0} ...' -f $name) -InformationAction Continue;
     Write-Information -MessageData ('{0} {1}' -f $installerPath,($options -join ' ')) -InformationAction Continue;
 
-    Start-Process $installerPath -Wait -ArgumentList $options;
+    # According to https://stackoverflow.com/a/23797762 caching the handle is required to get ExitCode
+    $process = Start-Process $installerPath -PassThru -ArgumentList $options;
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUserDeclaredVarsMoreThanAssignments', '', Scope='Function')]
+    $handle = $process.Handle;
+    $process.WaitForExit();
+
+    if ($process.ExitCode -ne 0) {
+        Write-Error ('{0} installer failed with exit code {1}' -f $name, $process.ExitCode) -ErrorAction Stop;
+    }
 
     # Update path
     Update-ScriptPath;
