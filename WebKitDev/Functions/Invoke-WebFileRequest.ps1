@@ -32,7 +32,7 @@ function Invoke-WebFileRequest {
     # Setup a proxy if needed
     $proxy = [System.Net.WebProxy]::GetDefaultProxy();
 
-    if ($null -ne $proxy.Address) {
+    if ($null -eq $proxy.Address) {
         if ($secure) {
             if (Test-Path env:HTTPS_PROXY) {
                 $proxy = New-Object System.Net.WebProxy ($env:HTTPS_PROXY,$true);
