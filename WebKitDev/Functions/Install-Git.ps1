@@ -53,5 +53,5 @@ function Install-Git {
         $options += ('/DIR="{0}"' -f $installationPath);
     }
 
-    Install-FromExe -Name 'git' -url $url -options $options;
+    Install-FromExe -Name 'git' -url $url -Options $options;
 }

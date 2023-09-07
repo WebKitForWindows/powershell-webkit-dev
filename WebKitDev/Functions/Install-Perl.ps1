@@ -36,5 +36,5 @@ function Install-Perl {
         $options += ('INSTALLDIR="{0}"' -f $installationPath);
     }
 
-    Install-FromMsi -Name 'perl' -url $url -options $options;
+    Install-FromMsi -Name 'perl' -url $url -Options $options;
 }

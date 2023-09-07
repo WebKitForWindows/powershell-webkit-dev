@@ -41,5 +41,5 @@ function Install-SVN {
         $options += ('INSTALLDIR="{0}"' -f $installationPath);
     }
 
-    Install-FromMsi -Name 'svn' -url $url -options $options;
+    Install-FromMsi -Name 'svn' -url $url -Options $options;
 }

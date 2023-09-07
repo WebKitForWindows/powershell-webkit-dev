@@ -51,7 +51,7 @@ function Install-Python {
             $options += ('TargetDir="{0}"' -f $installationPath)
         }
 
-        Install-FromExe -Name 'python' -url $pythonUrl -options $options;
+        Install-FromExe -Name 'python' -url $pythonUrl -Options $options;
     }
     else {
         $pythonUrl = ('https://www.python.org/ftp/python/{0}/python-{0}.amd64.msi' -f $version);
@@ -66,7 +66,7 @@ function Install-Python {
             $options += ('TARGETDIR="{0}"' -f $installationPath);
         }
 
-        Install-FromMsi -Name 'python' -url $pythonUrl -options $options;
+        Install-FromMsi -Name 'python' -url $pythonUrl -Options $options;
     }
 
     # Install PIP

@@ -50,13 +50,13 @@ function Install-FromMsi {
     Write-Information -MessageData ('msiexec {0}' -f ($msiArgs -join ' ')) -InformationAction Continue;
 
     # According to https://stackoverflow.com/a/23797762 caching the handle is required to get ExitCode
-    $process = Start-Process msiexec -PassThru -ArgumentList $msiArgs;
-    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUserDeclaredVarsMoreThanAssignments', '', Scope='Function')]
+    $process = Start-Process msiexec -Passthru -ArgumentList $msiArgs;
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUserDeclaredVarsMoreThanAssignments','',Scope = 'Function')]
     $handle = $process.Handle;
     $process.WaitForExit();
 
     if ($process.ExitCode -ne 0) {
-        Write-Error ('{0} installer failed with exit code {1}' -f $name, $process.ExitCode) -ErrorAction Stop;
+        Write-Error ('{0} installer failed with exit code {1}' -f $name,$process.ExitCode) -ErrorAction Stop;
     }
 
     # Update path

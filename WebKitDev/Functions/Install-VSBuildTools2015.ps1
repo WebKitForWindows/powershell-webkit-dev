@@ -30,5 +30,5 @@ function Install-VSBuildTools2015 {
         $options += ('/CustomInstallPath="{0}"' -f $installationPath);
     }
 
-    Install-FromExe -Name 'VSBuildTools2015' -url $url -options $options -noVerify;
+    Install-FromExe -Name 'VSBuildTools2015' -url $url -Options $options -noVerify;
 }

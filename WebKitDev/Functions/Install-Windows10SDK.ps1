@@ -40,5 +40,5 @@ function Install-Windows10SDK {
         $options += '/installPath',$installationPath
     }
 
-    Install-FromExe -Name 'Windows10SDK' -url $url -options $options -noVerify
+    Install-FromExe -Name 'Windows10SDK' -url $url -Options $options -noVerify
 }

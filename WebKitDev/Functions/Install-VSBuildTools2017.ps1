@@ -38,5 +38,5 @@ function Install-VSBuildTools2017 {
         $options += @('--installPath',$installationPath);
     }
 
-    Install-FromExe -Name 'VSBuildTools2017' -url $url -options $options -noVerify;
+    Install-FromExe -Name 'VSBuildTools2017' -url $url -Options $options -noVerify;
 }

@@ -38,5 +38,5 @@ function Install-VSBuildTools2022 {
         $options += @('--installPath',$installationPath);
     }
 
-    Install-FromExe -Name 'VSBuildTools2022' -url $url -options $options -noVerify;
+    Install-FromExe -Name 'VSBuildTools2022' -url $url -Options $options -noVerify;
 }

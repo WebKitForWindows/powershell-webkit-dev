@@ -46,5 +46,5 @@ function Install-Xampp {
         '--disable-components','xampp_mysql,xampp_filezilla,xampp_mercury,xampp_tomcat,xampp_perl,xampp_phpmyadmin,xampp_webalizer,xampp_sendmail'
     );
 
-    Install-FromExe -Name 'xampp' -url $url -options $options -noVerify;
+    Install-FromExe -Name 'xampp' -url $url -Options $options -noVerify;
 }

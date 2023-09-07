@@ -46,5 +46,5 @@ function Install-CMake {
         $options += ('INSTALL_ROOT="{0}"' -f $installationPath);
     }
 
-    Install-FromMsi -Name 'cmake' -url $url -options $options;
+    Install-FromMsi -Name 'cmake' -url $url -Options $options;
 }

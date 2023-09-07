@@ -39,5 +39,5 @@ function Install-Ruby {
         $options += ('/dir="{0}"' -f $installationPath);
     }
 
-    Install-FromExe -Name 'ruby' -url $url -options $options;
+    Install-FromExe -Name 'ruby' -url $url -Options $options;
 }

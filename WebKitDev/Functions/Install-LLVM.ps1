@@ -38,5 +38,5 @@ function Install-LLVM {
         $options += "/D=$installationPath"
     }
 
-    Install-FromExe -Name 'LLVM' -url $url -options $options -noVerify
+    Install-FromExe -Name 'LLVM' -url $url -Options $options -noVerify
 }
