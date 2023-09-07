@@ -37,7 +37,7 @@ function Import-ModuleLocally {
     Import-Module $importModule;
 }
 
-Import-ModuleLocally -Name PSScriptAnalyzer -Version 1.20.0;
+Import-ModuleLocally -Name PSScriptAnalyzer -Version 1.21.0;
 
 # Use Invoke-Formatter on all code
 # Using -Exclude breaks the -Filter functionality so a regex using Where-Object is used instead
