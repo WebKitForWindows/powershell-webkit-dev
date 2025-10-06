@@ -15,11 +15,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: linter
+    - name: Lint sources
       shell: pwsh
       run: ./Invoke-Linter.ps1 -exitCodeOnError
       if: always()
-    - name: formatter
+    - name: Check formatting
+      id: format
       shell: pwsh
       run: ./Invoke-Formatter.ps1 -exitCodeOnFormat
       if: always()
+    - name: Formatting changes
+      run: git diff
+      if: always() && steps.format.outcome != 'success'

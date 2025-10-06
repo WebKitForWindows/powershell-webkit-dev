@@ -37,7 +37,7 @@ function Import-ModuleLocally {
     Import-Module $importModule;
 }
 
-Import-ModuleLocally -Name PSScriptAnalyzer -Version 1.21.0;
+Import-ModuleLocally -Name PSScriptAnalyzer -Version 1.24.0;
 Import-ModuleLocally -Name PowerShell-Beautifier -Version 1.2.5;
 
 # Use Invoke-Formatter on all code
