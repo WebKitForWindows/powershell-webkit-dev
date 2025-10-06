@@ -27,3 +27,14 @@ jobs:
     - name: Formatting changes
       run: git diff
       if: always() && steps.format.outcome != 'success'
+
+  publish:
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Push release
+      shell: pwsh
+      run: ./Publish-WebKitDev.ps1
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
