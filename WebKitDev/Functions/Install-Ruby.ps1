@@ -27,17 +27,14 @@ function Install-Ruby {
         [AllowNull()]
         [string]$installationPath
     )
-
-    $url = ('https://github.com/oneclick/rubyinstaller2/releases/download/RubyInstaller-{0}/rubyinstaller-{0}-x64.exe' -f $version);
-
-    $options = @(
-        '/verysilent',
-        '/tasks="assocfiles,modpath"'
-    );
+    $packageParameters = @();
 
     if ($installationPath) {
-        $options += ('/dir="{0}"' -f $installationPath);
+        $packageParameters += ('/InstallDir:"{0}"' -f $installationPath);
     }
 
-    Install-FromExe -Name 'ruby' -url $url -Options $options;
+    Install-FromChoco `
+         -Name 'ruby' `
+         -Version $version `
+         -PackageParameters $packageParameters;
 }
