@@ -1,0 +1,25 @@
+name: Powershell CI
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ "v*.*.*" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: "0 0 * * 0"
+
+jobs:
+  lint:
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: linter
+      shell: pwsh
+      run: ./Invoke-Linter.ps1 -exitCodeOnError
+      if: always()
+    - name: formatter
+      shell: pwsh
+      run: ./Invoke-Formatter.ps1 -exitCodeOnFormat
+      if: always()
