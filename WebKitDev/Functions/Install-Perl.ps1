@@ -28,13 +28,15 @@ function Install-Perl {
         [string]$installationPath
     )
 
-    $url = ('http://strawberryperl.com/download/{0}/strawberry-perl-{0}-64bit.msi' -f $version);
-
-    $options = @();
+    $installerOptions = @();
 
     if ($installationPath) {
-        $options += ('INSTALLDIR="{0}"' -f $installationPath);
+        $installerOptions += ('INSTALLDIR="{0}"' -f $installationPath);
     }
 
-    Install-FromMsi -Name 'perl' -url $url -Options $options;
+    Install-FromChoco `
+         -Name 'strawberryperl' `
+         -Version $version `
+         -InstallerOptions $installerOptions `
+         -VerifyExe 'perl';
 }
