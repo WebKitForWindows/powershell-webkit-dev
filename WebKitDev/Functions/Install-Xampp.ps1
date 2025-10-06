@@ -25,26 +25,17 @@ function Install-Xampp {
         [string]$version
     )
 
-    $major,$minor,$patch,$build = $version.split('.')
-    if (-not $build) {
-        $build = '0'
-    }
+    $major,$minor,$patch = $version.split('.')
+    $name = ('xampp-{0}{1}' -f $major,$minor);
 
-    if ($major -eq '7') {
-        $toolchain = 'VC15';
-    }
-    else {
-        $toolchain = 'VS16';
-    }
+    $installerOptions = @(
+        '--disable-components',
+        'xampp_mysql,xampp_filezilla,xampp_mercury,xampp_tomcat,xampp_perl,xampp_phpmyadmin,xampp_webalizer,xampp_sendmail'
+    )
 
-    $url = ('https://sourceforge.net/projects/xampp/files/XAMPP%20Windows/{0}.{1}.{2}/xampp-windows-x64-{0}.{1}.{2}-{3}-{4}-installer.exe' -f ($major,$minor,$patch,$build,$toolchain));
-
-    $options = @(
-        '--unattendedmodeui','none',
-        '--mode','unattended',
-        '--launchapps','0',
-        '--disable-components','xampp_mysql,xampp_filezilla,xampp_mercury,xampp_tomcat,xampp_perl,xampp_phpmyadmin,xampp_webalizer,xampp_sendmail'
-    );
-
-    Install-FromExe -Name 'xampp' -url $url -Options $options -noVerify;
+    Install-FromChoco `
+         -Name $name `
+         -Version $version `
+         -InstallerOptions $installerOptions `
+         -noVerify;
 }
