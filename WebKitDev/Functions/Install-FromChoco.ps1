@@ -55,15 +55,10 @@ function Install-FromChoco {
         [string[]]$versionOptions = @('--version')
     )
 
-    $chocoArgs = @('install',$name,'--confirm');
+    $chocoArgs = @('install',$name,'--confirm','--no-progress');
 
     if ($version) {
         $chocoArgs += @('--version',$version);
-    }
-
-    # The progress status is very noisy in CI environments so turn it off
-    if (Test-Path env:CI) {
-        $chocoArgs += '--no-progress';
     }
 
     if ($installerOptions) {
