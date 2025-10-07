@@ -21,22 +21,18 @@ function Install-VSBuildTools2022 {
         [string]$installationPath
     )
 
-    $url = 'https://aka.ms/vs/17/release/vs_BuildTools.exe';
-
-    $options = @(
-        '--quiet',
-        '--norestart',
-        '--nocache',
-        '--wait'
-    );
+    $packageParameters = @();
 
     foreach ($workload in $workloads) {
-        $options += @('--add',$workload);
+        $packageParameters += @('--add',$workload);
     }
 
     if ($installationPath) {
-        $options += @('--installPath',$installationPath);
+        $packageParameters += @('--installPath',$installationPath);
     }
 
-    Install-FromExe -Name 'VSBuildTools2022' -url $url -Options $options -noVerify;
+    Install-FromChoco `
+         -Name visualstudio2022buildtools `
+         -PackageParameters $packageParameters `
+         -noVerify;
 }
