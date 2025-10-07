@@ -35,39 +35,27 @@ function Install-Python {
     )
 
     $major,$minor,$patch = $version.split('.');
+    $packageParameters = @();
+
+    if ($installationPath) {
+        $packageParameters += ('/InstallDir:"{0}"' -f $installationPath)
+    }
 
     if ($major -ne '2') {
-        $pythonUrl = ('https://www.python.org/ftp/python/{0}/python-{0}-amd64.exe' -f $version);
+        $name = ('python{0}{1}' -f $major,$minor);
         $getPip = 'https://bootstrap.pypa.io/get-pip.py';
-
-        $options = @(
-            '/quiet',
-            'InstallAllUsers=1',
-            'PrependPath=1',
-            'AssociateFiles=0'
-        );
-
-        if ($installationPath) {
-            $options += ('TargetDir="{0}"' -f $installationPath)
-        }
-
-        Install-FromExe -Name 'python' -url $pythonUrl -Options $options;
     }
     else {
-        $pythonUrl = ('https://www.python.org/ftp/python/{0}/python-{0}.amd64.msi' -f $version);
+        $name = 'python2'
         $getPip = 'https://bootstrap.pypa.io/pip/2.7/get-pip.py';
-
-        $options = @(
-            'ALLUSERS=1',
-            'ADDLOCAL=DefaultFeature,Extensions,TclTk,Tools,PrependPath'
-        );
-
-        if ($installationPath) {
-            $options += ('TARGETDIR="{0}"' -f $installationPath);
-        }
-
-        Install-FromMsi -Name 'python' -url $pythonUrl -Options $options;
     }
+
+    # Install Python
+    Install-FromChoco `
+         -Name $name `
+         -Version $version `
+         -VerifyExe 'python' `
+         -PackageParameters $packageParameters;
 
     # Install PIP
     $pipInstall = ('pip=={0}' -f $pipVersion);
