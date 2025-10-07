@@ -4,7 +4,7 @@
 
 <#
   .Synopsis
-  Installs a Windows package through choco.
+  Installs a Windows package through chocolatey.
 
   .Description
   Installs a package from chocolatey onto the system.
@@ -56,25 +56,35 @@ function Install-FromChoco {
     )
 
     $chocoArgs = @('install',$name,'--confirm');
-    $chocoArgs += $options;
 
     if ($version) {
         $chocoArgs += @('--version',$version);
     }
 
+    # The progress status is very noisy in CI environments so turn it off
+    if (Test-Path env:CI) {
+        $chocoArgs += '--no-progress';
+    }
+
     if ($installerOptions) {
-        $chocoArgs += @('--install-arguments',("'{0}'" -f ($installerOptions -join ' ')));
+        $joined = ($installerOptions -join ' ');
+        $chocoArgs += ('--install-arguments="{0}"' -f ($joined -replace '"','""'));
     }
 
     if ($packageParameters) {
-        $chocoArgs += @('--package-parameters',("'{0}'" -f ($packageParameters -join ' ')));
+        $joined = ($packageParameters -join ' ');
+        $chocoArgs += ('--package-parameters="{0}"' -f ($joined -replace '"','""'));
     }
 
-    Write-Information ('choco {0}' -f ($chocoArgs -join ' '));
+    $chocoArgs += $options;
+
+    Write-Information -MessageData ('choco {0}' -f ($chocoArgs -join ' ')) -InformationAction Continue;
+    $startTime = Get-Date;
     $process = Start-Process choco -Passthru -NoNewWindow -ArgumentList $chocoArgs;
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUserDeclaredVarsMoreThanAssignments','',Scope = 'Function')]
     $handle = $process.Handle;
     $process.WaitForExit();
+    $endTime = Get-Date;
 
     if ($process.ExitCode -ne 0) {
         Write-Error ('{0} installer failed with exit code {1}' -f $name,$process.ExitCode) -ErrorAction Stop;
@@ -95,4 +105,6 @@ function Install-FromChoco {
         Write-Information -MessageData $verifyCommand -InformationAction Continue;
         Invoke-Expression $verifyCommand;
     }
+
+    Write-Information -MessageData ('Installation of {0} completed in {1:mm} min {1:ss} sec' -f $name,($endTime - $startTime)) -InformationAction Continue;
 }
