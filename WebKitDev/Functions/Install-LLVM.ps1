@@ -29,14 +29,18 @@ function Install-LLVM {
         [string]$installationPath
     )
 
-    # Releases after 10.0 moved to GitHub
-    $url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-${version}/LLVM-${version}-win64.exe"
-
-    $options = @('/S')
+    $installerOptions = @()
 
     if ($installationPath) {
-        $options += "/D=$installationPath"
+        Write-Warning 'The chocolatey package expects the standard location to be used';
+        # NSIS installer will not accept " in the path even if there are spaces
+        $installerOptions += ('/D={0}' -f $installationPath);
+        Register-SystemPath (Join-Path $installationPath -ChildPath 'bin');
     }
 
-    Install-FromExe -Name 'LLVM' -url $url -Options $options -noVerify
+    Install-FromChoco `
+         -Name 'llvm' `
+         -Version $version `
+         -InstallerOptions $installerOptions `
+         -VerifyExe 'clang-cl';
 }
