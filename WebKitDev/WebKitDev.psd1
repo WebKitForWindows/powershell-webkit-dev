@@ -12,7 +12,7 @@
     # RootModule = ''
 
     # Version number of this module.
-    ModuleVersion     = '0.6.4'
+    ModuleVersion     = '0.7.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -113,6 +113,7 @@
         'Functions/Install-Python.ps1',
         'Functions/Install-Ruby.ps1',
         'Functions/Install-SVN.ps1',
+        'Functions/Install-Swift.ps1',
         'Functions/Install-VSBuildTools2015.ps1',
         'Functions/Install-VSBuildTools2017.ps1',
         'Functions/Install-VSBuildTools2019.ps1',
@@ -174,6 +175,7 @@
         'Install-Python',
         'Install-Ruby',
         'Install-SVN',
+        'Install-Swift',
         'Install-VSBuildTools2015',
         'Install-VSBuildTools2017',
         'Install-VSBuildTools2019',
